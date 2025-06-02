@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$comment": "This schema is DONE except for adding in `required: []` fields.",
     "type": "object",
     "title": "Enchantment",
     "properties": {
@@ -448,6 +447,7 @@
             
         }
     },
+    "required": ["description", "supported_items", "exclusive_set", "weight", "max_level", "min_cost", "max_cost", "anvil_cost", "slots", "effects"],
     "definitions": {
         "valueEffectComponent": {
             "type": "object",
@@ -458,7 +458,8 @@
                 "requirements": {
                     "$ref": "predicate.json"
                 }
-            }
+            },
+            "required": ["effect"]
         },
         "entityEffectComponent": {
             "type": "object",
@@ -469,7 +470,8 @@
                 "requirements": {
                     "$ref": "predicate.json"
                 }
-            }
+            },
+            "required": ["effect"]
         },
         "entityEffects": {
             "title": "Entity Effects",
@@ -479,20 +481,21 @@
                     "type": "object",
                     "title": "All Of",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:all_of"
                         },
                         "effects": {
                             "$ref": "#/definitions/entityEffects"
                         }
-                    }
+                    },
+                    "required": ["effects", "type"]
                 },
                 {
                     "type": "object",
                     "title": "Apply Mob Effect",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:apply_mob_effect"
                         },
@@ -516,13 +519,14 @@
                         "max_amplifier": {
                             "$ref": "#/definitions/levelBasedValue"
                         }
-                    }
+                    },
+                    "required": ["type", "to_apply", "min_duration", "max_duration", "min_amplifier", "max_amplifier"]
                 },
                 {
                     "type": "object",
                     "title": "Damage Entity",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:damage_entity"
                         },
@@ -537,26 +541,28 @@
                         "max_damage": {
                             "$ref": "#/definitions/levelBasedValue"
                         }
-                    }
+                    },
+                    "required": ["type", "damage_type", "min_damage", "max_damage"]
                 },
                 {
                     "type": "object",
                     "title": "Change Item Damage",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:change_item_damage"
                         },
                         "amount": {
                             "$ref": "#/definitions/levelBasedValue"
                         }
-                    }
+                    },
+                    "required": ["type", "amount"]
                 },
                 {
                     "type": "object",
                     "title": "Explode",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:explode"
                         },
@@ -624,26 +630,28 @@
                             "title": "Sound Event",
                             "enumSource": "sound_events"
                         }
-                    }
+                    },
+                    "required": ["type", "attribute_to_user", "radius", "create_fire", "block_interaction", "small_particle", "large_particle", "sound"]
                 },
                 {
                     "type": "object",
                     "title": "Ignite",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:ignite"
                         },
                         "duration": {
                             "$ref": "#/definitions/levelBasedValue"
                         }
-                    }
+                    },
+                    "required": ["type", "duration"]
                 },
                 {
                     "type": "object",
                     "title": "Play Sound",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:play_sound"
                         },
@@ -666,7 +674,8 @@
                                             "minimum": 0.00001,
                                             "maximum": 10.0
                                         }
-                                    }
+                                    },
+                                    "required": ["float"]
                                         
                                 },
                                 {
@@ -695,7 +704,8 @@
                                             "minimum": 0.00001,
                                             "maximum": 2.0
                                         }
-                                    }
+                                    },
+                                    "required": ["float"]
                                 },
                                 {   
                                     "type": "object",
@@ -708,13 +718,14 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    "required": ["type", "sound", "volume", "pitch"]
                 },
                 {
                     "type": "object",
                     "title": "Replace Block",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:replace_block"
                         },
@@ -744,13 +755,14 @@
                         "predicate": {
                             "$ref": "../utils/block_predicate.json#/definitions/blockPredicate"
                         }
-                    }
+                    },
+                    "required": ["type", "block_state", "trigger_game_event"]
                 },
                 {
                     "type": "object",
                     "title": "Replace Disk",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:replace_disk"
                         },
@@ -758,19 +770,15 @@
                             "$ref": "../utils/block_predicate.json#/definitions/blockStateProvider"
                         },
                         "offset": {
-                            "type": "object",
+                            "type": "array",
                             "title": "Offset",
-                            "properties": {
-                                "floatx": {
-                                    "type": "number"
-                                },
-                                "floaty": {
-                                    "type": "number"
-                                },
-                                "floatz": {
-                                    "type": "number"
+                            "items": {
+                                "integer": {
+                                    "type": "integer"
                                 }
-                            }
+                            },
+                            "minItems": 3,
+                            "maxItems": 3
                         },
                         "radius": {
                             "$ref": "#/definitions/levelBasedValue"
@@ -786,13 +794,14 @@
                         "predicate": {
                             "$ref": "../utils/block_predicate.json#/definitions/blockPredicate"
                         }
-                    }
+                    },
+                    "required": ["type", "block_state", "radius", "height", "trigger_game_event"]
                 },
                 {
                     "type": "object",
                     "title": "Run Function",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:run_function"
                         },
@@ -800,36 +809,42 @@
                             "type": "string",
                             "title": "Function"
                         }
-                    }
+                    },
+                    "required": ["type", "function"]
                 },
                 {
                     "type": "object",
                     "title": "Set Block Properties",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:set_block_properties"
                         },
                         "offset": {
-                            "type": "object",
+                            "type": "array",
                             "title": "Offset",
-                            "properties": {
-                                "floatx": {
-                                    "type": "number"
-                                },
-                                "floaty": {
-                                    "type": "number"
-                                },
-                                "floatz": {
+                            "items": {
+                                "integer": {
                                     "type": "number"
                                 }
-                            }
+                            },
+                            "minItems": 3,
+                            "maxItems": 3
                         },
-                        "props": {
+                        "properties": {
                             "type": "array",
                             "title": "Properties",
                             "items": {
-                                "type": "string"
+                                "type": "object",
+                                "required": ["key", "value"],
+                                "properties": {
+                                    "key": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         },
                         "trigger_game_event": {
@@ -837,13 +852,14 @@
                             "title": "Trigger Game Event",
                             "enumSource": "game_events"
                         }
-                    }
+                    },
+                    "required": ["type", "properties", "trigger_game_event"]
                 },
                 {
                     "type": "object",
                     "title": "Spawn Particles",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:spawn_particles"
                         },
@@ -854,7 +870,7 @@
                             "type": "object",
                             "title": "Horizontal Position",
                             "properties": {
-                                "ptype": {
+                                "type": {
                                     "type": "string",
                                     "title": "Type",
                                     "enum": [
@@ -868,12 +884,12 @@
                                     "default": 0
                                 }
                             },
-                            "required": ["ptype"],
+                            "required": ["type"],
                             "allOf": [
                                 {
                                     "if": {
                                         "properties": {
-                                            "ptype": { "const": "in_bounding_box" }
+                                            "type": { "const": "in_bounding_box" }
                                         }
                                     },
                                     "then": {
@@ -893,7 +909,7 @@
                             "type": "object",
                             "title": "Vertical Position",
                             "properties": {
-                                "ptype": {
+                                "type": {
                                     "type": "string",
                                     "title": "Type",
                                     "enum": [
@@ -907,12 +923,12 @@
                                     "default": 0
                                 }
                             },
-                            "required": ["ptype"],
+                            "required": ["type"],
                             "allOf": [
                                 {
                                     "if": {
                                         "properties": {
-                                            "ptype": { "const": "in_bounding_box" }
+                                            "type": { "const": "in_bounding_box" }
                                         }
                                     },
                                     "then": {
@@ -984,13 +1000,14 @@
                                 "default": 1
                             }
                         }
-                    }
+                    },
+                    "required": ["type", "particle", "horizontal_position", "vertical_position", "horizontal_velocity", "vertical_velocity"]
                 },
                 {
                     "type": "object",
                     "title": "Summons Entity",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:summon_entity"
                         },
@@ -1000,13 +1017,15 @@
                             "items": {
                                 "type": "string",
                                 "enumSource": "entities"
-                            }
+                            },
+                            "minItems": 1
                         },
                         "join_team": {
                             "type": "boolean",
                             "title": "Join Team"
                         }
-                    }
+                    },
+                    "required": ["type", "entity", "join_team"]
                 }
             ]
         },
@@ -1014,17 +1033,18 @@
             "title": "Location Based Effects",
             "oneOf": [
                 {
+                    "title": "attribute",
                     "type": "object",
-                    "title": "Attribute",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:attribute"
                         },
                         "attribute": {
                             "$ref": "#/definitions/attributeEffects"
                         }
-                    }
+                    },
+                    "required": ["type", "attribute"]
                 }
             ]
         },
@@ -1035,59 +1055,63 @@
                     "type": "object",
                     "title": "Set",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:set"
                         },
                         "value": {
                             "$ref": "#/definitions/levelBasedValue"
                         }
-                    }
+                    },
+                    "required": ["type", "value"]
                 },
                 {
                     "type": "object",
                     "title": "Add",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:add"
                         },
                         "value": {
                             "$ref": "#/definitions/levelBasedValue"
                         }
-                    }
+                    },
+                    "required": ["type", "value"]
                 },
                 {
                     "type": "object",
                     "title": "Multiply",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:multiply"
                         },
                         "factor": {
                             "$ref": "#/definitions/levelBasedValue"
                         }
-                    }
+                    },
+                    "required": ["type", "factor"]
                 },
                 {
                     "type": "object",
                     "title": "Remove Binomial",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:remove_binomial"
                         },
                         "chance": {
                             "$ref": "#/definitions/levelBasedValue"
                         }
-                    }
+                    },
+                    "required": ["type", "chance"]
                 },
                 {
                     "type": "object",
                     "title": "All Of",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:all_of"
                         },
@@ -1098,7 +1122,8 @@
                                 "$ref": "#/definitions/valueEffects"
                             }
                         }
-                    }
+                    },
+                    "required": ["type", "effects"]
                 }
             ]
         },
@@ -1126,21 +1151,29 @@
                     "type": "string",
                     "title": "id"
                 }
-            }
+            },
+            "required": ["attribute", "amount", "operation", "id"]
         },
         "levelBasedValue": {
             "title": "Level Based Value",
             "description": "A value that can be constant or vary based on enchantment level",
             "oneOf": [
                 {
-                    "type": "number",
-                    "title": "Constant"
+                    "type": "object",
+                    "title": "Constant",
+                    "properties": {
+                        "constant": {
+                            "type": "number",
+                            "title": "Constant"
+                        }
+                    },
+                    "required": ["constant"]
                 },
                 {
                     "type": "object",
                     "title": "Linear",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:linear"
                         },
@@ -1153,29 +1186,28 @@
                             "title": "Per Level Above First"
                         }
                     },
-                    "required": ["mctype", "base", "per_level_above_first"]
+                    "required": ["type", "base", "per_level_above_first"]
                 },
                 {
                     "type": "object",
                     "title": "Levels Squared",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:levels_squared"
                         },
                         "added": {
                             "type": "number",
-                            "title": "Added Value",
-                            "default": 0
+                            "title": "Added Value"
                         }
                     },
-                    "required": ["mctype"]
+                    "required": ["type", "added"]
                 },
                 {
                     "type": "object",
                     "title": "Clamped",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:clamped"
                         },
@@ -1191,13 +1223,13 @@
                             "title": "Maximum Value"
                         }
                     },
-                    "required": ["mctype", "value", "min", "max"]
+                    "required": ["type", "value", "min", "max"]
                 },
                 {
                     "type": "object",
                     "title": "Fraction",
                     "properties": {
-                        "mctype": {
+                        "type": {
                             "type": "string",
                             "const": "minecraft:fraction"
                         },
@@ -1208,7 +1240,7 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["mctype", "numerator", "denominator"]
+                    "required": ["type", "numerator", "denominator"]
                 },
                 {
                     "type": "object",
@@ -1229,7 +1261,7 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "values"]
+                    "required": ["type", "values", "fallback"]
                 }
             ]
         }

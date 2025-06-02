@@ -29,5 +29,4 @@ NOT STARTED:
 
 OTHER: 
 - Rename & Reorganize many schemas - Make sure to 
-- Use mDirt utility to regenerate utils/blockstates and utils/blockstates_for_predicate to update them to 1.21.5
 - Normalize `title` and `description` styles

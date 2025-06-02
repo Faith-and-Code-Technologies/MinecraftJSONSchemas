@@ -1,8 +1,395 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Minecraft Text Component",
+    "type": [
+        "object",
+        "string",
+        "array"
+    ],
+    "description": "Strict schema for Minecraft SNBT/JSON text components introduced in Java Edition 1.21.5.",
     "definitions": {
+        "textComponentBase": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "type": "string"
+                },
+                "font": {
+                    "type": "string"
+                },
+                "bold": {
+                    "type": "boolean"
+                },
+                "italic": {
+                    "type": "boolean"
+                },
+                "underlined": {
+                    "type": "boolean"
+                },
+                "strikethrough": {
+                    "type": "boolean"
+                },
+                "obfuscated": {
+                    "type": "boolean"
+                },
+                "shadow_color": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                            },
+                            "minItems": 4,
+                            "maxItems": 4
+                        }
+                    ]
+                },
+                "insertion": {
+                    "type": "string"
+                },
+                "extra": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/textComponent"
+                    }
+                },
+                "click_event": {
+                    "type": "object",
+                    "required": [
+                        "action"
+                    ],
+                    "properties": {
+                        "action": {
+                            "type": "string",
+                            "enum": [
+                                "open_url",
+                                "open_file",
+                                "run_command",
+                                "suggest_command",
+                                "change_page",
+                                "copy_to_clipboard",
+                                "show_dialog",
+                                "custom"
+                            ]
+                        },
+                        "url": {
+                            "type": "string"
+                        },
+                        "path": {
+                            "type": "string"
+                        },
+                        "command": {
+                            "type": "string"
+                        },
+                        "page": {
+                            "type": "integer"
+                        },
+                        "value": {
+                            "type": "string"
+                        },
+                        "dialog": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/definitions/textComponent"
+                                }
+                            ]
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "payload": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "hover_event": {
+                    "type": "object",
+                    "required": [
+                        "action"
+                    ],
+                    "properties": {
+                        "action": {
+                            "type": "string",
+                            "enum": [
+                                "show_text",
+                                "show_item",
+                                "show_entity"
+                            ]
+                        },
+                        "value": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/definitions/textComponent"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/textComponent"
+                                    }
+                                }
+                            ]
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "count": {
+                            "type": "integer"
+                        },
+                        "components": {
+                            "type": "object"
+                        },
+                        "name": {
+                            "$ref": "#/definitions/textComponent"
+                        },
+                        "uuid": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    },
+                                    "minItems": 4,
+                                    "maxItems": 4
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "additionalProperties": true
+        },
+        "textType": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/textComponentBase"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "text"
+                        },
+                        "text": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "text"
+                    ]
+                }
+            ]
+        },
+        "translatableType": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/textComponentBase"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "translatable"
+                        },
+                        "translate": {
+                            "type": "string"
+                        },
+                        "fallback": {
+                            "type": "string"
+                        },
+                        "with": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/textComponent"
+                            }
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "translate"
+                    ]
+                }
+            ]
+        },
+        "scoreType": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/textComponentBase"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "score"
+                        },
+                        "score": {
+                            "type": "object",
+                            "required": [
+                                "name",
+                                "objective"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "objective": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "score"
+                    ]
+                }
+            ]
+        },
+        "selectorType": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/textComponentBase"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "selector"
+                        },
+                        "selector": {
+                            "type": "string"
+                        },
+                        "separator": {
+                            "$ref": "#/definitions/textComponent"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "selector"
+                    ]
+                }
+            ]
+        },
+        "keybindType": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/textComponentBase"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "keybind"
+                        },
+                        "keybind": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "keybind"
+                    ]
+                }
+            ]
+        },
+        "nbtType": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/textComponentBase"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "nbt"
+                        },
+                        "nbt": {
+                            "type": "string"
+                        },
+                        "interpret": {
+                            "type": "boolean"
+                        },
+                        "block": {
+                            "type": "string"
+                        },
+                        "entity": {
+                            "type": "string"
+                        },
+                        "storage": {
+                            "type": "string"
+                        },
+                        "source": {
+                            "type": "string",
+                            "enum": [
+                                "block",
+                                "entity",
+                                "storage"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "nbt"
+                    ]
+                }
+            ]
+        },
         "textComponent": {
-            
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/textType"
+                },
+                {
+                    "$ref": "#/definitions/translatableType"
+                },
+                {
+                    "$ref": "#/definitions/scoreType"
+                },
+                {
+                    "$ref": "#/definitions/selectorType"
+                },
+                {
+                    "$ref": "#/definitions/keybindType"
+                },
+                {
+                    "$ref": "#/definitions/nbtType"
+                }
+            ]
         }
-    }
+    },
+    "oneOf": [
+        {
+            "$ref": "#/definitions/textComponent"
+        },
+        {
+            "type": "string"
+        },
+        {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/textComponent"
+                    },
+                    {
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    ]
 }

@@ -1,0 +1,24 @@
+FINISHED:
+- data/enchantment.json
+- data/item_stack.json
+- data/particle.json
+- data/text_component.json
+- data/worldgen/noise.json
+- utils/block_predicate.json
+- utils/block_state_provider.json
+- utils/block_state.json
+- utils/blockstates.json
+- utils/float_provider.json
+- utils/int_provider.json
+- utils/position_source.json
+
+IN PROGRESS:
+- data/data_component.json
+- data/entity_data.json
+- data/predicate.json
+
+NOT STARTED:
+
+OTHER: 
+- Rename & Reorganize many schemas
+- Regenerate utils/blockstates.json for 1.21.5 (current is 1.21.4)

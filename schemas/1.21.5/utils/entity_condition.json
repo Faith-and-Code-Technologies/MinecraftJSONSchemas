@@ -1,0 +1,97 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "entityCondition": {
+            "type": "object",
+            "title": "Entity Predicate",
+            "description": "The predicate applied to the entity.",
+            "properties": {
+                "type": {
+                    "type": "array",
+                    "description": "The entity type(s) to test. Can be a single ID, a tag (prefixed with #), or an array of IDs."
+                },
+                "components": {
+                    "type": "object",
+                    "description": "Matches exact item component values. Each key corresponds to a component to test."
+                },
+                "distance": {
+                    "type": "object",
+                    "description": "Tests the distance to the entity.",
+                    "properties": {
+                        "absolute": { "type": "number", "description": "Distance in 3D space." },
+                        "horizontal": { "type": "number", "description": "Horizontal distance (ignoring Y)." },
+                        "x": { "type": "number", "description": "Difference in X-coordinates." },
+                        "y": { "type": "number", "description": "Difference in Y-coordinates." },
+                        "z": { "type": "number", "description": "Difference in Z-coordinates." }
+                    }
+                },
+                "effects": {
+                    "type": "object",
+                    "description": "Tests active status effects on the entity.",
+                    "properties": {
+                        "effect_type":{
+                            "title": "Effect Type",
+                            "type": "object",
+                            "description": "The type of effect.",
+                            "properties": {
+                                "amplifier": {
+                                    "type": "object",
+                                    "properties": {
+                                        "min": { "type": "integer" },
+                                        "max": { "type": "integer" }
+                                    }
+                                },
+                                "duration": {
+                                    "type": "object",
+                                    "properties": {
+                                        "min": { "type": "integer" },
+                                        "max": { "type": "integer" }
+                                    }
+                                },
+                                "ambient": { "type": "boolean" },
+                                "visible": { "type": "boolean" }
+                            }
+                        }
+                    }
+                },
+                "equipment": {},
+
+                "flags": {
+                    "type": "object",
+                    "description": "Tests flags of the entity.",
+                    "properties": {
+                        "is_baby": { "type": "boolean" },
+                        "is_on_fire": { "type": "boolean" },
+                        "is_sneaking": { "type": "boolean" },
+                        "is_sprinting": { "type": "boolean" },
+                        "is_swimming": { "type": "boolean" },
+                        "is_on_ground": { "type": "boolean" },
+                        "is_flying": { "type": "boolean" }
+                    }
+                },
+                "location": {},
+
+                "movement": {
+                    "type": "object",
+                    "description": "Tests the movement of the entity.",
+                    "properties": {
+                        "x": { "type": "number" },
+                        "y": { "type": "number" },
+                        "z": { "type": "number" },
+                        "speed": { "type": "number" },
+                        "horizontal_speed": { "type": "number" },
+                        "vertical_speed": { "type": "number" },
+                        "fall_distance": { "type": "number" }
+                    }
+                },
+                "team": {
+                    "type": "string",
+                    "description": "The team of the entity."
+                },
+                "targeted_entity": {},
+
+                "vehicle": {}
+            }
+        }
+    }
+}

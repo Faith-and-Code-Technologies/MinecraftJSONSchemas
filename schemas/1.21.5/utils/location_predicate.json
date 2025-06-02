@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$comment": "VERY much not done",
+    "definitions": {
+        "locationPredicate": {
+            "type": "object",
+            "title": "Location Predicate",
+            "description": "The predicate to apply at the specified location.",
+            "properties": {
+                "biomes": { "type": "array", "items": { "type": "string" }, "description": "A list of biomes to check." },
+                "block": { "type": "object", "description": "A block predicate to check." },
+                "dimension": { "type": "string", "description": "The dimension to check, e.g., 'minecraft:overworld'." },
+                "fluid": { "type": "string", "description": "The fluid to check, e.g., 'minecraft:water'." },
+                "light": { "type": "object", "description": "The light level to check." },
+                "can_see_sky": { "type": "boolean", "description": "Whether the position can see the sky." },
+                "structures": { "type": "array", "items": { "type": "string" }, "description": "A list of structures to check." }
+            }
+        }
+    }
+}

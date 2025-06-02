@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "damageTypes": {
+            "title": "Damage Types",
+            "type": "object",
+            "properties": {
+                "direct_entity": {
+                    "title": "Direct Entity",
+                    "description": "The entity that was the direct cause of the damage.",
+                    "$ref": "entity_condition.json#/definitions/entityCondition"
+                },
+                "source_entity": {
+                    "title": "Source Entity",
+                    "description": "Checks the entity that was the source of the damage (for example: The skeleton that shot the arrow)",
+                    "$ref": "entity_condition.json#/definitions/entityCondition"
+                },
+                "is_direct": {
+                    "title": "Is Direct?",
+                    "description": "If true, checks if the damage is direct (i.e. the direct and source entities are the same), if false checks if the damage is not direct.",
+                    "type": "boolean"
+                },
+                "tags": {
+                    "title": "Tags",
+                    "description": "An array of objects containing damage type tags that the type of the damage should be included in.",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "title": "ID",
+                                "description": "The resource location of the tag."
+                            },
+                            "expected": {
+                                "type": "boolean",
+                                "title": "Expected?",
+                                "description": "Whether this tag should be present on the damage type."
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

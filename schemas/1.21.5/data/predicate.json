@@ -4,176 +4,247 @@
         "predicate": {
             "title": "Predicate",
             "description": "Schema for defining Minecraft predicates.",
-            "type": "object",
-            "properties": {
-                "condition": {
-                    "type": "string",
-                    "title": "Condition",
-                    "description": "The type of condition to evaluate.",
-                    "enum": [
-                        "minecraft:entity_properties",
-                        "minecraft:location_check",
-                        "minecraft:damage_source_properties",
-                        "minecraft:time_check",
-                        "minecraft:weather_check",
-                        "minecraft:reference",
-                        "minecraft:inverted",
-                        "minecraft:alternative",
-                        "minecraft:match_tool"
-                    ]
-                }
-            },
             "required": ["condition"],
             "oneOf": [
                 {
+                    "title": "All Of",
+                    "description": "Evaluates a list of predicates and passes if all of them pass. Invokable from any context.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:all_of"},
+                        "terms": {
+                            "type": "array",
+                            "title": "Terms",
+                            "description": "The list of predicates to evaluate.",
+                            "items": {
+                                "$ref": "#/definitions/predicate"
+                            }
+                        }
+                    },
+                    "required": ["condition", "terms"]
+                },
+                {
+                    "title": "Any Of",
+                    "description": "Evaluates a list of predicates and passes if any one of them passes. Invokable from any context.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:any_of"},
+                        "terms": {
+                            "type": "array",
+                            "title": "Terms",
+                            "description": "The list of predicates to evaluate.",
+                            "items": {
+                                "$ref": "#/definitions/predicate"
+                            }
+                        }
+                    },
+                    "required": ["condition", "terms"]
+                },
+                {
+                    "title": "Block State Property",
+                    "description": "Checks the mined block and its block states.",
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "condition": {"type": "string", "const": "minecraft:block_state_property"}
+                            },
+                            "required": ["condition"]
+                        },
+                        {
+                            "$ref": "../utils/blockstates_for_predicate.json#/definitions/blockStates"
+                        }
+                    ]
+                },
+                {
+                    "title": "Damage Source Properties",
+                    "description": "Checks properties of a damage source.",
+                    "type": "object",
+                    "properties": {
+                        "condition": { "type": "string", "const": "minecraft:damage_source_properties" },
+                        "predicate": {
+                            "type": "object",
+                            "description": "The damage source properties to check.",
+                            "title": "Predicate",
+                            "$ref": "../utils/damage_types.json#/definitions/damageTypes"
+                        }
+                    },
+                    "required": ["condition", "predicate"]
+                },
+                {
+                    "title": "Enchantment Active Check",
+                    "description": "Checks if the enchantment has been active.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:enchantment_active_check"},
+                        "enchantment_active_check": {
+                            "type": "boolean",
+                            "title": "Enchantment Active Check?",
+                            "description": "Checks if the enchantment has been active."
+                        }
+                    },
+                    "required": ["condition", "enchantment_active_check"]
+                },
+                {
                     "title": "Entity Properties",
                     "description": "Checks properties of an entity.",
+                    "type": "object",
                     "properties": {
-                        "condition": { "const": "minecraft:entity_properties" },
+                        "condition": {"type": "string", "const": "minecraft:entity_properties" },
                         "entity": {
                             "type": "string",
                             "enum": ["this", "attacker", "direct_attacker", "attacking_player"],
                             "description": "The entity to evaluate."
                         },
                         "predicate": {
+                            "$ref": "../utils/entity_condition.json#/definitions/entityCondition"
+                        }
+                    },
+                    "required": ["condition", "entity", "predicate"]
+                },
+                {
+                    "title": "Entity Scores",
+                    "description": "Checks the scoreboard scores of an entity.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:inverted"},
+                        "entity": {
+                            "type": "string",
+                            "enum": ["this", "attacker", "direct_attacker", "attacking_player"],
+                            "description": "The entity to check."
+                        },
+                        "scores": {
                             "type": "object",
-                            "title": "Entity Predicate",
-                            "description": "The predicate applied to the entity.",
-                            "properties": {
-                                "type": {
-                                    "type": "array",
-                                    "description": "The entity type(s) to test. Can be a single ID, a tag (prefixed with #), or an array of IDs."
-                                },
-                                "components": {
-                                    "type": "object",
-                                    "description": "Matches exact item component values. Each key corresponds to a component to test."
-                                },
-                                "distance": {
-                                    "type": "object",
-                                    "description": "Tests the distance to the entity.",
-                                    "properties": {
-                                        "absolute": { "type": "number", "description": "Distance in 3D space." },
-                                        "horizontal": { "type": "number", "description": "Horizontal distance (ignoring Y)." },
-                                        "x": { "type": "number", "description": "Difference in X-coordinates." },
-                                        "y": { "type": "number", "description": "Difference in Y-coordinates." },
-                                        "z": { "type": "number", "description": "Difference in Z-coordinates." }
-                                    }
-                                },
-                                "effects": {
-                                    "type": "object",
-                                    "description": "Tests active status effects on the entity.",
-                                    "properties": {
-                                        "effect_type":{
-                                            "title": "Effect Type",
-                                            "type": "object",
-                                            "description": "The type of effect.",
-                                            "properties": {
-                                                "amplifier": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "min": { "type": "integer" },
-                                                        "max": { "type": "integer" }
-                                                    }
-                                                },
-                                                "duration": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "min": { "type": "integer" },
-                                                        "max": { "type": "integer" }
-                                                    }
-                                                },
-                                                "ambient": { "type": "boolean" },
-                                                "visible": { "type": "boolean" }
+                            "additionalProperties": {
+                                "oneOf": [
+                                    {
+                                        "type": "integer"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "min": {
+                                                "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
+                                            },
+                                            "max": {
+                                                "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
                                             }
-                                        }
+                                        },
+                                        "additionalProperties": false
                                     }
-                                },
-                                "equipment": {},
-
-                                "flags": {
-                                    "type": "object",
-                                    "description": "Tests flags of the entity.",
-                                    "properties": {
-                                        "is_baby": { "type": "boolean" },
-                                        "is_on_fire": { "type": "boolean" },
-                                        "is_sneaking": { "type": "boolean" },
-                                        "is_sprinting": { "type": "boolean" },
-                                        "is_swimming": { "type": "boolean" },
-                                        "is_on_ground": { "type": "boolean" },
-                                        "is_flying": { "type": "boolean" }
-                                    }
-                                },
-                                "location": {},
-
-                                "movement": {
-                                    "type": "object",
-                                    "description": "Tests the movement of the entity.",
-                                    "properties": {
-                                        "x": { "type": "number" },
-                                        "y": { "type": "number" },
-                                        "z": { "type": "number" },
-                                        "speed": { "type": "number" },
-                                        "horizontal_speed": { "type": "number" },
-                                        "vertical_speed": { "type": "number" },
-                                        "fall_distance": { "type": "number" }
-                                    }
-                                },
-                                "team": {
-                                    "type": "string",
-                                    "description": "The team of the entity."
-                                },
-                                "targeted_entity": {},
-
-                                "vehicle": {}
+                                ]
                             }
                         }
                     },
-                    "required": ["entity", "predicate"]
+                    "required": ["condition", "entity", "scores"]
+                },
+                {
+                    "title": "Inverted",
+                    "description": "Inverts the result of another predicate.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:inverted" },
+                        "term": { "$ref": "#/definitions/predicate" }
+                    },
+                    "required": ["condition", "predicate"]
+                },
+                {
+                    "title": "Killed By Player",
+                    "description": "Checks if there is a attacking_player entity provided by loot context.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:killed_by_player" }
+                    },
+                    "required": ["condition"]
                 },
                 {
                     "title": "Location Check",
                     "description": "Checks properties of a specific location.",
+                    "type": "object",
                     "properties": {
-                        "condition": { "const": "minecraft:location_check" },
-                        "offset": {
-                            "type": "object",
-                            "title": "Location Offset",
-                            "description": "The x, y, and z offsets for the location check.",
-                            "properties": {
-                                "x": { "type": "number", "description": "X offset." },
-                                "y": { "type": "number", "description": "Y offset." },
-                                "z": { "type": "number", "description": "Z offset." }
-                            },
-                            "required": ["x", "y", "z"]
+                        "condition": {"type": "string", "const": "minecraft:location_check" },
+                        "offsetX": {
+                            "type": "integer",
+                            "title": "offsetY"
+                        },
+                        "offsetY": {
+                            "type": "integer",
+                            "title": "offsetX"
+                        },
+                        "offsetZ": {
+                            "type": "integer",
+                            "title": "offsetZ"
                         },
                         "predicate": {
-                            "type": "object",
-                            "title": "Location Predicate",
-                            "description": "The predicate to apply at the specified location.",
-                            "properties": {
-                                "biomes": { "type": "array", "items": { "type": "string" }, "description": "A list of biomes to check." },
-                                "block": { "type": "object", "description": "A block predicate to check." },
-                                "dimension": { "type": "string", "description": "The dimension to check, e.g., 'minecraft:overworld'." },
-                                "fluid": { "type": "string", "description": "The fluid to check, e.g., 'minecraft:water'." },
-                                "light": { "type": "object", "description": "The light level to check." },
-                                "can_see_sky": { "type": "boolean", "description": "Whether the position can see the sky." },
-                                "structures": { "type": "array", "items": { "type": "string" }, "description": "A list of structures to check." }
-                            }
+                            "$ref": "../utils/location_predicate.json#/definitions/locationPredicate"
                         }
                     },
-                    "required": ["offset", "predicate"]
+                    "required": ["condition", "predicate"]
                 },
                 {
-                    "title": "Damage Source Properties",
-                    "description": "Checks properties of a damage source.",
+                    "title": "Match Tool",
+                    "description": "Checks properties of a tool.",
+                    "type": "object",
                     "properties": {
-                        "condition": { "const": "minecraft:damage_source_properties" },
+                        "condition": {"type": "string", "const": "minecraft:match_tool" },
                         "predicate": {
-                            "type": "object",
-                            "description": "The damage source properties to check."
+                            "$ref": "../utils/item_predicate.json#/definitions/itemPredicate"
                         }
                     },
-                    "required": ["predicate"]
+                    "required": ["condition", "predicate"]
+                },
+                {
+                    "title": "Random Chance",
+                    "description": "Generates a random number between 0.0 and 1.0, and checks if it is less than a specified value.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:random_chance" },
+                        "chance": {
+                            "title": "Chance",
+                            "$ref": "../utils/number_provider.json#/definitions/floatNumberProvider"
+                        }
+                    },
+                    "required": ["condition", "chance"]
+                },
+                {
+                    "title": "Random Chance With Enchanted Bonus",
+                    "description": "Generates a random number between 0.0 and 1.0, and checks if it is less than the value determined using the level of a given enchantment.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:random_chance_with_enchanted_bonus" },
+                        "unenchanted_chance": {
+                            "type": "number",
+                            "title": "Unenchanted Chance",
+                            "description": "The success rate to use when the enchantment is not present.",
+                            "minimum": 0.0,
+                            "maximum": 1.0
+                        },
+                        "enchanted_chance": {
+                            "title": "Enchanted Chance",
+                            "description": "The success rate based on the level when then enchantment is present. Must be between 0.0 and 1.0",
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
+                        },
+                        "enchantment": {
+                            "title": "Enchantment",
+                            "description": "The enchantment whose level to use for the chance calculation.",
+                            "type": "string",
+                            "enumSource": "enchantments"
+                        }
+                    },
+                    "required": ["condition", "unenchanted_chance", "enchanted_chance", "enchantment"]
+                },
+                {
+                    "title": "Reference",
+                    "description": "References another predicate.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:reference" },
+                        "name": {
+                            "type": "string",
+                            "description": "The name of the referenced predicate."
+                        }
+                    },
+                    "required": ["condition", "name"]
                 },
                 {
                     "title": "Time Check",
@@ -211,27 +282,6 @@
                     }
                 },
                 {
-                    "title": "Reference",
-                    "description": "References another predicate.",
-                    "properties": {
-                        "condition": { "const": "minecraft:reference" },
-                        "name": {
-                            "type": "string",
-                            "description": "The name of the referenced predicate."
-                        }
-                    },
-                    "required": ["name"]
-                },
-                {
-                    "title": "Inverted",
-                    "description": "Inverts the result of another predicate.",
-                    "properties": {
-                        "condition": { "const": "minecraft:inverted" },
-                        "predicate": { "$ref": "#" }
-                    },
-                    "required": ["predicate"]
-                },
-                {
                     "title": "Alternative",
                     "description": "Combines multiple predicates with OR logic.",
                     "properties": {
@@ -243,18 +293,6 @@
                         }
                     },
                     "required": ["terms"]
-                },
-                {
-                    "title": "Match Tool",
-                    "description": "Checks properties of a tool.",
-                    "properties": {
-                        "condition": { "const": "minecraft:match_tool" },
-                        "predicate": {
-                            "type": "object",
-                            "description": "The tool properties to match."
-                        }
-                    },
-                    "required": ["predicate"]
                 }
             ]
         }

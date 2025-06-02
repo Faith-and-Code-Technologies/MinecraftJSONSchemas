@@ -574,16 +574,16 @@
                             }
                         },
                         "min_duration": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         },
                         "max_duration": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         },
                         "min_amplifier": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         },
                         "max_amplifier": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         }
                     },
                     "required": [
@@ -609,10 +609,10 @@
                             "enumSource": "damage_types"
                         },
                         "min_damage": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         },
                         "max_damage": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         }
                     },
                     "required": [
@@ -631,7 +631,7 @@
                             "const": "minecraft:change_item_damage"
                         },
                         "amount": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         }
                     },
                     "required": [
@@ -665,7 +665,7 @@
                             }
                         },
                         "knockback_multiplier": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         },
                         "offset": {
                             "type": "object",
@@ -683,7 +683,7 @@
                             }
                         },
                         "radius": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         },
                         "create_fire": {
                             "type": "boolean",
@@ -732,7 +732,7 @@
                             "const": "minecraft:ignite"
                         },
                         "duration": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         }
                     },
                     "required": [
@@ -885,10 +885,10 @@
                             "maxItems": 3
                         },
                         "radius": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         },
                         "height": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         },
                         "trigger_game_event": {
                             "type": "string",
@@ -1206,7 +1206,7 @@
                             "const": "minecraft:set"
                         },
                         "value": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         }
                     },
                     "required": [
@@ -1223,7 +1223,7 @@
                             "const": "minecraft:add"
                         },
                         "value": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         }
                     },
                     "required": [
@@ -1240,7 +1240,7 @@
                             "const": "minecraft:multiply"
                         },
                         "factor": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         }
                     },
                     "required": [
@@ -1257,7 +1257,7 @@
                             "const": "minecraft:remove_binomial"
                         },
                         "chance": {
-                            "$ref": "#/definitions/levelBasedValue"
+                            "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                         }
                     },
                     "required": [
@@ -1297,7 +1297,7 @@
                     "title": "attribute"
                 },
                 "amount": {
-                    "$ref": "#/definitions/levelBasedValue"
+                    "$ref": "../utils/level_based_value.json#/definitions/levelBasedValue"
                 },
                 "operation": {
                     "type": "string",
@@ -1318,139 +1318,6 @@
                 "amount",
                 "operation",
                 "id"
-            ]
-        },
-        "levelBasedValue": {
-            "title": "Level Based Value",
-            "description": "A value that can be constant or vary based on enchantment level",
-            "oneOf": [
-                {
-                    "type": "object",
-                    "title": "Constant",
-                    "properties": {
-                        "constant": {
-                            "type": "number",
-                            "title": "Constant"
-                        }
-                    },
-                    "required": [
-                        "constant"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "title": "Linear",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "const": "minecraft:linear"
-                        },
-                        "base": {
-                            "type": "number",
-                            "title": "Base Value"
-                        },
-                        "per_level_above_first": {
-                            "type": "number",
-                            "title": "Per Level Above First"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "base",
-                        "per_level_above_first"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "title": "Levels Squared",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "const": "minecraft:levels_squared"
-                        },
-                        "added": {
-                            "type": "number",
-                            "title": "Added Value"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "added"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "title": "Clamped",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "const": "minecraft:clamped"
-                        },
-                        "value": {
-                            "$ref": "#/definitions/levelBasedValue"
-                        },
-                        "min": {
-                            "type": "number",
-                            "title": "Minimum Value"
-                        },
-                        "max": {
-                            "type": "number",
-                            "title": "Maximum Value"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "value",
-                        "min",
-                        "max"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "title": "Fraction",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "const": "minecraft:fraction"
-                        },
-                        "numerator": {
-                            "$ref": "#/definitions/levelBasedValue"
-                        },
-                        "denominator": {
-                            "$ref": "#/definitions/levelBasedValue"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "numerator",
-                        "denominator"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "title": "Lookup Table",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "const": "minecraft:lookup"
-                        },
-                        "values": {
-                            "type": "array",
-                            "title": "Values by Level",
-                            "items": {
-                                "type": "number"
-                            }
-                        },
-                        "fallback": {
-                            "$ref": "#/definitions/levelBasedValue"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "values",
-                        "fallback"
-                    ]
-                }
             ]
         }
     }

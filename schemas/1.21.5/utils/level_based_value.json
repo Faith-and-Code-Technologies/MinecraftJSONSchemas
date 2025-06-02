@@ -1,0 +1,138 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "levelBasedValue": {
+            "title": "Level Based Value",
+            "description": "A value that can be constant or vary based on enchantment level",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "title": "Constant",
+                    "properties": {
+                        "constant": {
+                            "type": "number",
+                            "title": "Constant"
+                        }
+                    },
+                    "required": [
+                        "constant"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "Linear",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "const": "minecraft:linear"
+                        },
+                        "base": {
+                            "type": "number",
+                            "title": "Base Value"
+                        },
+                        "per_level_above_first": {
+                            "type": "number",
+                            "title": "Per Level Above First"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "base",
+                        "per_level_above_first"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "Levels Squared",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "const": "minecraft:levels_squared"
+                        },
+                        "added": {
+                            "type": "number",
+                            "title": "Added Value"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "added"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "Clamped",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "const": "minecraft:clamped"
+                        },
+                        "value": {
+                            "$ref": "#/definitions/levelBasedValue"
+                        },
+                        "min": {
+                            "type": "number",
+                            "title": "Minimum Value"
+                        },
+                        "max": {
+                            "type": "number",
+                            "title": "Maximum Value"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "value",
+                        "min",
+                        "max"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "Fraction",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "const": "minecraft:fraction"
+                        },
+                        "numerator": {
+                            "$ref": "#/definitions/levelBasedValue"
+                        },
+                        "denominator": {
+                            "$ref": "#/definitions/levelBasedValue"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "numerator",
+                        "denominator"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "Lookup Table",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "const": "minecraft:lookup"
+                        },
+                        "values": {
+                            "type": "array",
+                            "title": "Values by Level",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        "fallback": {
+                            "$ref": "#/definitions/levelBasedValue"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "values",
+                        "fallback"
+                    ]
+                }
+            ]
+        }
+    }
+}

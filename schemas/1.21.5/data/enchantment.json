@@ -4,36 +4,69 @@
     "title": "Enchantment",
     "properties": {
         "description": {
-            "type": "string",
+            "$ref": "text_component.json#/definitions/textComponent",
             "title": "Description",
             "description": "Text component describing the enchantment"
         },
         "exclusive_set": {
-            "type": "array",
             "title": "Exclusive Set",
             "description": "List of enchantments that cannot be combined with this one",
-            "items": {
-                "type": "string",
-                "enumSource": "enchantments"
-            }
+            "oneOf": [
+                {
+                    "title": "array",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enumSource": "enchantments"
+                    },
+                    "required": ["array"]
+                },
+                {
+                    "title": "string",
+                    "type": "string",
+                    "required": ["string"]
+                }
+            ]
         },
         "supported_items": {
-            "type": "array",
             "title": "Supported Items",
             "description": "Items that can receive this enchantment",
-            "items": {
-                "type": "string",
-                "enumSource": "items"
-            }
+            "oneOf": [
+                {
+                    "title": "array",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enumSource": "items"
+                    },
+                    "required": ["array"]
+                },
+                {
+                    "title": "string",
+                    "type": "string",
+                    "required": ["string"]
+                }
+            ]
         },
         "primary_items": {
-            "type": "array",
             "title": "Primary Items",
             "description": "Items for which this is a primary enchantment",
-            "items": {
-                "type": "string",
-                "enumSource": "items"
-            }
+            "oneOf": [
+                {
+                    "title": "array",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enumSource": "items"
+                    },
+                    "required": ["array"]
+                },
+                {
+                    "title": "string",
+                    "type": "string",
+                    "required": ["string"]
+                }
+            ]
         },
         "weight": {
             "type": "integer",

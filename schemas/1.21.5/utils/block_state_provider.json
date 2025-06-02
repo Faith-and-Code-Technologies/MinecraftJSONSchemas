@@ -32,7 +32,7 @@
                                 "type": "object",
                                 "properties": {
                                     "data": {
-                                         "$ref": "block_state.json#/definitions/blockState"
+                                        "$ref": "block_state.json#/definitions/blockState"
                                     },
                                     "weight": {
                                         "type": "integer",
@@ -54,7 +54,7 @@
                         "values": {
                             "title": "values",
                             "oneOf": [
-                                {   
+                                {
                                     "type": "object",
                                     "title": "Int",
                                     "properties": {
@@ -137,13 +137,13 @@
                         },
                         "threshold": {
                             "type": "number",
-                            "minimum": -1.0,
-                            "maximum": 1.0
+                            "minimum": -1,
+                            "maximum": 1
                         },
                         "high_chance": {
                             "type": "number",
-                            "minimum": -1.0,
-                            "maximum": 1.0
+                            "minimum": -1,
+                            "maximum": 1
                         },
                         "states": {
                             "$comment": "This is where this schema begins to derail from from the Minecraft Wiki. Here should have three different block states arrays, doing the same thing. For JSON Schema to work with this, the authors of this schema were required to flatten it down into one.",

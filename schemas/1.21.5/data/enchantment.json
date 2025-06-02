@@ -1,487 +1,513 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "title": "Enchantment",
-    "properties": {
-        "description": {
-            "$ref": "text_component.json#/definitions/textComponent",
-            "title": "Description",
-            "description": "Text component describing the enchantment"
-        },
-        "exclusive_set": {
-            "title": "Exclusive Set",
-            "description": "List of enchantments that cannot be combined with this one",
-            "oneOf": [
-                {
-                    "title": "array",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enumSource": "enchantments"
-                    },
-                    "required": ["array"]
-                },
-                {
-                    "title": "string",
-                    "type": "string",
-                    "required": ["string"]
-                }
-            ]
-        },
-        "supported_items": {
-            "title": "Supported Items",
-            "description": "Items that can receive this enchantment",
-            "oneOf": [
-                {
-                    "title": "array",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enumSource": "items"
-                    },
-                    "required": ["array"]
-                },
-                {
-                    "title": "string",
-                    "type": "string",
-                    "required": ["string"]
-                }
-            ]
-        },
-        "primary_items": {
-            "title": "Primary Items",
-            "description": "Items for which this is a primary enchantment",
-            "oneOf": [
-                {
-                    "title": "array",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enumSource": "items"
-                    },
-                    "required": ["array"]
-                },
-                {
-                    "title": "string",
-                    "type": "string",
-                    "required": ["string"]
-                }
-            ]
-        },
-        "weight": {
-            "type": "integer",
-            "title": "Weight",
-            "description": "Probability weight for random enchanting",
-            "minimum": 1,
-            "maximum": 1024,
-            "default": 1
-        },
-        "max_level": {
-            "type": "integer",
-            "title": "Max Level",
-            "description": "Maximum enchantment level",
-            "minimum": 1,
-            "maximum": 255,
-            "default": 1
-        },
-        "min_cost": {
+    "definitions": {
+        "enchantment": {
             "type": "object",
-            "title": "Minimum Cost",
-            "description": "Minimum experience cost for enchanting",
+            "title": "Enchantment",
             "properties": {
-                "base": {
-                    "type": "integer",
-                    "title": "Base Cost",
-                    "minimum": 0,
-                    "maximum": 20000,
-                    "default": 1
+                "description": {
+                    "$ref": "text_component.json#/definitions/textComponent",
+                    "title": "Description",
+                    "description": "Text component describing the enchantment"
                 },
-                "per_level_above_first": {
-                    "type": "integer",
-                    "title": "Per Level Above First",
-                    "minimum": 0,
-                    "maximum": 20000,
-                    "default": 1
-                }
-            },
-            "required": ["base", "per_level_above_first"]
-        },
-        "max_cost": {
-            "type": "object",
-            "title": "Maximum Cost",
-            "description": "Maximum experience cost for enchanting",
-            "properties": {
-                "base": {
-                    "type": "integer",
-                    "title": "Base Cost",
-                    "minimum": 0,
-                    "maximum": 20000,
-                    "default": 1
-                },
-                "per_level_above_first": {
-                    "type": "integer",
-                    "title": "Per Level Above First",
-                    "minimum": 0,
-                    "maximum": 20000,
-                    "default": 1
-                }
-            },
-            "required": ["base", "per_level_above_first"]
-        },
-        "anvil_cost": {
-            "type": "integer",
-            "title": "Anvil Cost",
-            "description": "Experience cost multiplier for anvil operations",
-            "minimum": 0,
-            "maximum": 20000,
-            "default": 1
-        },
-        "slots": {
-            "type": "array",
-            "title": "Equipment Slots",
-            "description": "Valid equipment slots for this enchantment",
-            "items": {
-                "type": "string",
-                "enum": [
-                    "any",
-                    "hand",
-                    "mainhand", 
-                    "offhand",
-                    "armor",
-                    "feet",
-                    "legs", 
-                    "chest",
-                    "head",
-                    "body"
-                ]
-            }
-        },
-        "effects": {
-            "type": "object",
-            "title": "Effects",
-            "description": "Map of effect components by type",
-            "oneOf": [
-                {
-                    "title": "armor_effectiveness",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "damage",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "damage_protection",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "smash_damage_per_fallen_block",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "knockback",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "equipment_drops",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "ammo_use",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "projectile_piercing",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "block_experience",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "repair_with_xp",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "item_damage",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "projectile_count",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "trident_return_acceleration",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "projectile_speed",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "fishing_time_reduction",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "fishing_luck_bonus",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "mob_experience",
-                    "type": "object",
-                    "properties": {
-                        "valueEffectComp": {
-                            "$ref": "#/definitions/valueEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "crossbow_charge_time",
-                    "type": "object",
-                    "properties": {
-                        "effect": {
-                            "$ref": "#/definitions/valueEffects"
-                        }
-                    }
-                },
-                {
-                    "title": "trident_spin_attack_strength",
-                    "type": "object",
-                    "properties": {
-                        "effect": {
-                            "$ref": "#/definitions/valueEffects"
-                        }
-                    }
-                },
-                {
-                    "title": "hit_block",
-                    "type": "object",
-                    "properties": {
-                        "entityEffectComp": {
-                            "$ref": "#/definitions/entityEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "tick",
-                    "type": "object",
-                    "properties": {
-                        "entityEffectComp": {
-                            "$ref": "#/definitions/entityEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "projectile_spawned",
-                    "type": "object",
-                    "properties": {
-                        "entityEffectComp": {
-                            "$ref": "#/definitions/entityEffectComponent"
-                        }
-                    }
-                },
-                {
-                    "title": "post_attack",
-                    "type": "object",
-                    "properties": {
-                        "entityEffectComp": {
-                            "$ref": "#/definitions/entityEffectComponent"
-                        },
-                        "enchanted": {
-                            "title": "enchanted",
-                            "type": "string",
-                            "enum": [
-                                "attacker",
-                                "victim",
-                                "damaging_entity"
-                            ]
-                        },
-                        "affected": {
-                            "title": "affected",
-                            "type": "string",
-                            "enum": [
-                                "attacker",
-                                "victim",
-                                "damaging_entity"
-                            ]
-                        }
-                    }
-                },
-                {
-                    "title": "location_changed",
-                    "type": "object",
-                    "properties": {
-                        "effect": {
-                            "$ref": "#/definitions/locationBasedEffects"
-                        },
-                        "requirements": {
-                            "$ref": "predicate.json"
-                        }
-                    }
-                },
-                {
-                    "title": "damage_immunity",
-                    "type": "object",
-                    "properties": {
-                        "effect": {
-                            "type": "string",
-                            "const": ""
-                        },
-                        "requirements": {
-                            "$ref": "predicate.json"
-                        }
-                    }
-                },
-                {
-                    "title": "prevent_equipment_drop",
-                    "type": "object",
-                    "properties": {
-                        
-                    }
-                },
-                {
-                    "title": "prevent_armor_change",
-                    "type": "object",
-                    "properties": {
-
-                    }
-                },
-                {
-                    "title": "attributes",
-                    "type": "object",
-                    "properties": {
-                        "attributes": {
-                            "$ref": "#/definitions/attributeEffects"
-                        }
-                    }
-                },
-                {
-                    "title": "crossbow_charging_sounds",
-                    "type": "object",
-                    "properties": {
-                        "sounds": {
+                "exclusive_set": {
+                    "title": "Exclusive Set",
+                    "description": "List of enchantments that cannot be combined with this one",
+                    "oneOf": [
+                        {
+                            "title": "array",
                             "type": "array",
                             "items": {
-                                "type": "object",
-                                "properties": {
-                                    "start": {
+                                "type": "string",
+                                "enumSource": "enchantments"
+                            },
+                            "required": [
+                                "array"
+                            ]
+                        },
+                        {
+                            "title": "string",
+                            "type": "string",
+                            "required": [
+                                "string"
+                            ]
+                        }
+                    ]
+                },
+                "supported_items": {
+                    "title": "Supported Items",
+                    "description": "Items that can receive this enchantment",
+                    "oneOf": [
+                        {
+                            "title": "array",
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enumSource": "items"
+                            },
+                            "required": [
+                                "array"
+                            ]
+                        },
+                        {
+                            "title": "string",
+                            "type": "string",
+                            "required": [
+                                "string"
+                            ]
+                        }
+                    ]
+                },
+                "primary_items": {
+                    "title": "Primary Items",
+                    "description": "Items for which this is a primary enchantment",
+                    "oneOf": [
+                        {
+                            "title": "array",
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enumSource": "items"
+                            },
+                            "required": [
+                                "array"
+                            ]
+                        },
+                        {
+                            "title": "string",
+                            "type": "string",
+                            "required": [
+                                "string"
+                            ]
+                        }
+                    ]
+                },
+                "weight": {
+                    "type": "integer",
+                    "title": "Weight",
+                    "description": "Probability weight for random enchanting",
+                    "minimum": 1,
+                    "maximum": 1024,
+                    "default": 1
+                },
+                "max_level": {
+                    "type": "integer",
+                    "title": "Max Level",
+                    "description": "Maximum enchantment level",
+                    "minimum": 1,
+                    "maximum": 255,
+                    "default": 1
+                },
+                "min_cost": {
+                    "type": "object",
+                    "title": "Minimum Cost",
+                    "description": "Minimum experience cost for enchanting",
+                    "properties": {
+                        "base": {
+                            "type": "integer",
+                            "title": "Base Cost",
+                            "minimum": 0,
+                            "maximum": 20000,
+                            "default": 1
+                        },
+                        "per_level_above_first": {
+                            "type": "integer",
+                            "title": "Per Level Above First",
+                            "minimum": 0,
+                            "maximum": 20000,
+                            "default": 1
+                        }
+                    },
+                    "required": [
+                        "base",
+                        "per_level_above_first"
+                    ]
+                },
+                "max_cost": {
+                    "type": "object",
+                    "title": "Maximum Cost",
+                    "description": "Maximum experience cost for enchanting",
+                    "properties": {
+                        "base": {
+                            "type": "integer",
+                            "title": "Base Cost",
+                            "minimum": 0,
+                            "maximum": 20000,
+                            "default": 1
+                        },
+                        "per_level_above_first": {
+                            "type": "integer",
+                            "title": "Per Level Above First",
+                            "minimum": 0,
+                            "maximum": 20000,
+                            "default": 1
+                        }
+                    },
+                    "required": [
+                        "base",
+                        "per_level_above_first"
+                    ]
+                },
+                "anvil_cost": {
+                    "type": "integer",
+                    "title": "Anvil Cost",
+                    "description": "Experience cost multiplier for anvil operations",
+                    "minimum": 0,
+                    "maximum": 20000,
+                    "default": 1
+                },
+                "slots": {
+                    "type": "array",
+                    "title": "Equipment Slots",
+                    "description": "Valid equipment slots for this enchantment",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "any",
+                            "hand",
+                            "mainhand",
+                            "offhand",
+                            "armor",
+                            "feet",
+                            "legs",
+                            "chest",
+                            "head",
+                            "body"
+                        ]
+                    }
+                },
+                "effects": {
+                    "type": "object",
+                    "title": "Effects",
+                    "description": "Map of effect components by type",
+                    "oneOf": [
+                        {
+                            "title": "armor_effectiveness",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "damage",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "damage_protection",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "smash_damage_per_fallen_block",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "knockback",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "equipment_drops",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "ammo_use",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "projectile_piercing",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "block_experience",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "repair_with_xp",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "item_damage",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "projectile_count",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "trident_return_acceleration",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "projectile_speed",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "fishing_time_reduction",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "fishing_luck_bonus",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "mob_experience",
+                            "type": "object",
+                            "properties": {
+                                "valueEffectComp": {
+                                    "$ref": "#/definitions/valueEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "crossbow_charge_time",
+                            "type": "object",
+                            "properties": {
+                                "effect": {
+                                    "$ref": "#/definitions/valueEffects"
+                                }
+                            }
+                        },
+                        {
+                            "title": "trident_spin_attack_strength",
+                            "type": "object",
+                            "properties": {
+                                "effect": {
+                                    "$ref": "#/definitions/valueEffects"
+                                }
+                            }
+                        },
+                        {
+                            "title": "hit_block",
+                            "type": "object",
+                            "properties": {
+                                "entityEffectComp": {
+                                    "$ref": "#/definitions/entityEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "tick",
+                            "type": "object",
+                            "properties": {
+                                "entityEffectComp": {
+                                    "$ref": "#/definitions/entityEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "projectile_spawned",
+                            "type": "object",
+                            "properties": {
+                                "entityEffectComp": {
+                                    "$ref": "#/definitions/entityEffectComponent"
+                                }
+                            }
+                        },
+                        {
+                            "title": "post_attack",
+                            "type": "object",
+                            "properties": {
+                                "entityEffectComp": {
+                                    "$ref": "#/definitions/entityEffectComponent"
+                                },
+                                "enchanted": {
+                                    "title": "enchanted",
+                                    "type": "string",
+                                    "enum": [
+                                        "attacker",
+                                        "victim",
+                                        "damaging_entity"
+                                    ]
+                                },
+                                "affected": {
+                                    "title": "affected",
+                                    "type": "string",
+                                    "enum": [
+                                        "attacker",
+                                        "victim",
+                                        "damaging_entity"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "title": "location_changed",
+                            "type": "object",
+                            "properties": {
+                                "effect": {
+                                    "$ref": "#/definitions/locationBasedEffects"
+                                },
+                                "requirements": {
+                                    "$ref": "predicate.json"
+                                }
+                            }
+                        },
+                        {
+                            "title": "damage_immunity",
+                            "type": "object",
+                            "properties": {
+                                "effect": {
+                                    "type": "string",
+                                    "const": ""
+                                },
+                                "requirements": {
+                                    "$ref": "predicate.json"
+                                }
+                            }
+                        },
+                        {
+                            "title": "prevent_equipment_drop",
+                            "type": "object",
+                            "properties": {}
+                        },
+                        {
+                            "title": "prevent_armor_change",
+                            "type": "object",
+                            "properties": {}
+                        },
+                        {
+                            "title": "attributes",
+                            "type": "object",
+                            "properties": {
+                                "attributes": {
+                                    "$ref": "#/definitions/attributeEffects"
+                                }
+                            }
+                        },
+                        {
+                            "title": "crossbow_charging_sounds",
+                            "type": "object",
+                            "properties": {
+                                "sounds": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "start": {
+                                                "type": "string",
+                                                "title": "Start",
+                                                "enumSource": "sound_events"
+                                            },
+                                            "mid": {
+                                                "type": "string",
+                                                "title": "Mid",
+                                                "enumSource": "sound_events"
+                                            },
+                                            "end": {
+                                                "type": "string",
+                                                "title": "End",
+                                                "enumSource": "sound_events"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "title": "trident_sound",
+                            "type": "object",
+                            "properties": {
+                                "sounds": {
+                                    "type": "array",
+                                    "items": {
                                         "type": "string",
-                                        "title": "Start",
-                                        "enumSource": "sound_events"
-                                    },
-                                    "mid": {
-                                        "type": "string",
-                                        "title": "Mid",
-                                        "enumSource": "sound_events"
-                                    },
-                                    "end": {
-                                        "type": "string",
-                                        "title": "End",
                                         "enumSource": "sound_events"
                                     }
                                 }
                             }
                         }
-                    }
-                },
-                {
-                    "title": "trident_sound",
-                    "type": "object",
-                    "properties": {
-                        "sounds": {
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "enumSource": "sound_events"
-                            }
-                        }
-                    }
+                    ]
                 }
+            },
+            "required": [
+                "description",
+                "supported_items",
+                "exclusive_set",
+                "weight",
+                "max_level",
+                "min_cost",
+                "max_cost",
+                "anvil_cost",
+                "slots",
+                "effects"
             ]
-            
-        }
-    },
-    "required": ["description", "supported_items", "exclusive_set", "weight", "max_level", "min_cost", "max_cost", "anvil_cost", "slots", "effects"],
-    "definitions": {
+        },
         "valueEffectComponent": {
             "type": "object",
             "properties": {
@@ -492,7 +518,9 @@
                     "$ref": "predicate.json"
                 }
             },
-            "required": ["effect"]
+            "required": [
+                "effect"
+            ]
         },
         "entityEffectComponent": {
             "type": "object",
@@ -504,7 +532,9 @@
                     "$ref": "predicate.json"
                 }
             },
-            "required": ["effect"]
+            "required": [
+                "effect"
+            ]
         },
         "entityEffects": {
             "title": "Entity Effects",
@@ -522,7 +552,10 @@
                             "$ref": "#/definitions/entityEffects"
                         }
                     },
-                    "required": ["effects", "type"]
+                    "required": [
+                        "effects",
+                        "type"
+                    ]
                 },
                 {
                     "type": "object",
@@ -538,7 +571,7 @@
                             "items": {
                                 "type": "string",
                                 "enumSource": "effects"
-                                }
+                            }
                         },
                         "min_duration": {
                             "$ref": "#/definitions/levelBasedValue"
@@ -553,7 +586,14 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "to_apply", "min_duration", "max_duration", "min_amplifier", "max_amplifier"]
+                    "required": [
+                        "type",
+                        "to_apply",
+                        "min_duration",
+                        "max_duration",
+                        "min_amplifier",
+                        "max_amplifier"
+                    ]
                 },
                 {
                     "type": "object",
@@ -575,7 +615,12 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "damage_type", "min_damage", "max_damage"]
+                    "required": [
+                        "type",
+                        "damage_type",
+                        "min_damage",
+                        "max_damage"
+                    ]
                 },
                 {
                     "type": "object",
@@ -589,7 +634,10 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "amount"]
+                    "required": [
+                        "type",
+                        "amount"
+                    ]
                 },
                 {
                     "type": "object",
@@ -664,7 +712,16 @@
                             "enumSource": "sound_events"
                         }
                     },
-                    "required": ["type", "attribute_to_user", "radius", "create_fire", "block_interaction", "small_particle", "large_particle", "sound"]
+                    "required": [
+                        "type",
+                        "attribute_to_user",
+                        "radius",
+                        "create_fire",
+                        "block_interaction",
+                        "small_particle",
+                        "large_particle",
+                        "sound"
+                    ]
                 },
                 {
                     "type": "object",
@@ -678,7 +735,10 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "duration"]
+                    "required": [
+                        "type",
+                        "duration"
+                    ]
                 },
                 {
                     "type": "object",
@@ -696,7 +756,7 @@
                         "volume": {
                             "type": "object",
                             "title": "Volume",
-                                "oneOf": [
+                            "oneOf": [
                                 {
                                     "type": "object",
                                     "title": "Float",
@@ -705,29 +765,29 @@
                                             "type": "number",
                                             "title": "Volume",
                                             "minimum": 0.00001,
-                                            "maximum": 10.0
+                                            "maximum": 10
                                         }
                                     },
-                                    "required": ["float"]
-                                        
+                                    "required": [
+                                        "float"
+                                    ]
                                 },
                                 {
                                     "type": "object",
                                     "title": "Object",
                                     "properties": {
-                                            "objects": {
+                                        "objects": {
                                             "$ref": "../utils/float_provider.json#/definitions/floatProvider"
                                         }
                                     }
                                 }
                             ]
-                            
                         },
                         "pitch": {
                             "type": "object",
                             "title": "Pitch",
-                                "oneOf": [
-                                {   
+                            "oneOf": [
+                                {
                                     "type": "object",
                                     "title": "Float",
                                     "properties": {
@@ -735,12 +795,14 @@
                                             "type": "number",
                                             "title": "Pitch",
                                             "minimum": 0.00001,
-                                            "maximum": 2.0
+                                            "maximum": 2
                                         }
                                     },
-                                    "required": ["float"]
+                                    "required": [
+                                        "float"
+                                    ]
                                 },
-                                {   
+                                {
                                     "type": "object",
                                     "title": "Object",
                                     "properties": {
@@ -752,7 +814,12 @@
                             ]
                         }
                     },
-                    "required": ["type", "sound", "volume", "pitch"]
+                    "required": [
+                        "type",
+                        "sound",
+                        "volume",
+                        "pitch"
+                    ]
                 },
                 {
                     "type": "object",
@@ -789,7 +856,11 @@
                             "$ref": "../utils/block_predicate.json#/definitions/blockPredicate"
                         }
                     },
-                    "required": ["type", "block_state", "trigger_game_event"]
+                    "required": [
+                        "type",
+                        "block_state",
+                        "trigger_game_event"
+                    ]
                 },
                 {
                     "type": "object",
@@ -828,7 +899,13 @@
                             "$ref": "../utils/block_predicate.json#/definitions/blockPredicate"
                         }
                     },
-                    "required": ["type", "block_state", "radius", "height", "trigger_game_event"]
+                    "required": [
+                        "type",
+                        "block_state",
+                        "radius",
+                        "height",
+                        "trigger_game_event"
+                    ]
                 },
                 {
                     "type": "object",
@@ -843,7 +920,10 @@
                             "title": "Function"
                         }
                     },
-                    "required": ["type", "function"]
+                    "required": [
+                        "type",
+                        "function"
+                    ]
                 },
                 {
                     "type": "object",
@@ -869,7 +949,10 @@
                             "title": "Properties",
                             "items": {
                                 "type": "object",
-                                "required": ["key", "value"],
+                                "required": [
+                                    "key",
+                                    "value"
+                                ],
                                 "properties": {
                                     "key": {
                                         "type": "string"
@@ -886,7 +969,11 @@
                             "enumSource": "game_events"
                         }
                     },
-                    "required": ["type", "properties", "trigger_game_event"]
+                    "required": [
+                        "type",
+                        "properties",
+                        "trigger_game_event"
+                    ]
                 },
                 {
                     "type": "object",
@@ -917,12 +1004,16 @@
                                     "default": 0
                                 }
                             },
-                            "required": ["type"],
+                            "required": [
+                                "type"
+                            ],
                             "allOf": [
                                 {
                                     "if": {
                                         "properties": {
-                                            "type": { "const": "in_bounding_box" }
+                                            "type": {
+                                                "const": "in_bounding_box"
+                                            }
                                         }
                                     },
                                     "then": {
@@ -933,7 +1024,9 @@
                                                 "default": 0
                                             }
                                         },
-                                        "required": ["scale"]
+                                        "required": [
+                                            "scale"
+                                        ]
                                     }
                                 }
                             ]
@@ -956,12 +1049,16 @@
                                     "default": 0
                                 }
                             },
-                            "required": ["type"],
+                            "required": [
+                                "type"
+                            ],
                             "allOf": [
                                 {
                                     "if": {
                                         "properties": {
-                                            "type": { "const": "in_bounding_box" }
+                                            "type": {
+                                                "const": "in_bounding_box"
+                                            }
                                         }
                                     },
                                     "then": {
@@ -972,14 +1069,16 @@
                                                 "default": 0
                                             }
                                         },
-                                        "required": ["scale"]
+                                        "required": [
+                                            "scale"
+                                        ]
                                     }
                                 }
                             ]
                         },
                         "horizontal_velocity": {
                             "oneOf": [
-                                {   
+                                {
                                     "type": "object",
                                     "title": "Float",
                                     "properties": {
@@ -1034,7 +1133,14 @@
                             }
                         }
                     },
-                    "required": ["type", "particle", "horizontal_position", "vertical_position", "horizontal_velocity", "vertical_velocity"]
+                    "required": [
+                        "type",
+                        "particle",
+                        "horizontal_position",
+                        "vertical_position",
+                        "horizontal_velocity",
+                        "vertical_velocity"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1058,7 +1164,11 @@
                             "title": "Join Team"
                         }
                     },
-                    "required": ["type", "entity", "join_team"]
+                    "required": [
+                        "type",
+                        "entity",
+                        "join_team"
+                    ]
                 }
             ]
         },
@@ -1077,7 +1187,10 @@
                             "$ref": "#/definitions/attributeEffects"
                         }
                     },
-                    "required": ["type", "attribute"]
+                    "required": [
+                        "type",
+                        "attribute"
+                    ]
                 }
             ]
         },
@@ -1096,7 +1209,10 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "value"]
+                    "required": [
+                        "type",
+                        "value"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1110,7 +1226,10 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "value"]
+                    "required": [
+                        "type",
+                        "value"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1124,7 +1243,10 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "factor"]
+                    "required": [
+                        "type",
+                        "factor"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1138,7 +1260,10 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "chance"]
+                    "required": [
+                        "type",
+                        "chance"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1156,7 +1281,10 @@
                             }
                         }
                     },
-                    "required": ["type", "effects"]
+                    "required": [
+                        "type",
+                        "effects"
+                    ]
                 }
             ]
         },
@@ -1185,7 +1313,12 @@
                     "title": "id"
                 }
             },
-            "required": ["attribute", "amount", "operation", "id"]
+            "required": [
+                "attribute",
+                "amount",
+                "operation",
+                "id"
+            ]
         },
         "levelBasedValue": {
             "title": "Level Based Value",
@@ -1200,7 +1333,9 @@
                             "title": "Constant"
                         }
                     },
-                    "required": ["constant"]
+                    "required": [
+                        "constant"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1215,11 +1350,15 @@
                             "title": "Base Value"
                         },
                         "per_level_above_first": {
-                            "type": "number", 
+                            "type": "number",
                             "title": "Per Level Above First"
                         }
                     },
-                    "required": ["type", "base", "per_level_above_first"]
+                    "required": [
+                        "type",
+                        "base",
+                        "per_level_above_first"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1234,7 +1373,10 @@
                             "title": "Added Value"
                         }
                     },
-                    "required": ["type", "added"]
+                    "required": [
+                        "type",
+                        "added"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1256,7 +1398,12 @@
                             "title": "Maximum Value"
                         }
                     },
-                    "required": ["type", "value", "min", "max"]
+                    "required": [
+                        "type",
+                        "value",
+                        "min",
+                        "max"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1273,7 +1420,11 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "numerator", "denominator"]
+                    "required": [
+                        "type",
+                        "numerator",
+                        "denominator"
+                    ]
                 },
                 {
                     "type": "object",
@@ -1294,7 +1445,11 @@
                             "$ref": "#/definitions/levelBasedValue"
                         }
                     },
-                    "required": ["type", "values", "fallback"]
+                    "required": [
+                        "type",
+                        "values",
+                        "fallback"
+                    ]
                 }
             ]
         }

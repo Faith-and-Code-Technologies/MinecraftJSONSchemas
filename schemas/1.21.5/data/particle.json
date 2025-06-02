@@ -10,16 +10,22 @@
                     "enumSource": "particles"
                 }
             },
-            "required": ["particle"],
+            "required": [
+                "particle"
+            ],
             "allOf": [
                 {
                     "if": {
                         "properties": {
-                            "particle": { "const": "block" }
+                            "particle": {
+                                "const": "block"
+                            }
                         }
                     },
                     "then": {
-                        "required": [ "block_states" ],
+                        "required": [
+                            "block_states"
+                        ],
                         "properties": {
                             "block_states": {
                                 "oneOf": [
@@ -44,11 +50,15 @@
                 {
                     "if": {
                         "properties": {
-                            "particle": { "const": "block_crumble" }
+                            "particle": {
+                                "const": "block_crumble"
+                            }
                         }
                     },
                     "then": {
-                        "required": [ "block_states" ],
+                        "required": [
+                            "block_states"
+                        ],
                         "properties": {
                             "block_states": {
                                 "oneOf": [
@@ -73,11 +83,15 @@
                 {
                     "if": {
                         "properties": {
-                            "particle": { "const": "block_marker" }
+                            "particle": {
+                                "const": "block_marker"
+                            }
                         }
                     },
                     "then": {
-                        "required": [ "block_states" ],
+                        "required": [
+                            "block_states"
+                        ],
                         "properties": {
                             "block_states": {
                                 "oneOf": [
@@ -102,11 +116,15 @@
                 {
                     "if": {
                         "properties": {
-                            "particle": { "const": "dust_pillar" }
+                            "particle": {
+                                "const": "dust_pillar"
+                            }
                         }
                     },
                     "then": {
-                        "required": [ "block_states" ],
+                        "required": [
+                            "block_states"
+                        ],
                         "properties": {
                             "block_states": {
                                 "oneOf": [
@@ -131,11 +149,15 @@
                 {
                     "if": {
                         "properties": {
-                            "particle": { "const": "falling_dust" }
+                            "particle": {
+                                "const": "falling_dust"
+                            }
                         }
                     },
                     "then": {
-                        "required": [ "block_states" ],
+                        "required": [
+                            "block_states"
+                        ],
                         "properties": {
                             "block_states": {
                                 "oneOf": [
@@ -158,168 +180,247 @@
                     }
                 },
                 {
-                    "if": { "properties": { "particle": { "const": "minecraft:dust" } } },
+                    "if": {
+                        "properties": {
+                            "particle": {
+                                "const": "minecraft:dust"
+                            }
+                        }
+                    },
                     "then": {
-                        "required": ["color", "scale"],
+                        "required": [
+                            "color",
+                            "scale"
+                        ],
                         "properties": {
                             "color": {
                                 "type": "array",
                                 "items": {
                                     "type": "number",
-                                    "minimum": 0.0,
-                                    "maximum": 1.0
+                                    "minimum": 0,
+                                    "maximum": 1
                                 },
                                 "minItems": 3,
                                 "maxItems": 3
                             },
                             "scale": {
                                 "type": "number",
-                                "minimum": 1.0
+                                "minimum": 1
                             }
                         }
-                        }
-                },
-
-                {
-                "if": { "properties": { "particle": { "const": "minecraft:dust_color_transition" } } },
-                "then": {
-                    "required": ["from_color", "to_color", "scale"],
-                    "properties": {
-                    "from_color": {
-                        "type": "array",
-                        "items": {
-                        "type": "number",
-                        "minimum": 0.0,
-                        "maximum": 1.0
-                        },
-                        "minItems": 3,
-                        "maxItems": 3
-                    },
-                    "to_color": {
-                        "type": "array",
-                        "items": {
-                        "type": "number",
-                        "minimum": 0.0,
-                        "maximum": 1.0
-                        },
-                        "minItems": 3,
-                        "maxItems": 3
-                    },
-                    "scale": {
-                        "type": "number",
-                        "minimum": 1.0
                     }
-                    }
-                }
                 },
-
                 {
-                "if": { "properties": { "particle": { "const": "minecraft:entity_effect" } } },
-                "then": {
-                    "oneOf": [
-                    {
-                        "required": ["color"],
+                    "if": {
                         "properties": {
-                        "color": {
-                            "type": "array",
-                            "items": {
-                            "type": "number",
-                            "minimum": 0.0,
-                            "maximum": 1.0
+                            "particle": {
+                                "const": "minecraft:dust_color_transition"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "from_color",
+                            "to_color",
+                            "scale"
+                        ],
+                        "properties": {
+                            "from_color": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                },
+                                "minItems": 3,
+                                "maxItems": 3
                             },
-                            "minItems": 4,
-                            "maxItems": 4
-                        }
-                        }
-                    },
-                    {
-                        "required": ["color"],
-                        "properties": {
-                        "color": {
-                            "type": "integer",
-                            "minimum": 0
-                        }
+                            "to_color": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                },
+                                "minItems": 3,
+                                "maxItems": 3
+                            },
+                            "scale": {
+                                "type": "number",
+                                "minimum": 1
+                            }
                         }
                     }
-                    ]
-                }
                 },
-
                 {
-                "if": { "properties": { "particle": { "const": "minecraft:item" } } },
-                "then": {
-                    "required": ["item"],
-                    "properties": {
-                    "item": {
+                    "if": {
+                        "properties": {
+                            "particle": {
+                                "const": "minecraft:entity_effect"
+                            }
+                        }
+                    },
+                    "then": {
                         "oneOf": [
                             {
-                                "type": "object",
-                                "title": "Item Stack",
+                                "required": [
+                                    "color"
+                                ],
                                 "properties": {
-                                    "item_stack": {
-                                        "$ref": "item_stack.json#/definitions/itemStack"
+                                    "color": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 1
+                                        },
+                                        "minItems": 4,
+                                        "maxItems": 4
                                     }
-                                },
-                                "required": ["item_stack"]
+                                }
                             },
                             {
-                                "type": "string",
-                                "title": "Resource Location"
+                                "required": [
+                                    "color"
+                                ],
+                                "properties": {
+                                    "color": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                    }
+                                }
                             }
                         ]
                     }
-                    }
-                }
                 },
-
                 {
-                "if": { "properties": { "particle": { "const": "minecraft:sculk_charge" } } },
-                "then": {
-                    "required": ["roll"],
-                    "properties": {
-                    "roll": { "type": "number" }
-                    }
-                }
-                },
-
-                {
-                "if": { "properties": { "particle": { "const": "minecraft:shriek" } } },
-                "then": {
-                    "required": ["delay"],
-                    "properties": {
-                    "delay": { "type": "integer" }
-                    }
-                }
-                },
-
-                {
-                "if": { "properties": { "particle": { "const": "minecraft:trail" } } },
-                "then": {
-                    "required": ["target", "color", "duration"],
-                    "properties": {
-                    "target": {
-                        "type": "array",
-                        "items": { "type": "number" },
-                        "minItems": 3,
-                        "maxItems": 3
+                    "if": {
+                        "properties": {
+                            "particle": {
+                                "const": "minecraft:item"
+                            }
+                        }
                     },
-                    "color": { "type": "integer" },
-                    "duration": { "type": "integer" }
+                    "then": {
+                        "required": [
+                            "item"
+                        ],
+                        "properties": {
+                            "item": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "title": "Item Stack",
+                                        "properties": {
+                                            "item_stack": {
+                                                "$ref": "item_stack.json#/definitions/itemStack"
+                                            }
+                                        },
+                                        "required": [
+                                            "item_stack"
+                                        ]
+                                    },
+                                    {
+                                        "type": "string",
+                                        "title": "Resource Location"
+                                    }
+                                ]
+                            }
+                        }
                     }
-                }
                 },
-
                 {
-                "if": { "properties": { "particle": { "const": "minecraft:vibration" } } },
-                "then": {
-                    "required": ["destination", "arrival_in_ticks"],
-                    "properties": {
-                    "destination": { 
-                        "$ref": "utils/position_source.json#/definitions/positionSource"
+                    "if": {
+                        "properties": {
+                            "particle": {
+                                "const": "minecraft:sculk_charge"
+                            }
+                        }
                     },
-                    "arrival_in_ticks": { "type": "integer" }
+                    "then": {
+                        "required": [
+                            "roll"
+                        ],
+                        "properties": {
+                            "roll": {
+                                "type": "number"
+                            }
+                        }
                     }
-                }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "particle": {
+                                "const": "minecraft:shriek"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "delay"
+                        ],
+                        "properties": {
+                            "delay": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "particle": {
+                                "const": "minecraft:trail"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "target",
+                            "color",
+                            "duration"
+                        ],
+                        "properties": {
+                            "target": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number"
+                                },
+                                "minItems": 3,
+                                "maxItems": 3
+                            },
+                            "color": {
+                                "type": "integer"
+                            },
+                            "duration": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "particle": {
+                                "const": "minecraft:vibration"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "destination",
+                            "arrival_in_ticks"
+                        ],
+                        "properties": {
+                            "destination": {
+                                "$ref": "utils/position_source.json#/definitions/positionSource"
+                            },
+                            "arrival_in_ticks": {
+                                "type": "integer"
+                            }
+                        }
+                    }
                 }
             ]
         }

@@ -13,7 +13,9 @@
                     "$ref": "data_component.json#/definitions/dataComponent"
                 }
             },
-            "required": ["id"]
+            "required": [
+                "id"
+            ]
         }
-    } 
+    }
 }

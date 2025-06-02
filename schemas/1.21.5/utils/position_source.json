@@ -25,7 +25,10 @@
                             "maxItems": 3
                         }
                     },
-                    "required": ["type", "pos"]
+                    "required": [
+                        "type",
+                        "pos"
+                    ]
                 },
                 {
                     "type": "object",
@@ -45,10 +48,13 @@
                             "type": "number",
                             "title": "Y Offset",
                             "description": "Vertical offset from entity position",
-                            "default": 0.0
+                            "default": 0
                         }
                     },
-                    "required": ["type", "source_entity"]
+                    "required": [
+                        "type",
+                        "source_entity"
+                    ]
                 }
             ]
         }

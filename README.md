@@ -7,3 +7,6 @@ A library of JSON Schemas handbuilt for Minecraft. It defines everything in the 
 
 Schemas are located in `schemas/{VERSION_NUMBER}/`.
 Only supported for **1.21.4 and up!**
+
+### Credits
+- Minecraft.wiki for their well structured site allowing this project to be possible. Also, most definitions are directly from here.

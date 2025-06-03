@@ -2,163 +2,254 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "title": "Data Component",
-        "oneOf": [
-            {
-                "type": "object",
-                "title": "Attribute Modifiers",
-                "properties": {
-                    "attribute_type": {
-                        "type": "string",
-                        "title": "Type"
-                    },
-                    "slot": {
-                        "type": "string",
-                        "title": "Slot",
-                        "enum": [
-                            "any",
-                            "hand",
-                            "armor",
-                            "mainhand",
-                            "offhand",
-                            "head",
-                            "chest",
-                            "legs",
-                            "feet",
-                            "body"
-                        ]
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "ID"
-                    },
-                    "amount": {
-                        "type": "number",
-                        "title": "Amount"
-                    },
-                    "operation": {
-                        "type": "string",
-                        "title": "Operation",
-                        "enum": [
-                            "add_value",
-                            "add_multiplied_base",
-                            "add_multiplied_total"
-                        ]
+    "oneOf": [
+        {
+            "type": "object",
+            "title": "Attribute Modifiers",
+            "description": "Applies attribute modifiers onto items.",
+            "properties": {
+                "atttibute_modifiers": {
+                    "type": "array",
+                    "items": {
+                        "title": "Attibute Modifier",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "The name of the attribute this modifier is to act upon.",
+                                "title": "Type"
+                            },
+                            "slot": {
+                                "type": "string",
+                                "description": "Slot or slot type the item must be in for the modifier to take effect.",
+                                "title": "Slot",
+                                "enum": [
+                                    "any",
+                                    "hand",
+                                    "armor",
+                                    "mainhand",
+                                    "offhand",
+                                    "head",
+                                    "chest",
+                                    "legs",
+                                    "feet",
+                                    "body"
+                                ],
+                                "default": "any"
+                            },
+                            "id": {
+                                "type": "string",
+                                "description": "The unique resource location to identify this modifier.",
+                                "title": "ID"
+                            },
+                            "amount": {
+                                "type": "number",
+                                "title": "Amount",
+                                "description": "Amount of change form the modifier."
+                            },
+                            "operation": {
+                                "type": "string",
+                                "title": "Operation",
+                                "description": "Modifer operation.",
+                                "enum": [
+                                    "add_value",
+                                    "add_multiplied_base",
+                                    "add_multiplied_total"
+                                ]
+                            }
+                        },
+                        "required": ["type", "slot", "id", "amount", "operation"]
                     }
                 }
             },
-            {
-                "type": "object",
-                "title": "Banner Patterns",
-                "properties": {
-                    "patterns": {
-                        "type": "array",
-                        "title": "Patterns",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "color": {
-                                    "type": "string",
-                                    "title": "Color"
-                                },
-                                "pattern": {
-                                    "type": "object",
-                                    "title": "Pattern",
-                                    "oneOf": [
-                                        {
-                                            "type": "object",
-                                            "title": "Asset ID",
-                                            "properties": {
-                                                "asset_id": {
-                                                    "type": "string",
-                                                    "title": "Asset ID",
-                                                    "enumSource": "banner_patterns"
-                                                }
+            "required": ["atttibute_modifiers"]
+        },
+        {
+            "type": "object",
+            "title": "Banner Patterns",
+            "properties": {
+                "patterns": {
+                    "type": "array",
+                    "title": "banner_patterns",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "color": {
+                                "type": "string",
+                                "title": "Color"
+                            },
+                            "pattern": {
+                                "title": "Pattern",
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "title": "Asset ID",
+                                        "properties": {
+                                            "pattern": {
+                                                "type": "string",
+                                                "title": "ID"
                                             }
                                         },
-                                        {
-                                            "type": "object",
-                                            "title": "Banner Pattern Definition",
-                                            "properties": {
-                                                "asset_id": {
-                                                    "type": "string",
-                                                    "title": "Asset ID",
-                                                    "enumSource": "banner_patterns"
-                                                },
-                                                "translation_key": {
-                                                    "type": "string",
-                                                    "title": "Translation Key"
-                                                }
+                                        "required": ["pattern"]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "title": "Banner Pattern Definition",
+                                        "properties": {
+                                            "asset_id": {
+                                                "type": "string",
+                                                "title": "Asset ID"
+                                            },
+                                            "translation_key": {
+                                                "type": "string",
+                                                "title": "Translation Key"
                                             }
-                                        }
-                                    ]
-                                }
+                                        },
+                                        "required": ["asset_id", "translation_key"]
+                                    }
+                                ]
                             }
-                        }
-                    }
-                }
-            },
-            {
-                "type": "object",
-                "title": "Base Color",
-                "properties": {
-                    "base_color": {
-                        "type": "string",
-                        "title": "Base Color",
-                        "enum": [
-                            "white",
-                            "orange",
-                            "magenta",
-                            "light_blue",
-                            "yellow",
-                            "lime",
-                            "pink",
-                            "gray",
-                            "light_gray",
-                            "cyan",
-                            "purple",
-                            "blue",
-                            "brown",
-                            "green",
-                            "red",
-                            "black"
-                        ]
-                    }
-                }
-            },
-            {
-                "type": "object",
-                "title": "Bees",
-                "properties": {
-                    "bees": {
-                        "type": "array",
-                        "title": "Bees",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "entity_data": {
-                                    "$ref": "entity_data.json"
-                                },
-                                "min_ticks_in_hive": {
-                                    "type": "integer",
-                                    "title": "Min Ticks In Hive"
-                                },
-                                "ticks_in_hive": {
-                                    "type": "integer",
-                                    "title": "Ticks In Hive"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "type": "object",
-                "title": "Block Entity Data",
-                "properties": {
-                    "block_entity_data": {
-                        "$ref": "block_entity_data.json"
+                        },
+                        "required": ["color", "pattern"]
                     }
                 }
             }
-        ]
+        },
+        {
+            "type": "object",
+            "title": "Base Color",
+            "$ref": "../utils/base_color.json"
+        },
+        {
+            "type": "object",
+            "title": "Bees",
+            "properties": {
+                "bees": {
+                    "type": "array",
+                    "title": "Bees",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "entity_data": {
+                                "$ref": "entity_data.json"
+                            },
+                            "min_ticks_in_hive": {
+                                "type": "integer",
+                                "title": "Min Ticks In Hive"
+                            },
+                            "ticks_in_hive": {
+                                "type": "integer",
+                                "title": "Ticks In Hive"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "object",
+            "title": "Block Entity Data",
+            "properties": {
+                "block_entity_data": {
+                    "$ref": "block_entity_data.json"
+                }
+            }
+        },
+        {
+        "type": "object",
+        "title": "Block State",
+        "properties": {
+            "block_state": {
+            "type": "object",
+            "title": "Single Block State",
+            "description": "A single block state key-value pair like {type: 'top'}",
+            "minProperties": 1,
+            "maxProperties": 1,
+            "additionalProperties": {
+                "type": "string"
+            }
+            }
+        },
+        "required": ["block_state"],
+        "additionalProperties": false
+        },
+        {
+            "title": "Blocks Attacks",
+            "type": "object",
+            "properties": {
+                "minecraft:blocks_attacks": {
+                "type": "object",
+                "properties": {
+                    "block_delay_seconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "default": 0
+                    },
+                    "disable_cooldown_scale": {
+                    "type": "number",
+                    "minimum": 0,
+                    "default": 1
+                    },
+                    "damage_reductions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                        "type": {
+                            "oneOf": [
+                            { "type": "string" },
+                            {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
+                            ]
+                        },
+                        "base": {
+                            "type": "number"
+                        },
+                        "factor": {
+                            "type": "number"
+                        },
+                        "horizontal_blocking_angle": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "default": 90
+                        }
+                        },
+                        "required": ["base", "factor"]
+                    }
+                    },
+                    "item_damage": {
+                    "type": "object",
+                    "properties": {
+                        "threshold": { "type": "number" },
+                        "base": { "type": "number" },
+                        "factor": { "type": "number" }
+                    },
+                    "required": ["threshold", "base", "factor"]
+                    },
+                    "block_sound": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "object" }
+                    ]
+                    },
+                    "disabled_sound": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "object" }
+                    ]
+                    },
+                    "bypassed_by": {
+                    "type": "string",
+                    "pattern": "^#.+"
+                    }
+                },
+                "additionalProperties": false
+                }
+            },
+            "required": ["minecraft:blocks_attacks"],
+            "additionalProperties": false
+        }
+    ]
 }

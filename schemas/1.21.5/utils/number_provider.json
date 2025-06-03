@@ -2,10 +2,350 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "floatNumberProvider": {
-
+            "oneOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "type": "object",
+                            "title": "Uniform Distribution",
+                            "properties": {
+                                "min": {
+                                    "$ref": "#/definitions/floatNumberProvider"
+                                },
+                                "max": {
+                                    "$ref": "#/definitions/floatNumberProvider"
+                                }
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "title": "Number Provider",
+                            "oneOf": [
+                                {
+                                    "type": "object",
+                                    "title": "Constant",
+                                    "description": "A constant value.",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "constant"},
+                                        "value": {
+                                            "type": "number",
+                                            "title": "Value",
+                                            "description": "The exact value."
+                                        }
+                                    },
+                                    "required": ["type", "value"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Uniform",
+                                    "description": "A random number following a unifor distribution between two values.",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "uniform"},
+                                        "min": {
+                                            "$ref": "#/definitions/floatNumberProvider"
+                                        },
+                                        "max": {
+                                            "$ref": "#/definitions/floatNumberProvider"
+                                        }
+                                    },
+                                    "required": ["type", "min", "max"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Binomial",
+                                    "description": "A random number following a binomial distribution.",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "binomial"},
+                                        "n": {
+                                            "$ref": "#/definitions/integerNumberProvider",
+                                            "title": "n",
+                                            "description": "The amount of trials"
+                                        },
+                                        "p": {
+                                            "$ref": "#/definitions/floatNumberProvider",
+                                            "title": "p",
+                                            "description": "The probability of success on an individual trial"
+                                        }
+                                    },
+                                    "required": ["type", "n", "p"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Score",
+                                    "description": "To query and use a scoreboard value",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "score"},
+                                        "target": {
+                                            "type": "object",
+                                            "title": "Target",
+                                            "description": "To choose which player name or entity UUID to query.",
+                                            "oneOf": [
+                                                {
+                                                    "title": "Fixed",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string", "const": "fixed"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "title": "Name",
+                                                            "description": "Specifies the name of the player or the entity's UUID whose score to query."
+                                                        }
+                                                    },
+                                                    "required": ["type", "name"]
+                                                },
+                                                {
+                                                    "title": "Context",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string", "const": "context"
+                                                        },
+                                                        "target": {
+                                                            "type": "string",
+                                                            "title": "Target",
+                                                            "enum": [
+                                                                "this",
+                                                                "attacker",
+                                                                "direct_attacker",
+                                                                "attacking_player"
+                                                            ],
+                                                            "description": "Specifies an entity from loot context to query the score of."
+                                                        }
+                                                    },
+                                                    "required": ["type", "target"]
+                                                }
+                                            ]
+                                        },
+                                        "score": {
+                                            "type": "string",
+                                            "title": "Score",
+                                            "description": "The scoreboard objective to query on the selected player name or UUID."
+                                        },
+                                        "scale": {
+                                            "type": "number",
+                                            "title": "Scale",
+                                            "description": "Scale to multiply the score before returning it."
+                                        }
+                                    },
+                                    "required": ["type", "target", "score"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Storage",
+                                    "description": "A value in command storage.",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "storage"},
+                                        "storage": {
+                                            "type": "string",
+                                            "title": "Storage",
+                                            "description": "The resource location of the storage."
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "title": "Path",
+                                            "description": "The nbt path to the field in storage."
+                                        }
+                                    },
+                                    "required": ["type", "storage", "path"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Enchantment Level",
+                                    "description": "A value dependent on the level of the loot context enchantment",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "enchantment_level"},
+                                        "amount": {
+                                            "$ref": "level_based_value.json#/definitions/levelBasedValue",
+                                            "title": "Amount",
+                                            "description": "Level based value calculating the value based on the enchantment."
+                                        }
+                                    },
+                                    "required": ["type", "amount"]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         "integerNumberProvider": {
-            
+            "oneOf": [
+                {
+                    "type": "integer"
+                },
+                {
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "type": "object",
+                            "title": "Uniform Distribution",
+                            "properties": {
+                                "min": {
+                                    "$ref": "#/definitions/integerNumberProvider"
+                                },
+                                "max": {
+                                    "$ref": "#/definitions/integerNumberProvider"
+                                }
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "title": "Number Provider",
+                            "oneOf": [
+                                {
+                                    "type": "object",
+                                    "title": "Constant",
+                                    "description": "A constant value.",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "constant"},
+                                        "value": {
+                                            "type": "integer",
+                                            "title": "Value",
+                                            "description": "The exact value."
+                                        }
+                                    },
+                                    "required": ["type", "value"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Uniform",
+                                    "description": "A random number following a unifor distribution between two values.",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "uniform"},
+                                        "min": {
+                                            "$ref": "#/definitions/integerNumberProvider"
+                                        },
+                                        "max": {
+                                            "$ref": "#/definitions/integerNumberProvider"
+                                        }
+                                    },
+                                    "required": ["type", "min", "max"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Binomial",
+                                    "description": "A random number following a binomial distribution.",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "binomial"},
+                                        "n": {
+                                            "$ref": "#/definitions/integerNumberProvider",
+                                            "title": "n",
+                                            "description": "The amount of trials"
+                                        },
+                                        "p": {
+                                            "$ref": "#/definitions/floatNumberProvider",
+                                            "title": "p",
+                                            "description": "The probability of success on an individual trial"
+                                        }
+                                    },
+                                    "required": ["type", "n", "p"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Score",
+                                    "description": "To query and use a scoreboard value",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "score"},
+                                        "target": {
+                                            "type": "object",
+                                            "title": "Target",
+                                            "description": "To choose which player name or entity UUID to query.",
+                                            "oneOf": [
+                                                {
+                                                    "title": "Fixed",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string", "const": "fixed"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "title": "Name",
+                                                            "description": "Specifies the name of the player or the entity's UUID whose score to query."
+                                                        }
+                                                    },
+                                                    "required": ["type", "name"]
+                                                },
+                                                {
+                                                    "title": "Context",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string", "const": "context"
+                                                        },
+                                                        "target": {
+                                                            "type": "string",
+                                                            "title": "Target",
+                                                            "enum": [
+                                                                "this",
+                                                                "attacker",
+                                                                "direct_attacker",
+                                                                "attacking_player"
+                                                            ],
+                                                            "description": "Specifies an entity from loot context to query the score of."
+                                                        }
+                                                    },
+                                                    "required": ["type", "target"]
+                                                }
+                                            ]
+                                        },
+                                        "score": {
+                                            "type": "string",
+                                            "title": "Score",
+                                            "description": "The scoreboard objective to query on the selected player name or UUID."
+                                        },
+                                        "scale": {
+                                            "type": "number",
+                                            "title": "Scale",
+                                            "description": "Scale to multiply the score before returning it."
+                                        }
+                                    },
+                                    "required": ["type", "target", "score"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Storage",
+                                    "description": "A value in command storage.",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "storage"},
+                                        "storage": {
+                                            "type": "string",
+                                            "title": "Storage",
+                                            "description": "The resource location of the storage."
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "title": "Path",
+                                            "description": "The nbt path to the field in storage."
+                                        }
+                                    },
+                                    "required": ["type", "storage", "path"]
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Enchantment Level",
+                                    "description": "A value dependent on the level of the loot context enchantment",
+                                    "properties": {
+                                        "type": {"type": "string", "const": "enchantment_level"},
+                                        "amount": {
+                                            "$ref": "level_based_value.json#/definitions/levelBasedValue",
+                                            "title": "Amount",
+                                            "description": "Level based value calculating the value based on the enchantment."
+                                        }
+                                    },
+                                    "required": ["type", "amount"]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     }
 }

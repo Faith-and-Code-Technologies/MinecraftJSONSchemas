@@ -15,6 +15,7 @@ FINISHED:
 - utils/position_source.json
 - utils/damage_types.json
 - utils/level_based_value.json
+- utils/number_provider.json
 
 IN PROGRESS:
 - data/data_component.json | https://minecraft.wiki/w/Data_component_format
@@ -23,7 +24,6 @@ IN PROGRESS:
 - utils/location_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > location_check >  Tags common to all locations > show
 - utils/item_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > match_tool > All possible conditions for items > show
 - utils/item_sub_predicate |  https://minecraft.wiki/w/Data_component_predicate#Formats
-- utils/number_provider.json | https://minecraft.wiki/w/Loot_table#Number_provider - Note that there are 2 definitions in the json. They should be the exact same, except the float one should use `number`, and the integer one whould use `integer`
 
 NOT STARTED:
 

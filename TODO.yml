@@ -33,3 +33,4 @@ NOT STARTED:
 OTHER:
 - Rename & Reorganize many schemas - Make sure to 
 - Normalize `title` and `description` styles
+- Look through finished schemas to add `required` and `additionalProperties` tags

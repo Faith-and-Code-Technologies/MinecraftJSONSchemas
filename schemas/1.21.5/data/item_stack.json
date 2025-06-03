@@ -9,6 +9,10 @@
                     "type": "string",
                     "enumSource": "items"
                 },
+                "count": {
+                    "type": "integer",
+                    "minimum": 1
+                },
                 "components": {
                     "$ref": "data_component.json"
                 }

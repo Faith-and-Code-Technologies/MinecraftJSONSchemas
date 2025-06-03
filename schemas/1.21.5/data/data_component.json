@@ -300,6 +300,107 @@
                 "minecraft:blocks_attacks"
             ],
             "additionalProperties": false
+        },
+        {
+            "title": "Break Sound",
+            "type": "object",
+            "properties": {
+                "minecraft:break_sound": {
+                    "type": "object",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "title": "String",
+                            "description": "A sound event ID"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Object",
+                            "$ref": "../utils/sound_event.json"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "title": "Bucket Entity Data",
+            "type": "object",
+            "properties": {
+                "minecraft:bucket_entity_data": {
+                    "type": "object",
+                    "properties": {
+                        "NoAI": {
+                            "type": "boolean",
+                            "title": "No AI",
+                            "description": "Turns into NoAI entity tag for all bucketable entities."
+                        },
+                        "Silent": {
+                            "type": "boolean",
+                            "title": "Silent",
+                            "description": "Turns into Silent entity tag for all bucketable entities."
+                        },
+                        "NoGravity": {
+                            "type": "boolean",
+                            "title": "No Gravity",
+                            "description": "Turns into NoGravity entity tag for all bucketable entities."
+                        },
+                        "Glowing": {
+                            "type": "boolean",
+                            "title": "Glowing",
+                            "description": "Turns into Glowing entity tag for all bucketable entities."
+                        },
+                        "Invulnerable": {
+                            "type": "boolean",
+                            "title": "Invulnerable",
+                            "description": "Turns into Invulnerable entity tag for all bucketable entities."
+                        },
+                        "Health": {
+                            "type": "number",
+                            "title": "Health",
+                            "description": "Turns into Health entity tag for all bucketable entities."
+                        },
+                        "Age": {
+                            "type": "integer",
+                            "title": "Age",
+                            "description": "Turns into Age entity tag for axolotls and tadpoles."
+                        },
+                        "Variant": {
+                            "type": "integer",
+                            "title": "Variant",
+                            "description": "Turns into Variant entity tag for axolotls."
+                        },
+                        "HuntingCooldown": {
+                            "type": "integer",
+                            "title": "Hunting Cooldown",
+                            "description": "Turns into the expiry time of the memory module has_hunting_cooldown for axolotls."
+                        },
+                        "BucketVariantTag": {
+                            "type": "integer",
+                            "title": "Bucket Variant Tag",
+                            "description": "Turns into Variant entity tag for tropical fish."
+                        },
+                        "type": {
+                            "type": "string",
+                            "title": "Type",
+                            "description": "Turns into type entity tag for salmon."
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "title": "Bundle Contents",
+            "type": "object",
+            "properties": {
+                "minecraft:bundle_contents": {
+                    "type": "array",
+                    "title": "Bundle Contents",
+                    "description": "The items stored inside this bundle.",
+                    "items": {
+                        "$ref": "item_stack.json#/definitions/itemStack"
+                    }
+                }
+            }
         }
     ]
 }

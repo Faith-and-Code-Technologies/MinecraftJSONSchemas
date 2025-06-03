@@ -8,7 +8,7 @@
             "title": "Attribute Modifiers",
             "description": "Applies attribute modifiers onto items.",
             "properties": {
-                "atttibute_modifiers": {
+                "minecraft:atttibute_modifiers": {
                     "type": "array",
                     "items": {
                         "title": "Attibute Modifier",
@@ -58,17 +58,25 @@
                                 ]
                             }
                         },
-                        "required": ["type", "slot", "id", "amount", "operation"]
+                        "required": [
+                            "type",
+                            "slot",
+                            "id",
+                            "amount",
+                            "operation"
+                        ]
                     }
                 }
             },
-            "required": ["atttibute_modifiers"]
+            "required": [
+                "atttibute_modifiers"
+            ]
         },
         {
             "type": "object",
             "title": "Banner Patterns",
             "properties": {
-                "patterns": {
+                "minecraft:banner_patterns": {
                     "type": "array",
                     "title": "banner_patterns",
                     "items": {
@@ -90,7 +98,9 @@
                                                 "title": "ID"
                                             }
                                         },
-                                        "required": ["pattern"]
+                                        "required": [
+                                            "pattern"
+                                        ]
                                     },
                                     {
                                         "type": "object",
@@ -105,12 +115,18 @@
                                                 "title": "Translation Key"
                                             }
                                         },
-                                        "required": ["asset_id", "translation_key"]
+                                        "required": [
+                                            "asset_id",
+                                            "translation_key"
+                                        ]
                                     }
                                 ]
                             }
                         },
-                        "required": ["color", "pattern"]
+                        "required": [
+                            "color",
+                            "pattern"
+                        ]
                     }
                 }
             }
@@ -124,7 +140,7 @@
             "type": "object",
             "title": "Bees",
             "properties": {
-                "bees": {
+                "minecraft:bees": {
                     "type": "array",
                     "title": "Bees",
                     "items": {
@@ -150,105 +166,139 @@
             "type": "object",
             "title": "Block Entity Data",
             "properties": {
-                "block_entity_data": {
+                "minecraft:block_entity_data": {
                     "$ref": "block_entity_data.json"
                 }
             }
         },
         {
-        "type": "object",
-        "title": "Block State",
-        "properties": {
-            "block_state": {
             "type": "object",
-            "title": "Single Block State",
-            "description": "A single block state key-value pair like {type: 'top'}",
-            "minProperties": 1,
-            "maxProperties": 1,
-            "additionalProperties": {
-                "type": "string"
-            }
-            }
-        },
-        "required": ["block_state"],
-        "additionalProperties": false
+            "title": "Block State",
+            "properties": {
+                "minecraft:block_state": {
+                    "type": "object",
+                    "properties": {
+                        "block_state": {
+                            "type": "object",
+                            "title": "Single Block State",
+                            "description": "A single block state key-value pair like {type: 'top'}",
+                            "minProperties": 1,
+                            "maxProperties": 1,
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "block_state"
+            ],
+            "additionalProperties": false
         },
         {
             "title": "Blocks Attacks",
             "type": "object",
             "properties": {
                 "minecraft:blocks_attacks": {
-                "type": "object",
-                "properties": {
-                    "block_delay_seconds": {
-                    "type": "number",
-                    "minimum": 0,
-                    "default": 0
-                    },
-                    "disable_cooldown_scale": {
-                    "type": "number",
-                    "minimum": 0,
-                    "default": 1
-                    },
-                    "damage_reductions": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                        "type": {
-                            "oneOf": [
-                            { "type": "string" },
-                            {
-                                "type": "array",
-                                "items": { "type": "string" }
-                            }
-                            ]
-                        },
-                        "base": {
-                            "type": "number"
-                        },
-                        "factor": {
-                            "type": "number"
-                        },
-                        "horizontal_blocking_angle": {
-                            "type": "number",
-                            "exclusiveMinimum": 0,
-                            "default": 90
-                        }
-                        },
-                        "required": ["base", "factor"]
-                    }
-                    },
-                    "item_damage": {
                     "type": "object",
                     "properties": {
-                        "threshold": { "type": "number" },
-                        "base": { "type": "number" },
-                        "factor": { "type": "number" }
+                        "block_delay_seconds": {
+                            "type": "number",
+                            "default": 0
+                        },
+                        "disable_cooldown_scale": {
+                            "type": "number",
+                            "default": 1
+                        },
+                        "damage_reductions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "oneOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "base": {
+                                        "type": "number"
+                                    },
+                                    "factor": {
+                                        "type": "number"
+                                    },
+                                    "horizontal_blocking_angle": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "default": 90
+                                    }
+                                },
+                                "required": [
+                                    "base",
+                                    "factor"
+                                ]
+                            }
+                        },
+                        "item_damage": {
+                            "type": "object",
+                            "properties": {
+                                "threshold": {
+                                    "type": "number"
+                                },
+                                "base": {
+                                    "type": "number"
+                                },
+                                "factor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "threshold",
+                                "base",
+                                "factor"
+                            ]
+                        },
+                        "block_sound": {
+                            "oneOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "object",
+                                    "$ref": "../utils/sound_event.json"
+                                }
+                            ]
+                        },
+                        "disabled_sound": {
+                            "oneOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "object",
+                                    "$ref": "../utils/sound_event.json"
+                                }
+                            ]
+                        },
+                        "bypassed_by": {
+                            "type": "string",
+                            "pattern": "^#.+"
+                        }
                     },
-                    "required": ["threshold", "base", "factor"]
-                    },
-                    "block_sound": {
-                    "oneOf": [
-                        { "type": "string" },
-                        { "type": "object" }
-                    ]
-                    },
-                    "disabled_sound": {
-                    "oneOf": [
-                        { "type": "string" },
-                        { "type": "object" }
-                    ]
-                    },
-                    "bypassed_by": {
-                    "type": "string",
-                    "pattern": "^#.+"
-                    }
-                },
-                "additionalProperties": false
+                    "additionalProperties": false
                 }
             },
-            "required": ["minecraft:blocks_attacks"],
+            "required": [
+                "minecraft:blocks_attacks"
+            ],
             "additionalProperties": false
         }
     ]

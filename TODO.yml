@@ -17,6 +17,7 @@ FINISHED:
 - utils/level_based_value.json
 - utils/number_provider.json
 - utils/base_color.json
+- utils/sound_event.json
 
 IN PROGRESS:
 - data/data_component.json | https://minecraft.wiki/w/Data_component_format#List_of_components

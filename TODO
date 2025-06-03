@@ -26,7 +26,7 @@ IN PROGRESS:
 - utils/entity_condition.json | https://minecraft.wiki/w/Predicate#JSON_Format > entity_properties > All possible conditions for entities > show
 - utils/location_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > location_check >  Tags common to all locations > show
 - utils/item_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > match_tool > All possible conditions for items > show
-- utils/item_sub_predicate |  https://minecraft.wiki/w/Data_component_predicate#Formats
+- utils/item_sub_predicate.json |  https://minecraft.wiki/w/Data_component_predicate#Formats
 
 NOT STARTED:
 

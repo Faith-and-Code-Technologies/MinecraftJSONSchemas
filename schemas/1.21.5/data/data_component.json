@@ -2,405 +2,1937 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "title": "Data Component",
-    "oneOf": [
-        {
+    "properties": {
+        "minecraft:attribute_modifiers": {
+            "type": "array",
+            "description": "Contains attribute modifiers on this item which modify attributes of the wearer or holder.",
+            "items": {
+                "type": "object",
+                "description": "A single attribute modifier.",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "The name of the attribute this modifier is to act upon."
+                    },
+                    "slot": {
+                        "type": "string",
+                        "description": "Slot or slot type the item must be in for the modifier to take effect.",
+                        "enum": [
+                            "any",
+                            "hand",
+                            "armor",
+                            "mainhand",
+                            "offhand",
+                            "head",
+                            "chest",
+                            "legs",
+                            "feet",
+                            "body"
+                        ],
+                        "default": "any"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The unique resource location to identify this modifier."
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Amount of change from the modifier."
+                    },
+                    "operation": {
+                        "type": "string",
+                        "description": "Modifier operation. See Attribute Modifiers for info.",
+                        "enum": [
+                            "add_value",
+                            "add_multiplied_base",
+                            "add_multiplied_total"
+                        ]
+                    }
+                },
+                "required": [
+                    "type",
+                    "id",
+                    "amount",
+                    "operation"
+                ]
+            }
+        },
+        "minecraft:banner_patterns": {
+            "type": "array",
+            "description": "List of all patterns applied to the banner or the shield.",
+            "items": {
+                "type": "object",
+                "description": "A single pattern.",
+                "properties": {
+                    "color": {
+                        "type": "string",
+                        "description": "Dye color of the section."
+                    },
+                    "pattern": {
+                        "type": "object",
+                        "description": "One banner pattern (an ID or a new banner pattern definition).",
+                        "properties": {
+                            "asset_id": {
+                                "type": "string",
+                                "description": "The resource location for the texture asset."
+                            },
+                            "translation_key": {
+                                "type": "string",
+                                "description": "The translation key for displaying the banner tooltip."
+                            }
+                        },
+                        "required": [
+                            "asset_id",
+                            "translation_key"
+                        ]
+                    }
+                },
+                "required": [
+                    "color",
+                    "pattern"
+                ]
+            }
+        },
+        "minecraft:base_color": {
+            "type": "string",
+            "description": "The base dye color of the banner applied on a shield. Example: /give @s shield[base_color=\"lime\"]"
+        },
+        "minecraft:bees": {
+            "type": "array",
+            "description": "The entities currently in the beehive or bee nest.",
+            "items": {
+                "type": "object",
+                "description": "A single entity in the hive.",
+                "properties": {
+                    "entity_data": {
+                        "type": "object",
+                        "description": "The NBT data of the entity in the hive. See Entity format.",
+                        "$ref": "entity_data.json"
+                    },
+                    "min_ticks_in_hive": {
+                        "type": "integer",
+                        "description": "The minimum amount of time in ticks for this entity to stay in the hive."
+                    },
+                    "ticks_in_hive": {
+                        "type": "integer",
+                        "description": "The amount of ticks the entity has stayed in the hive."
+                    }
+                },
+                "required": [
+                    "entity_data",
+                    "min_ticks_in_hive",
+                    "ticks_in_hive"
+                ]
+            }
+        },
+        "minecraft:block_entity_data": {
             "type": "object",
-            "title": "Attribute Modifiers",
-            "description": "Applies attribute modifiers onto items.",
+            "description": "Block entity NBT applied when this block is placed. See Block entity format. Excludes x, y and z tags.",
+            "$ref": "block_entity_data.json"
+        },
+        "minecraft:block_state": {
+            "type": "object",
+            "description": "The block state properties to apply when placing this block. Each key is a block state key and its value is the desired state value.",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "minecraft:blocks_attacks": {
+            "type": "object",
+            "description": "When present, this item can be used like a shield to block attacks to the holding player.",
             "properties": {
-                "minecraft:atttibute_modifiers": {
+                "block_delay_seconds": {
+                    "type": "number",
+                    "description": "Time (in seconds) that use must be held before successfully blocking attacks.",
+                    "default": 0
+                },
+                "disable_cooldown_scale": {
+                    "type": "number",
+                    "description": "Multiplier for cooldown time when attacked by a disabling attack. If 0, item can't be disabled.",
+                    "default": 1
+                },
+                "damage_reductions": {
                     "type": "array",
+                    "description": "Controls how much damage should be blocked in a given attack.",
                     "items": {
-                        "title": "Attibute Modifier",
                         "type": "object",
                         "properties": {
                             "type": {
-                                "type": "string",
-                                "description": "The name of the attribute this modifier is to act upon.",
-                                "title": "Type"
-                            },
-                            "slot": {
-                                "type": "string",
-                                "description": "Slot or slot type the item must be in for the modifier to take effect.",
-                                "title": "Slot",
-                                "enum": [
-                                    "any",
-                                    "hand",
-                                    "armor",
-                                    "mainhand",
-                                    "offhand",
-                                    "head",
-                                    "chest",
-                                    "legs",
-                                    "feet",
-                                    "body"
-                                ],
-                                "default": "any"
-                            },
-                            "id": {
-                                "type": "string",
-                                "description": "The unique resource location to identify this modifier.",
-                                "title": "ID"
-                            },
-                            "amount": {
-                                "type": "number",
-                                "title": "Amount",
-                                "description": "Amount of change form the modifier."
-                            },
-                            "operation": {
-                                "type": "string",
-                                "title": "Operation",
-                                "description": "Modifer operation.",
-                                "enum": [
-                                    "add_value",
-                                    "add_multiplied_base",
-                                    "add_multiplied_total"
-                                ]
-                            }
-                        },
-                        "required": [
-                            "type",
-                            "slot",
-                            "id",
-                            "amount",
-                            "operation"
-                        ]
-                    }
-                }
-            },
-            "required": [
-                "atttibute_modifiers"
-            ]
-        },
-        {
-            "type": "object",
-            "title": "Banner Patterns",
-            "properties": {
-                "minecraft:banner_patterns": {
-                    "type": "array",
-                    "title": "banner_patterns",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "color": {
-                                "type": "string",
-                                "title": "Color"
-                            },
-                            "pattern": {
-                                "title": "Pattern",
+                                "description": "Damage type(s) (ID, tag with #, or list of string IDs).",
                                 "oneOf": [
                                     {
-                                        "type": "object",
-                                        "title": "Asset ID",
-                                        "properties": {
-                                            "pattern": {
-                                                "type": "string",
-                                                "title": "ID"
-                                            }
-                                        },
-                                        "required": [
-                                            "pattern"
-                                        ]
+                                        "type": "string"
                                     },
                                     {
-                                        "type": "object",
-                                        "title": "Banner Pattern Definition",
-                                        "properties": {
-                                            "asset_id": {
-                                                "type": "string",
-                                                "title": "Asset ID"
-                                            },
-                                            "translation_key": {
-                                                "type": "string",
-                                                "title": "Translation Key"
-                                            }
-                                        },
-                                        "required": [
-                                            "asset_id",
-                                            "translation_key"
-                                        ]
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     }
                                 ]
+                            },
+                            "base": {
+                                "type": "number",
+                                "description": "Constant amount of damage to block."
+                            },
+                            "factor": {
+                                "type": "number",
+                                "description": "Fraction of dealt damage to block."
+                            },
+                            "horizontal_blocking_angle": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "description": "Maximum angle between user's facing direction and attack direction for blocking.",
+                                "default": 90
                             }
                         },
                         "required": [
-                            "color",
-                            "pattern"
+                            "base",
+                            "factor"
                         ]
                     }
+                },
+                "item_damage": {
+                    "type": "object",
+                    "description": "Controls how much damage is applied to the item from a given attack.",
+                    "properties": {
+                        "threshold": {
+                            "type": "number",
+                            "description": "Minimum damage required before applying item damage."
+                        },
+                        "base": {
+                            "type": "number",
+                            "description": "Base damage applied to item if threshold is passed."
+                        },
+                        "factor": {
+                            "type": "number",
+                            "description": "Fraction of dealt damage applied to item if threshold is passed."
+                        }
+                    },
+                    "required": [
+                        "threshold",
+                        "base",
+                        "factor"
+                    ]
+                },
+                "block_sound": {
+                    "description": "Sound played when an attack is successfully blocked.",
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "object",
+                            "description": "Sound event definition.",
+                            "$ref": "../utils/sound_event.json"
+                        }
+                    ]
+                },
+                "disabled_sound": {
+                    "description": "Sound played when the item goes into disabled cooldown due to an attack.",
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "object",
+                            "description": "Sound event definition.",
+                            "$ref": "../utils/sound_event.json"
+                        }
+                    ]
+                },
+                "bypassed_by": {
+                    "type": "string",
+                    "description": "A damage type tag with # of damage types that bypass blocking. Defaults to none."
                 }
             }
         },
-        {
-            "type": "object",
-            "title": "Base Color",
-            "$ref": "../utils/base_color.json"
+        "minecraft:break_sound": {
+            "description": "Sound event to play when the item breaks due to zero durability.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "description": "A sound event ID."
+                },
+                {
+                    "type": "object",
+                    "description": "A sound event definition object.",
+                    "$ref": "../utils/sound_event.json"
+                }
+            ]
         },
-        {
+        "minecraft:bucket_entity_data": {
             "type": "object",
-            "title": "Bees",
+            "description": "NBT applied to an entity when placed from this bucket. Only specific tags are supported.",
             "properties": {
-                "minecraft:bees": {
-                    "type": "array",
-                    "title": "Bees",
-                    "items": {
+                "NoAI": {
+                    "type": "boolean",
+                    "description": "Maps to NoAI entity tag."
+                },
+                "Silent": {
+                    "type": "boolean",
+                    "description": "Maps to Silent entity tag."
+                },
+                "NoGravity": {
+                    "type": "boolean",
+                    "description": "Maps to NoGravity entity tag."
+                },
+                "Glowing": {
+                    "type": "boolean",
+                    "description": "Maps to Glowing entity tag."
+                },
+                "Invulnerable": {
+                    "type": "boolean",
+                    "description": "Maps to Invulnerable entity tag."
+                },
+                "Health": {
+                    "type": "number",
+                    "description": "Maps to Health entity tag."
+                },
+                "Age": {
+                    "type": "integer",
+                    "description": "Maps to Age tag (axolotls, tadpoles)."
+                },
+                "Variant": {
+                    "type": "integer",
+                    "description": "Maps to Variant tag (axolotls)."
+                },
+                "HuntingCooldown": {
+                    "type": "integer",
+                    "description": "Memory module cooldown for axolotls (in ticks).",
+                    "format": "int64"
+                },
+                "BucketVariantTag": {
+                    "type": "integer",
+                    "description": "Maps to Variant tag for tropical fish."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Maps to type tag for salmon."
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:bundle_contents": {
+            "type": "array",
+            "description": "The items stored inside this bundle.",
+            "items": {
+                "type": "object",
+                "description": "A single item stack.",
+                "$ref": "item_stack.json"
+            }
+        },
+        "minecraft:can_break": {
+            "title": "Can Break Block Predicates",
+            "description": "The only blocks this item may break when used by a player in adventure mode. Can be a single block predicate or a list of them.",
+            "type": [
+                "object",
+                "array"
+            ],
+            "items": {
+                "type": "object",
+                "title": "Block Predicate",
+                "description": "A single block predicate describing blocks the item can break.",
+                "properties": {
+                    "blocks": {
+                        "title": "Blocks",
+                        "description": "A block ID (e.g. 'minecraft:stone'), a block tag prefixed with '#' (e.g. '#minecraft:logs'), or a list of such strings.",
+                        "type": [
+                            "string",
+                            "array"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "nbt": {
+                        "title": "NBT",
+                        "description": "Optional NBT string representing the block entity data to match.",
+                        "type": "string"
+                    },
+                    "state": {
+                        "title": "Block State",
+                        "description": "An object containing block state key-value pairs to match, e.g., { \"facing\": \"east\" }.",
                         "type": "object",
-                        "properties": {
-                            "entity_data": {
-                                "$ref": "entity_data.json"
-                            },
-                            "min_ticks_in_hive": {
-                                "type": "integer",
-                                "title": "Min Ticks In Hive"
-                            },
-                            "ticks_in_hive": {
-                                "type": "integer",
-                                "title": "Ticks In Hive"
-                            }
+                        "additionalProperties": {
+                            "type": "string"
                         }
                     }
-                }
+                },
+                "additionalProperties": false
             }
         },
-        {
-            "type": "object",
-            "title": "Block Entity Data",
-            "properties": {
-                "minecraft:block_entity_data": {
-                    "$ref": "block_entity_data.json"
-                }
-            }
-        },
-        {
-            "type": "object",
-            "title": "Block State",
-            "properties": {
-                "minecraft:block_state": {
-                    "type": "object",
-                    "properties": {
-                        "block_state": {
-                            "type": "object",
-                            "title": "Single Block State",
-                            "description": "A single block state key-value pair like {type: 'top'}",
-                            "minProperties": 1,
-                            "maxProperties": 1,
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+        "minecraft:can_place_on": {
+            "title": "Can Place On Block Predicates",
+            "description": "Determines which blocks this item can be placed on in adventure mode. Can be a single block predicate object or an array of such objects.",
+            "type": [
+                "object",
+                "array"
+            ],
+            "items": {
+                "type": "object",
+                "title": "Block Predicate",
+                "description": "A predicate defining a set of block conditions this item can be placed on.",
+                "properties": {
+                    "blocks": {
+                        "title": "Blocks",
+                        "description": "A block ID (e.g., 'minecraft:stone'), a tag with '#' (e.g., '#minecraft:logs'), or a list of such strings.",
+                        "type": [
+                            "string",
+                            "array"
+                        ],
+                        "items": {
+                            "type": "string"
                         }
+                    },
+                    "nbt": {
+                        "title": "NBT",
+                        "description": "Optional NBT data to match block entity properties.",
+                        "type": "string"
+                    },
+                    "state": {
+                        "title": "Block State",
+                        "description": "An object specifying required block state key-value pairs (e.g., { \"facing\": \"north\" }).",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "minecraft:charged_projectiles": {
+            "title": "Charged Projectiles",
+            "description": "A list of item stacks representing the projectiles loaded into this crossbow.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "title": "Projectile Item Stack",
+                "description": "A single projectile item stack.",
+                "$ref": "item_stack.json",
+                "additionalProperties": true
+            }
+        },
+        "minecraft:consumable": {
+            "title": "Consumable Component",
+            "description": "Specifies consumption properties and effects for this item.",
+            "type": "object",
+            "properties": {
+                "consume_seconds": {
+                    "title": "Consume Time",
+                    "description": "Number of seconds required to consume the item. Defaults to 1.6.",
+                    "type": "number"
+                },
+                "animation": {
+                    "title": "Consume Animation",
+                    "description": "Animation used while consuming. Must be one of: none, eat, drink, block, bow, spear, crossbow, spyglass, toot_horn, brush. Defaults to eat.",
+                    "type": "string"
+                },
+                "sound": {
+                    "title": "Consume Sound",
+                    "description": "Sound event used during and after consumption. Can be a string sound ID or a sound object definition.",
+                    "type": [
+                        "string",
+                        "object"
+                    ],
+                    "properties": {
+                        "id": {
+                            "title": "Sound ID",
+                            "description": "The identifier of the sound event.",
+                            "type": "string"
+                        },
+                        "volume": {
+                            "title": "Volume",
+                            "description": "The volume of the sound.",
+                            "type": "number"
+                        },
+                        "pitch": {
+                            "title": "Pitch",
+                            "description": "The pitch of the sound.",
+                            "type": "number"
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "has_consume_particles": {
+                    "title": "Has Consume Particles",
+                    "description": "Whether particles are emitted while consuming. Defaults to true.",
+                    "type": "boolean"
+                },
+                "on_consume_effects": {
+                    "title": "On Consume Effects",
+                    "description": "A list of effects that occur when the item is consumed.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/consumableEffect"
                     }
                 }
             },
+            "additionalProperties": false
+        },
+        "minecraft:container": {
+            "title": "Container Items",
+            "description": "List of item entries representing contents of the container.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "title": "Container Slot",
+                "description": "A single slot entry within the container.",
+                "properties": {
+                    "slot": {
+                        "title": "Slot Index",
+                        "description": "The index of the slot in the container (0–255).",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 255
+                    },
+                    "item": {
+                        "title": "Item Stack",
+                        "description": "The item stored in this slot.",
+                        "type": "object",
+                        "$ref": "item_stack.json"
+                    }
+                },
+                "required": [
+                    "slot",
+                    "item"
+                ],
+                "additionalProperties": false
+            }
+        },
+        "minecraft:container_loot": {
+            "title": "Container Loot",
+            "description": "Specifies the unresolved loot table and optional seed for the container.",
+            "type": "object",
+            "properties": {
+                "loot_table": {
+                    "title": "Loot Table ID",
+                    "description": "The identifier of the loot table used to generate container contents.",
+                    "type": "string"
+                },
+                "seed": {
+                    "title": "Loot Table Seed",
+                    "description": "A pseudorandom seed to resolve the loot table with. If not specified or 0, a random seed is used by the game.",
+                    "type": "integer"
+                }
+            },
             "required": [
-                "block_state"
+                "loot_table"
             ],
             "additionalProperties": false
         },
-        {
-            "title": "Blocks Attacks",
+        "minecraft:custom_data": {
+            "title": "Custom Data",
+            "description": "A compound of arbitrary key-value pairs defined by the user. Can be any valid JSON structure or string SNBT.",
+            "type": [
+                "object",
+                "string"
+            ],
+            "additionalProperties": true
+        },
+        "minecraft:custom_model_data": {
+            "title": "Custom Model Data",
+            "description": "A compound containing lists of values used by different model selectors.",
             "type": "object",
             "properties": {
-                "minecraft:blocks_attacks": {
+                "floats": {
+                    "title": "Floats",
+                    "description": "List of float values used by range_dispatch model types. Missing values fall back to default models.",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "flags": {
+                    "title": "Flags",
+                    "description": "Byte array interpreted as booleans for the condition model type. Missing values return the 'is_false' model.",
+                    "type": "array",
+                    "items": {
+                        "type": "boolean"
+                    }
+                },
+                "strings": {
+                    "title": "Strings",
+                    "description": "List of string selectors for the select model type. Missing values use the fallback model.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "colors": {
+                    "title": "Colors",
+                    "description": "List of RGB color values for tinting. Each entry can be an int (decimal or hex) or a list of 3 floats (converted to int).",
+                    "type": "array",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "integer",
+                                "title": "Color as Integer",
+                                "description": "An RGB color packed into a single integer using the formula: Red<<16 + Green<<8 + Blue."
+                            },
+                            {
+                                "type": "array",
+                                "title": "Color as RGB Floats",
+                                "description": "List of 3 floats between 0 and 1 representing red, green, and blue.",
+                                "items": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                },
+                                "minItems": 3,
+                                "maxItems": 3
+                            }
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:custom_name": {
+            "title": "Custom Name",
+            "description": "The item's display name in Text Component format. Can be a string (JSON text component as string), a JSON object, or a list of JSON objects for complex formatting.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "Text Component as String",
+                    "description": "A JSON-formatted string representing the item's custom name."
+                },
+                {
                     "type": "object",
-                    "properties": {
-                        "block_delay_seconds": {
-                            "type": "number",
-                            "default": 0
+                    "title": "Text Component as Object",
+                    "description": "A single text component object representing the item's custom name.",
+                    "$ref": "text_component.json#/definitions/textComponentBase"
+                },
+                {
+                    "type": "array",
+                    "title": "Text Component as Array",
+                    "description": "An array of text component objects for a richly formatted name.",
+                    "items": {
+                        "type": "object",
+                        "$ref": "text_component.json#/definitions/textComponentBase"
+                    }
+                }
+            ]
+        },
+        "minecraft:damage": {
+            "title": "Damage",
+            "description": "The number of durability uses consumed by the item. Must be a non-negative integer. Defaults to 0 if unspecified.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "minecraft:damage_resistant": {
+            "title": "Damage Resistant Types",
+            "description": "A tag listing damage types (prefixed with #) to which the item is invulnerable, both in entity form and when equipped.",
+            "type": "object",
+            "properties": {
+                "types": {
+                    "title": "Damage Types",
+                    "description": "A damage type tag, starting with '#', representing the set of damage types this item resists.",
+                    "type": "string",
+                    "pattern": "^#.+"
+                }
+            },
+            "required": [
+                "types"
+            ],
+            "additionalProperties": false
+        },
+        "minecraft:debug_stick_state": {
+            "title": "Debug Stick Selected Block States",
+            "description": "A compound mapping block IDs to block state values that the debug stick will edit.",
+            "type": "object",
+            "additionalProperties": {
+                "title": "Block State Value",
+                "description": "The block state value for the corresponding block ID property.",
+                "type": "string"
+            }
+        },
+        "minecraft:death_protection": {
+            "title": "Death Protection Component",
+            "description": "If present, this item protects the holder from dying by restoring a single health point",
+            "type": "object",
+            "properties": {
+                "death_effects": {
+                    "title": "Death Effects",
+                    "description": "A list of consume effects that are applied when the item protects the holder",
+                    "type": "array",
+                    "items": {
+                        "title": "Consume Effect",
+                        "description": "A single consume effect",
+                        "$ref": "#/definitions/consumableEffect"
+                    }
+                }
+            }
+        },
+        "minecraft:dyed_color": {
+            "title": "Dyed Color Component",
+            "description": "Defines the color of this leather armor piece. The color applied of this leather armor or wolf armor item. More generally, it is used as the minecraft:dye color provider in item model definitions.",
+            "oneOf": [
+                {
+                    "title": "Color as Integer",
+                    "description": "Color codes are the hex code of the color converted to a decimal number, or can be calculated from the red, green and blue components using this formula: Red<<16 + Green<<8 + Blue",
+                    "type": "integer"
+                },
+                {
+                    "title": "Color as RGB Array",
+                    "description": "A list containing 3 floats corresponding to red, green and blue values as a fraction (ranged 0 to 1, inclusive) that is automatically converted to the int format",
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                }
+            ]
+        },
+        "minecraft:enchantable": {
+            "title": "Enchantable Component",
+            "description": "Defines whether the item can be enchanted in an enchanting table. This only applies if there are applicable enchantments available for that item. If present, and applicable enchantments are available, items with the component can be enchanted in an enchanting table.",
+            "type": "object",
+            "properties": {
+                "value": {
+                    "title": "Enchantability Value",
+                    "description": "Positive integer representing the item's enchantability. A higher value allows enchantments with a higher cost to be picked.",
+                    "type": "integer",
+                    "minimum": 1
+                }
+            },
+            "required": [
+                "value"
+            ]
+        },
+        "minecraft:enchantment_glint_override": {
+            "title": "Enchantment Glint Override Component",
+            "description": "Overrides the enchantment glint effect on this item. When true, this item displays a glint, even without enchantments. When false, this item does not display a glint, even with enchantments.",
+            "type": "boolean"
+        },
+        "minecraft:enchantments": {
+            "title": "Enchantments Component",
+            "description": "Specifies the enchantments on this item. Contains key-value pairs of levels of enchantments on this item that affect the way the item works.",
+            "type": "object",
+            "patternProperties": {
+                "^[a-z0-9_.-]+:[a-z0-9_.-]+$": {
+                    "title": "Enchantment Level",
+                    "description": "The level of the enchantment, where the key is the resource location of an enchantment.",
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:entity_data": {
+            "title": "Entity Data Component",
+            "description": "Specifies the NBT data of an entity that is spawned/created from this item (e.g. armor stand, spawn egg, etc). NBT applied to an entity when created from an item.",
+            "type": "object",
+            "$ref": "entity_data.json"
+        },
+        "minecraft:equippable": {
+            "title": "Equippable Component",
+            "description": "If present, this item can be equipped in the specified slot.",
+            "type": "object",
+            "properties": {
+                "slot": {
+                    "title": "Equipment Slot",
+                    "description": "The slot to put the item on",
+                    "type": "string",
+                    "enum": [
+                        "head",
+                        "chest",
+                        "legs",
+                        "feet",
+                        "body",
+                        "mainhand",
+                        "offhand",
+                        "saddle"
+                    ]
+                },
+                "equip_sound": {
+                    "title": "Equip Sound",
+                    "description": "One sound event (an ID, or a new sound event definition) to play when the item is equipped. Defaults to item.armor.equip_generic.",
+                    "oneOf": [
+                        {
+                            "type": "string"
                         },
-                        "disable_cooldown_scale": {
-                            "type": "number",
-                            "default": 1
+                        {
+                            "type": "object"
+                        }
+                    ]
+                },
+                "asset_id": {
+                    "title": "Asset ID",
+                    "description": "The resource location of the equipment model to use when equipped. The directory this refers to is assets/<namespace>/equipment/<id>.json. If not specified, falls back to rendering as the item itself when in the head slot (if not applicable, the item does not render).",
+                    "type": "string"
+                },
+                "allowed_entities": {
+                    "title": "Allowed Entities",
+                    "description": "Entity ID and or Entity Size, Entity Tag, or list of Entity IDs to limit which entities can equip this item. Defaults to all entities.",
+                    "oneOf": [
+                        {
+                            "type": "string"
                         },
-                        "damage_reductions": {
+                        {
                             "type": "array",
                             "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "dispensable": {
+                    "title": "Dispensable",
+                    "description": "Whether the item can be dispensed by using a dispenser. Defaults to true.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "swappable": {
+                    "title": "Swappable",
+                    "description": "Whether the item can be equipped into the relevant slot by right-clicking. Defaults to true.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "damage_on_hurt": {
+                    "title": "Damage On Hurt",
+                    "description": "Whether this item is damaged when the wearing entity is damaged. Defaults to true.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "equip_on_interact": {
+                    "title": "Equip On Interact",
+                    "description": "Whether this item can be equipped onto a target mob by pressing use on it (as long as this item can be equipped on the target at all). Defaults to true.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "camera_overlay": {
+                    "title": "Camera Overlay",
+                    "description": "The resource location of the overlay texture to use when equipped. The directory this refers to is assets/<namespace>/textures/<id>.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "slot"
+            ]
+        },
+        "minecraft:firework_explosion": {
+            "title": "Firework Explosion Component",
+            "description": "The firework explosion effect stored inside of this firework star (not a firework rocket. For that see the fireworks component). The explosion effect stored by this firework star.",
+            "type": "object",
+            "properties": {
+                "shape": {
+                    "title": "Explosion Shape",
+                    "description": "The shape of the explosion",
+                    "type": "string",
+                    "enum": [
+                        "small_ball",
+                        "large_ball",
+                        "star",
+                        "creeper",
+                        "burst"
+                    ]
+                },
+                "colors": {
+                    "title": "Colors",
+                    "description": "The colors of the initial particles of the explosion, randomly selected from",
+                    "type": "array",
+                    "items": {
+                        "title": "Color",
+                        "description": "A color as a packed integer",
+                        "type": "integer"
+                    }
+                },
+                "fade_colors": {
+                    "title": "Fade Colors",
+                    "description": "The colors of the fading particles of the explosion, randomly selected from",
+                    "type": "array",
+                    "items": {
+                        "title": "Fade Color",
+                        "description": "A color as a packed integer",
+                        "type": "integer"
+                    }
+                },
+                "has_trail": {
+                    "title": "Has Trail",
+                    "description": "Whether or not the explosion has a trail effect (diamond)",
+                    "type": "boolean"
+                },
+                "has_twinkle": {
+                    "title": "Has Twinkle",
+                    "description": "Whether or not the explosion has a twinkle effect (glowstone dust)",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "shape"
+            ]
+        },
+        "minecraft:fireworks": {
+            "title": "Fireworks Component",
+            "description": "The firework explosion effects stored inside of this firework rocket (not a firework star, for that see the firework_explosion component).",
+            "type": "object",
+            "properties": {
+                "explosions": {
+                    "title": "Explosions",
+                    "description": "List of the explosion effects caused by this firework rocket. Has a maximum of 256 explosions.",
+                    "type": "array",
+                    "maxItems": 256,
+                    "items": {
+                        "title": "Explosion Effect",
+                        "description": "A single explosion effect",
+                        "type": "object",
+                        "properties": {
+                            "shape": {
+                                "title": "Explosion Shape",
+                                "description": "The shape of the explosion",
+                                "type": "string",
+                                "enum": [
+                                    "small_ball",
+                                    "large_ball",
+                                    "star",
+                                    "creeper",
+                                    "burst"
+                                ]
+                            },
+                            "colors": {
+                                "title": "Colors",
+                                "description": "The colors of the initial particles of the explosion, randomly selected from",
+                                "type": "array",
+                                "items": {
+                                    "title": "Color",
+                                    "description": "A color as a packed integer",
+                                    "type": "integer"
+                                }
+                            },
+                            "fade_colors": {
+                                "title": "Fade Colors",
+                                "description": "The colors of the fading particles of the explosion, randomly selected from",
+                                "type": "array",
+                                "items": {
+                                    "title": "Fade Color",
+                                    "description": "A color as a packed integer",
+                                    "type": "integer"
+                                }
+                            },
+                            "has_trail": {
+                                "title": "Has Trail",
+                                "description": "Whether or not the explosion has a trail effect (diamond)",
+                                "type": "boolean"
+                            },
+                            "has_twinkle": {
+                                "title": "Has Twinkle",
+                                "description": "Whether or not the explosion has a twinkle effect (glowstone dust)",
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "shape"
+                        ]
+                    }
+                },
+                "flight_duration": {
+                    "title": "Flight Duration",
+                    "description": "The flight duration of this firework rocket, i.e. the number of gunpowders used to craft it. Must be an integer between -128 and 127. Defaults to 1.",
+                    "type": "integer",
+                    "minimum": -128,
+                    "maximum": 127,
+                    "default": 1
+                }
+            }
+        },
+        "minecraft:food": {
+            "title": "Minecraft Food Component",
+            "description": "The food stats for this consumable item. Has no effect unless the item can be consumed (i.e. the item has the consumable component)",
+            "type": "object",
+            "properties": {
+                "nutrition": {
+                    "title": "Nutrition",
+                    "description": "The number of food points restored by this item when eaten. Must be a non-negative integer",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "saturation": {
+                    "title": "Saturation",
+                    "description": "The amount of saturation restored by this item when eaten",
+                    "type": "number"
+                },
+                "can_always_eat": {
+                    "title": "Can Always Eat",
+                    "description": "If true, this item can be eaten even if the player is not hungry. Defaults to false",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "nutrition",
+                "saturation"
+            ],
+            "additionalProperties": false
+        },
+        "minecraft:glider": {
+            "title": "Minecraft Glider Component",
+            "description": "If present, this item allows players to glide (as with elytra) when equipped",
+            "type": "object",
+            "additionalProperties": false
+        },
+        "minecraft:instrument": {
+            "title": "Minecraft Instrument Component",
+            "description": "Specifies the instrument of a goat horn. One instrument (an ID, or a new instrument definition)",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "Instrument ID",
+                    "description": "String ID of an existing instrument"
+                },
+                {
+                    "type": "object",
+                    "title": "Instrument Definition",
+                    "description": "New instrument definition",
+                    "properties": {
+                        "description": {
+                            "title": "Description",
+                            "description": "A text component that is used as a description in tooltips",
+                            "type": "object"
+                        },
+                        "sound_event": {
+                            "title": "Sound Event",
+                            "description": "One sound event (an ID, or a new sound event definition)",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "title": "Sound Event ID",
+                                    "description": "String ID of an existing sound event"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Sound Event Definition",
+                                    "description": "New sound event definition",
+                                    "$ref": "../utils/sound_event.json"
+                                }
+                            ]
+                        },
+                        "use_duration": {
+                            "title": "Use Duration",
+                            "description": "A non-negative float for how long the use duration is",
+                            "type": "number",
+                            "minimum": 0
+                        },
+                        "range": {
+                            "title": "Range",
+                            "description": "A non-negative float for the range of the sound",
+                            "type": "number",
+                            "minimum": 0
+                        }
+                    },
+                    "required": [
+                        "sound_event",
+                        "use_duration",
+                        "range"
+                    ],
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "minecraft:intangible_projectile": {
+            "title": "Minecraft Intangible Projectile Component",
+            "description": "If set, this projectile item can't be picked up by a player when fired, except in creative mode. Can only be used within charged_projectiles components",
+            "type": "object",
+            "additionalProperties": false
+        },
+        "minecraft:item_model": {
+            "title": "Minecraft Item Model Component",
+            "description": "Defines the item model of this item. The resource location of the item, which references the item model definition /assets/<namespace>/items/<id> without the .json suffix",
+            "type": "string"
+        },
+        "minecraft:item_name": {
+            "title": "Minecraft Item Name Component",
+            "description": "The default name of this item, as a text component. Unlike the custom_name component, this name cannot be erased using an anvil, is not italicized, and does not appear in some labels, such as banner markers and item frames",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "Simple Text",
+                    "description": "Simple string text component"
+                },
+                {
+                    "type": "array",
+                    "title": "Text Component Array",
+                    "description": "Array of text components",
+                    "items": {
+                        "$ref": "text_component.json#/definitions/textComponentBase"
+                    }
+                },
+                {
+                    "type": "object",
+                    "title": "Text Component Object",
+                    "description": "Text component object",
+                    "$ref": "text_component.json#/definitions/textComponentBase"
+                }
+            ]
+        },
+        "minecraft:jukebox_playable": {
+            "title": "Minecraft Jukebox Playable Component",
+            "description": "One jukebox song (an ID) to play when inserted into a jukebox. Presence of this component allows the item can be inserted into a jukebox to play the specified song",
+            "type": "string"
+        },
+        "minecraft:lock": {
+            "title": "Minecraft Lock Component",
+            "description": "Locks a container to a certain \"key\". The \"key\" must be an item with the same data as the container item's lock. An item predicate representing the \"key\" to open this container item",
+            "$ref": "../utils/item_sub_predicate.json#/definitions/itemSubPredicate"
+        },
+        "minecraft:lodestone_tracker": {
+            "title": "Minecraft Lodestone Tracker Component",
+            "description": "If specified, stores information about the lodestone this compass should point toward",
+            "type": "object",
+            "properties": {
+                "target": {
+                    "title": "Target",
+                    "description": "Information about the lodestone. Optional. If not set, this compass spins randomly",
+                    "type": "object",
+                    "properties": {
+                        "pos": {
+                            "title": "Position",
+                            "description": "The integer coordinates of the lodestone",
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            },
+                            "minItems": 3,
+                            "maxItems": 3
+                        },
+                        "dimension": {
+                            "title": "Dimension",
+                            "description": "The ID of the dimension of the lodestone",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "pos",
+                        "dimension"
+                    ],
+                    "additionalProperties": false
+                },
+                "tracked": {
+                    "title": "Tracked",
+                    "description": "If true, the component is removed when the lodestone is broken. If false, the component is kept. Defaults to true",
+                    "type": "boolean",
+                    "default": true
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:lore": {
+            "title": "Minecraft Lore Component",
+            "description": "Specifies the item's lore - that being the description of an item. List of additional lines to display in this item's tooltip. Has a maximum of 256 lines",
+            "type": "array",
+            "maxItems": 256,
+            "items": {
+                "title": "Lore Line",
+                "description": "Text component representing a line of text",
+                "oneOf": [
+                    {
+                        "type": "string",
+                        "title": "Simple Text",
+                        "description": "Simple string text component"
+                    },
+                    {
+                        "type": "array",
+                        "title": "Text Component Array",
+                        "description": "Array of text components",
+                        "items": {
+                            "$ref": "text_component.json#/definitions/textComponentBase"
+                        }
+                    },
+                    {
+                        "type": "object",
+                        "title": "Text Component Object",
+                        "description": "Text component object",
+                        "$ref": "text_component.json#/definitions/textComponentBase"
+                    }
+                ]
+            }
+        },
+        "minecraft:map_color": {
+            "title": "Minecraft Map Color Component",
+            "description": "Defines the color of the markings on the item of this map (not the actual map when viewed). The color of the markings on this filled map item texture",
+            "type": "integer"
+        },
+        "minecraft:map_decorations": {
+            "title": "Minecraft Map Decorations Component",
+            "description": "Contains the icons that are displayed on this filled map (e.g. the structures on an explorer map). Contains key-value pairs of the icons to display on this filled map",
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "title": "Map Decoration",
+                    "description": "The key-value pair of a single icon, where the key is an arbitrary unique string identifying the decoration",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "title": "Type",
+                            "description": "The type of the icon",
+                            "type": "string",
+                            "enum": [
+                                "player",
+                                "frame",
+                                "red_marker",
+                                "blue_marker",
+                                "target_x",
+                                "target_point",
+                                "player_off_map",
+                                "player_off_limits",
+                                "mansion",
+                                "monument",
+                                "banner_white",
+                                "banner_orange",
+                                "banner_magenta",
+                                "banner_light_blue",
+                                "banner_yellow",
+                                "banner_lime",
+                                "banner_pink",
+                                "banner_gray",
+                                "banner_light_gray",
+                                "banner_cyan",
+                                "banner_purple",
+                                "banner_blue",
+                                "banner_brown",
+                                "banner_green",
+                                "banner_red",
+                                "banner_black",
+                                "red_x",
+                                "village_desert",
+                                "village_plains",
+                                "village_savanna",
+                                "village_snowy",
+                                "village_taiga",
+                                "jungle_temple",
+                                "swamp_hut"
+                            ]
+                        },
+                        "x": {
+                            "title": "X Coordinate",
+                            "description": "The X world coordinate of the decoration",
+                            "type": "number"
+                        },
+                        "z": {
+                            "title": "Z Coordinate",
+                            "description": "The Z world coordinate of the decoration",
+                            "type": "number"
+                        },
+                        "rotation": {
+                            "title": "Rotation",
+                            "description": "The rotation of the icon, ranging from 0.0 to 360.0, rotated clockwise from north in degrees",
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 360
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "x",
+                        "z",
+                        "rotation"
+                    ],
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:map_id": {
+            "title": "Minecraft Map ID Component",
+            "description": "The id of the map to show. Maps are stored in .minecraft\\saves\\<world_name>\\data and have file names such as map_1.dat. The number of this filled map, representing the shared state holding map contents and markers",
+            "type": "integer"
+        },
+        "minecraft:max_damage": {
+            "title": "Minecraft Max Damage Component",
+            "description": "The maximum amount of damage that this item can take. If not set, this item cannot take damage. Must be a positive integer. Cannot be combined with max_stack_size if it has a value greater than 1 (if the item can be stacked). For the durability bar to appear, the damage component must have a value",
+            "type": "integer",
+            "minimum": 1
+        },
+        "minecraft:max_stack_size": {
+            "title": "Minecraft Max Stack Size Component",
+            "description": "The maximum number of items that can fit in a stack. Must be a positive integer between 1 and 99 (inclusive). If it has a value greater than 1 (if the item can be stacked), cannot be combined with max_damage",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 99
+        },
+        "minecraft:note_block_sound": {
+            "title": "Minecraft Note Block Sound Component",
+            "description": "The ID of the sound event played by a note block when this player head is placed above",
+            "type": "string"
+        },
+        "minecraft:ominous_bottle_amplifier": {
+            "title": "Minecraft Ominous Bottle Amplifier Component",
+            "description": "The amplifier amount of the Bad Omen effect on this ominous bottle. Must be a positive integer between 0 and 4 (inclusive)",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+        },
+        "minecraft:pot_decorations": {
+            "title": "Minecraft Pot Decorations Component",
+            "description": "Defines the sherds applied on a decorated pot. A list of the sherds applied on each face of this decorated pot. If the list has less than 4 entries, the remaining ones default to \"minecraft:brick\"",
+            "type": "array",
+            "maxItems": 4,
+            "items": {
+                "title": "Decoration Item",
+                "description": "The ID of an item. Can be either brick or a sherd",
+                "type": "string"
+            }
+        },
+        "minecraft:potion_contents": {
+            "title": "Minecraft Potion Contents Component",
+            "description": "The potion and custom effects contained in this potion, splash potion, lingering potion, or tipped arrow",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "Potion ID",
+                    "description": "The ID of a potion type"
+                },
+                {
+                    "type": "object",
+                    "title": "Potion Contents Object",
+                    "description": "Detailed potion contents with custom effects and properties",
+                    "properties": {
+                        "potion": {
+                            "title": "Potion",
+                            "description": "The ID of a potion type. Optional",
+                            "type": "string"
+                        },
+                        "custom_color": {
+                            "title": "Custom Color",
+                            "description": "The overriding color of this potion texture, and/or the particles of the area effect cloud created",
+                            "type": "integer"
+                        },
+                        "custom_name": {
+                            "title": "Custom Name",
+                            "description": "An optional string used to generate containing stack name. The game uses the translation key item.minecraft.<item type>.effect.<value>. This name has a higher priority than the minecraft:item_name component, but lower than the minecraft:custom_name component",
+                            "type": "string"
+                        },
+                        "custom_effects": {
+                            "title": "Custom Effects",
+                            "description": "A list of the additional effects that this item should apply",
+                            "type": "array",
+                            "items": {
+                                "title": "Custom Effect",
+                                "description": "A single custom effect",
                                 "type": "object",
                                 "properties": {
-                                    "type": {
-                                        "oneOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        ]
+                                    "id": {
+                                        "title": "Effect ID",
+                                        "description": "The ID of the effect",
+                                        "type": "string"
                                     },
-                                    "base": {
-                                        "type": "number"
+                                    "amplifier": {
+                                        "title": "Amplifier",
+                                        "description": "The amplifier of the effect, with level I having value 0. Optional, defaults to 0",
+                                        "type": "integer",
+                                        "default": 0
                                     },
-                                    "factor": {
-                                        "type": "number"
+                                    "duration": {
+                                        "title": "Duration",
+                                        "description": "The duration of the effect in ticks. Value -1 is treated as infinity. Values 0 or less than -2 are treated as 1. Optional, defaults to 1 tick",
+                                        "type": "integer",
+                                        "default": 1
                                     },
-                                    "horizontal_blocking_angle": {
-                                        "type": "number",
-                                        "exclusiveMinimum": 0,
-                                        "default": 90
+                                    "ambient": {
+                                        "title": "Ambient",
+                                        "description": "Whether or not this is an effect provided by a beacon and therefore should be less intrusive on the screen. Optional, defaults to false",
+                                        "type": "boolean",
+                                        "default": false
+                                    },
+                                    "show_particles": {
+                                        "title": "Show Particles",
+                                        "description": "Whether or not this effect produces particles. Optional, defaults to true",
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "show_icon": {
+                                        "title": "Show Icon",
+                                        "description": "Whether or not an icon should be shown for this effect. Optional, defaults to true",
+                                        "type": "boolean",
+                                        "default": true
                                     }
                                 },
                                 "required": [
-                                    "base",
-                                    "factor"
-                                ]
+                                    "id"
+                                ],
+                                "additionalProperties": false
                             }
-                        },
-                        "item_damage": {
-                            "type": "object",
-                            "properties": {
-                                "threshold": {
-                                    "type": "number"
-                                },
-                                "base": {
-                                    "type": "number"
-                                },
-                                "factor": {
-                                    "type": "number"
-                                }
-                            },
-                            "required": [
-                                "threshold",
-                                "base",
-                                "factor"
-                            ]
-                        },
-                        "block_sound": {
-                            "oneOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "object",
-                                    "$ref": "../utils/sound_event.json"
-                                }
-                            ]
-                        },
-                        "disabled_sound": {
-                            "oneOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "object",
-                                    "$ref": "../utils/sound_event.json"
-                                }
-                            ]
-                        },
-                        "bypassed_by": {
-                            "type": "string",
-                            "pattern": "^#.+"
                         }
                     },
                     "additionalProperties": false
                 }
-            },
-            "required": [
-                "minecraft:blocks_attacks"
-            ],
-            "additionalProperties": false
+            ]
         },
-        {
-            "title": "Break Sound",
+        "minecraft:potion_duration_scale": {
+            "title": "Minecraft Potion Duration Scale Component",
+            "description": "When present, for items that have the minecraft:potion_contents component, the duration of the applied effects is scaled by this factor. Defaults to 1.0",
+            "type": "number",
+            "default": 1
+        },
+        "minecraft:profile": {
+            "title": "Minecraft Profile Component",
+            "description": "Information about the owner of this player head",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "Player Name",
+                    "description": "The name of a player profile, i.e. its username"
+                },
+                {
+                    "type": "object",
+                    "title": "Profile Object",
+                    "description": "Detailed profile information with name, ID, and properties",
+                    "properties": {
+                        "name": {
+                            "title": "Name",
+                            "description": "The name of a player profile, i.e. its username. If this is the only tag provided, it resolves into the other ones below. Optional",
+                            "type": "string"
+                        },
+                        "id": {
+                            "title": "ID",
+                            "description": "The UUID of the owner. Used to update the other tags when the chunk loads or the holder logs in, in case the owner's name has changed. Optional",
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            },
+                            "minItems": 4,
+                            "maxItems": 4
+                        },
+                        "properties": {
+                            "title": "Properties",
+                            "description": "A list of properties. Optional",
+                            "type": "array",
+                            "items": {
+                                "title": "Property",
+                                "description": "A single property",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "title": "Property Name",
+                                        "description": "The name of the property. Can be textures",
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "title": "Value",
+                                        "description": "The texture data json, encoded in base64",
+                                        "type": "string"
+                                    },
+                                    "signature": {
+                                        "title": "Signature",
+                                        "description": "Optional. Mojang's signature of the value, encoded in base64",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "minecraft:provides_banner_patterns": {
+            "title": "Banner Pattern Tag",
+            "description": "When present, this item can be placed in the pattern slot of a loom and provides the specified banner pattern tag. Must be a tag prefixed with #.",
+            "type": "string",
+            "pattern": "^#.+"
+        },
+        "minecraft:provides_trim_material": {
+            "title": "Trim Material",
+            "description": "When present, this item provides the specified trim material when used in a trimming recipe.",
+            "type": "string"
+        },
+        "minecraft:rarity": {
+            "title": "Item Rarity",
+            "description": "Sets the rarity of this item, which affects the default color of its name. Can be common, uncommon, rare or epic.",
+            "type": "string",
+            "enum": [
+                "common",
+                "uncommon",
+                "rare",
+                "epic"
+            ]
+        },
+        "minecraft:recipes": {
+            "title": "Recipe List",
+            "description": "The recipes that a player unlocks when this knowledge book is used.",
+            "type": "array",
+            "items": {
+                "title": "Recipe ID",
+                "description": "The ID of a recipe.",
+                "type": "string"
+            }
+        },
+        "minecraft:repairable": {
+            "title": "Repairable Configuration",
+            "description": "Allows the item to be repaired, if damageable, in an anvil using the specified ingredient.",
             "type": "object",
             "properties": {
-                "minecraft:break_sound": {
-                    "type": "object",
+                "items": {
+                    "title": "Repair Items",
+                    "description": "Item, list of Items, or hash-prefixed Item Tag matching what can be used to repair this item.",
                     "oneOf": [
                         {
-                            "type": "string",
-                            "title": "String",
-                            "description": "A sound event ID"
+                            "type": "string"
                         },
                         {
-                            "type": "object",
-                            "title": "Object",
-                            "$ref": "../utils/sound_event.json"
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     ]
                 }
+            },
+            "required": [
+                "items"
+            ],
+            "additionalProperties": false
+        },
+        "minecraft:repair_cost": {
+            "title": "Repair Cost",
+            "description": "The number of experience levels to add to the base level cost when repairing, combining, or renaming this item with an anvil. Must be a non-negative integer, defaults to 0.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "minecraft:stored_enchantments": {
+            "title": "Stored Enchantments",
+            "description": "Contains key-value pairs of levels of enchantments stored on this enchanted book.",
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "title": "Enchantment Level",
+                    "description": "A single key-value pair, where the key is the resource location of an enchantment, and the value is the level.",
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:suspicious_stew_effects": {
+            "title": "Suspicious Stew Effects",
+            "description": "The effects applied when consuming this suspicious stew.",
+            "type": "array",
+            "items": {
+                "title": "Stew Effect",
+                "description": "A single custom effect.",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Effect ID",
+                        "description": "The ID of the effect.",
+                        "type": "string"
+                    },
+                    "duration": {
+                        "title": "Effect Duration",
+                        "description": "The duration of the effect in ticks. Defaults to 160.",
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "id"
+                ],
+                "additionalProperties": false
             }
         },
-        {
-            "title": "Bucket Entity Data",
+        "minecraft:tool": {
+            "title": "Tool Configuration",
+            "description": "If set, this item is considered as a tool.",
             "type": "object",
             "properties": {
-                "minecraft:bucket_entity_data": {
+                "default_mining_speed": {
+                    "title": "Default Mining Speed",
+                    "description": "The default mining speed of this tool, used if no rules override it. Defaults to 1.0.",
+                    "type": "number"
+                },
+                "damage_per_block": {
+                    "title": "Damage Per Block",
+                    "description": "The amount of durability to remove each time a block is broken with this tool. Must be a non-negative integer. Defaults to 1.",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "can_destroy_blocks_in_creative": {
+                    "title": "Can Destroy Blocks in Creative",
+                    "description": "Whether players can break blocks while holding this tool in Creative mode. Defaults to true.",
+                    "type": "boolean"
+                },
+                "rules": {
+                    "title": "Tool Rules",
+                    "description": "A list of rules for the blocks that this tool has a special behavior with. If a field is overridden by multiple matched rules, the one that comes first in the list is chosen.",
+                    "type": "array",
+                    "items": {
+                        "title": "Tool Rule",
+                        "description": "A single rule.",
+                        "type": "object",
+                        "properties": {
+                            "blocks": {
+                                "title": "Block Matcher",
+                                "description": "The blocks to match with. Can be a block ID or a block tag with a #, or a list of block IDs.",
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                ]
+                            },
+                            "speed": {
+                                "title": "Mining Speed",
+                                "description": "If the blocks match, overrides the default mining speed. Optional.",
+                                "type": "number"
+                            },
+                            "correct_for_drops": {
+                                "title": "Correct for Drops",
+                                "description": "If the blocks match, overrides whether or not this tool is considered correct to mine at its most efficient speed, and to drop items if the block's loot table requires it. If not set by any rules, defaults to false. Optional.",
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "blocks"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:tooltip_display": {
+            "title": "Tooltip Display Configuration",
+            "description": "Allows the tooltips provided specifically by any given item component to be suppressed.",
+            "type": "object",
+            "properties": {
+                "hide_tooltip": {
+                    "title": "Hide Tooltip",
+                    "description": "If true, the item has no tooltip when hovered.",
+                    "type": "boolean"
+                },
+                "hidden_components": {
+                    "title": "Hidden Components",
+                    "description": "The tooltips provided by any component in this list are hidden. If that component provides no tooltip, it has no effect.",
+                    "type": "array",
+                    "items": {
+                        "title": "Component Resource Location",
+                        "description": "The resource location of a component",
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:tooltip_style": {
+            "title": "Tooltip Style Resource Location",
+            "description": "The resource location of the custom sprites for the tooltip background and frame which references textures /assets/<namespace>/textures/gui/sprites/tooltip/<id>_background and /assets/<namespace>/textures/gui/sprites/tooltip/<id>_frame.",
+            "type": "string"
+        },
+        "minecraft:trim": {
+            "title": "Armor Trim",
+            "description": "Contains the trim applied to this armor piece.",
+            "type": "object",
+            "properties": {
+                "pattern": {
+                    "title": "Trim Pattern",
+                    "description": "The ID of the trim pattern.",
+                    "type": "string"
+                },
+                "material": {
+                    "title": "Trim Material",
+                    "description": "The ID of the trim material, which applies a color to the trim.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "pattern",
+                "material"
+            ],
+            "additionalProperties": false
+        },
+        "minecraft:unbreakable": {
+            "title": "Unbreakable Configuration",
+            "description": "If set, this item doesn't lose durability when used.",
+            "type": "object",
+            "additionalProperties": false
+        },
+        "minecraft:use_cooldown": {
+            "title": "Use Cooldown Configuration",
+            "description": "If present, this item applies a cooldown to all items of the same type when it has been used.",
+            "type": "object",
+            "properties": {
+                "seconds": {
+                    "title": "Cooldown Duration",
+                    "description": "The cooldown duration in seconds.",
+                    "type": "number"
+                },
+                "cooldown_group": {
+                    "title": "Cooldown Group",
+                    "description": "The unique resource location to identify this cooldown group. If present, the item is included in a cooldown group and no longer shares cooldowns with its base item type, but instead with any other items that are part of the same cooldown group. Optional.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "seconds"
+            ],
+            "additionalProperties": false
+        },
+        "minecraft:use_remainder": {
+            "title": "Use Remainder Configuration",
+            "description": "If present, replaces the item with a remainder item if its stack count has decreased after use.",
+            "$ref": "item_stack.json#/definitions/itemStack"
+        },
+        "minecraft:weapon": {
+            "title": "Weapon Configuration",
+            "description": "When present, the specified amount of damage can be done to the item with each attack. Additionally, the 'Item Used' statistic is incremented for each attack with the item.",
+            "type": "object",
+            "properties": {
+                "item_damage_per_attack": {
+                    "title": "Item Damage Per Attack",
+                    "description": "The amount to damage the item for each attack performed. Defaults to 1.",
+                    "type": "integer"
+                },
+                "disable_blocking_for_seconds": {
+                    "title": "Shield Disable Duration",
+                    "description": "The amount of seconds that this item can disable a blocking shield on successful attack. If set to 0, this item cannot disable a blocking shield. Defaults to 0.",
+                    "type": "number",
+                    "minimum": 0
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:writable_book_content": {
+            "title": "Writable Book Content",
+            "description": "The contents of this book and quill.",
+            "type": "object",
+            "properties": {
+                "pages": {
+                    "title": "Book Pages",
+                    "description": "A list of the pages in the book.",
+                    "type": "array",
+                    "items": {
+                        "title": "Book Page",
+                        "description": "A single page.",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "title": "Plain Text Page",
+                                "description": "The plain text content of a page."
+                            },
+                            {
+                                "type": "object",
+                                "title": "Detailed Page",
+                                "description": "A single page with optional filtering.",
+                                "properties": {
+                                    "raw": {
+                                        "title": "Raw Text",
+                                        "description": "The plain text content of the page.",
+                                        "type": "string"
+                                    },
+                                    "filtered": {
+                                        "title": "Filtered Text",
+                                        "description": "The filtered text of the page. Optional. Shown only to players with chat filter enabled, instead of raw text.",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "raw"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "pages"
+            ],
+            "additionalProperties": false
+        },
+        "minecraft:written_book_content": {
+            "title": "Written Book Content",
+            "description": "The contents and metadata of this written book.",
+            "type": "object",
+            "properties": {
+                "pages": {
+                    "title": "Book Pages",
+                    "description": "A list of the pages in the book.",
+                    "type": "array",
+                    "items": {
+                        "title": "Book Page",
+                        "description": "A single page.",
+                        "oneOf": [
+                            {},
+                            {
+                                "type": "object",
+                                "title": "Detailed Page",
+                                "description": "A single page with optional filtering.",
+                                "properties": {
+                                    "raw": {
+                                        "title": "Raw Text Component",
+                                        "description": "The text component representing the text content of the page. See Text component format."
+                                    },
+                                    "filtered": {
+                                        "title": "Filtered Text Component",
+                                        "description": "The Text component representing the filtered text of the page. Optional. Shown only to players with chat filter enabled, instead of raw text."
+                                    }
+                                },
+                                "required": [
+                                    "raw"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    }
+                },
+                "title": {
+                    "title": "Book Title",
+                    "description": "The title of this written book.",
                     "type": "object",
                     "properties": {
-                        "NoAI": {
-                            "type": "boolean",
-                            "title": "No AI",
-                            "description": "Turns into NoAI entity tag for all bucketable entities."
+                        "raw": {
+                            "title": "Raw Title",
+                            "description": "The plain text title.",
+                            "type": "string"
                         },
-                        "Silent": {
-                            "type": "boolean",
-                            "title": "Silent",
-                            "description": "Turns into Silent entity tag for all bucketable entities."
-                        },
-                        "NoGravity": {
-                            "type": "boolean",
-                            "title": "No Gravity",
-                            "description": "Turns into NoGravity entity tag for all bucketable entities."
-                        },
-                        "Glowing": {
-                            "type": "boolean",
-                            "title": "Glowing",
-                            "description": "Turns into Glowing entity tag for all bucketable entities."
-                        },
-                        "Invulnerable": {
-                            "type": "boolean",
-                            "title": "Invulnerable",
-                            "description": "Turns into Invulnerable entity tag for all bucketable entities."
-                        },
-                        "Health": {
-                            "type": "number",
-                            "title": "Health",
-                            "description": "Turns into Health entity tag for all bucketable entities."
-                        },
-                        "Age": {
-                            "type": "integer",
-                            "title": "Age",
-                            "description": "Turns into Age entity tag for axolotls and tadpoles."
-                        },
-                        "Variant": {
-                            "type": "integer",
-                            "title": "Variant",
-                            "description": "Turns into Variant entity tag for axolotls."
-                        },
-                        "HuntingCooldown": {
-                            "type": "integer",
-                            "title": "Hunting Cooldown",
-                            "description": "Turns into the expiry time of the memory module has_hunting_cooldown for axolotls."
-                        },
-                        "BucketVariantTag": {
-                            "type": "integer",
-                            "title": "Bucket Variant Tag",
-                            "description": "Turns into Variant entity tag for tropical fish."
-                        },
-                        "type": {
-                            "type": "string",
-                            "title": "Type",
-                            "description": "Turns into type entity tag for salmon."
+                        "filtered": {
+                            "title": "Filtered Title",
+                            "description": "The filtered title. Optional. Shown only to players with chat filter enabled, instead of raw text.",
+                            "type": "string"
                         }
-                    }
+                    },
+                    "required": [
+                        "raw"
+                    ],
+                    "additionalProperties": false
+                },
+                "author": {
+                    "title": "Book Author",
+                    "description": "The author of this written book.",
+                    "type": "string"
+                },
+                "generation": {
+                    "title": "Book Generation",
+                    "description": "The number of times this written book has been copied. 0 = original, 1 = copy of original, 2 = copy of copy, 3 = tattered. Defaults to 0. If the value is greater than 1, the book cannot be copied.",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "resolved": {
+                    "title": "Text Components Resolved",
+                    "description": "If true, the text components have already been resolved (such as entity selectors and scores). If false, they are resolved when this book is opened by a player for the first time. Defaults to false.",
+                    "type": "boolean"
                 }
-            }
-        },
-        {
-            "title": "Bundle Contents",
-            "type": "object",
-            "properties": {
-                "minecraft:bundle_contents": {
-                    "type": "array",
-                    "title": "Bundle Contents",
-                    "description": "The items stored inside this bundle.",
-                    "items": {
-                        "$ref": "item_stack.json#/definitions/itemStack"
-                    }
-                }
-            }
+            },
+            "required": [
+                "pages",
+                "title",
+                "author"
+            ],
+            "additionalProperties": false
         }
-    ]
+    },
+    "definitions": {
+        "consumableEffect": {
+            "type": "object",
+            "title": "Consume Effect",
+            "description": "A single consume effect with a specific behavior.",
+            "properties": {
+                "type": {
+                    "title": "Effect Type",
+                    "description": "The type of consume effect. Must be one of: apply_effects, remove_effects, clear_all_effects, teleport_randomly, play_sound.",
+                    "type": "string"
+                },
+                "effects": {
+                    "title": "Effects",
+                    "description": "List of effect definitions or effect IDs, depending on effect type.",
+                    "type": [
+                        "array",
+                        "string"
+                    ],
+                    "items": {
+                        "type": [
+                            "object",
+                            "string"
+                        ],
+                        "properties": {
+                            "id": {
+                                "title": "Effect ID",
+                                "description": "The ID of the effect to apply.",
+                                "type": "string"
+                            },
+                            "amplifier": {
+                                "title": "Amplifier",
+                                "description": "The amplifier value. Level I is 0. Defaults to 0.",
+                                "type": "integer"
+                            },
+                            "duration": {
+                                "title": "Duration",
+                                "description": "Duration of the effect in ticks. -1 = infinite, 0/-2 or less = 1. Defaults to 1.",
+                                "type": "integer"
+                            },
+                            "ambient": {
+                                "title": "Ambient",
+                                "description": "Whether it's a beacon-style effect. Defaults to false.",
+                                "type": "boolean"
+                            },
+                            "show_particles": {
+                                "title": "Show Particles",
+                                "description": "Whether the effect shows particles. Defaults to true.",
+                                "type": "boolean"
+                            },
+                            "show_icon": {
+                                "title": "Show Icon",
+                                "description": "Whether the effect icon is shown. Defaults to true.",
+                                "type": "boolean"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "probability": {
+                    "title": "Effect Probability",
+                    "description": "Chance (0.0–1.0) that effects apply when consumed. Defaults to 1.0.",
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                },
+                "diameter": {
+                    "title": "Teleport Diameter",
+                    "description": "Diameter of the teleport range if teleport_randomly. Defaults to 16.0.",
+                    "type": "number"
+                },
+                "sound": {
+                    "title": "Play Sound Effect",
+                    "description": "Sound played if effect is play_sound. Can be string or compound.",
+                    "type": [
+                        "string",
+                        "object"
+                    ],
+                    "properties": {
+                        "id": {
+                            "title": "Sound ID",
+                            "description": "ID of the sound event to play.",
+                            "type": "string"
+                        },
+                        "volume": {
+                            "title": "Volume",
+                            "description": "Volume of the sound event.",
+                            "type": "number"
+                        },
+                        "pitch": {
+                            "title": "Pitch",
+                            "description": "Pitch of the sound event.",
+                            "type": "number"
+                        }
+                    },
+                    "additionalProperties": true
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "additionalProperties": false
+        }
+    }
 }

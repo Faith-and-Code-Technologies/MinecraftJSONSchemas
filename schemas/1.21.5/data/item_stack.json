@@ -10,7 +10,7 @@
                     "enumSource": "items"
                 },
                 "components": {
-                    "$ref": "data_component.json#/definitions/dataComponent"
+                    "$ref": "data_component.json"
                 }
             },
             "required": [

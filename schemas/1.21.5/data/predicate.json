@@ -1,10 +1,10 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
+    "type": "object",
+    "properties": {
         "predicate": {
             "title": "Predicate",
             "description": "Schema for defining Minecraft predicates.",
-            "required": ["condition"],
             "oneOf": [
                 {
                     "title": "All Of",
@@ -17,7 +17,7 @@
                             "title": "Terms",
                             "description": "The list of predicates to evaluate.",
                             "items": {
-                                "$ref": "#/definitions/predicate"
+                                "$ref": "#"
                             }
                         }
                     },
@@ -34,7 +34,7 @@
                             "title": "Terms",
                             "description": "The list of predicates to evaluate.",
                             "items": {
-                                "$ref": "#/definitions/predicate"
+                                "$ref": "#"
                             }
                         }
                     },
@@ -107,34 +107,23 @@
                     "description": "Checks the scoreboard scores of an entity.",
                     "type": "object",
                     "properties": {
-                        "condition": {"type": "string", "const": "minecraft:inverted"},
+                        "condition": {"type": "string", "const": "minecraft:entity_scores"},
                         "entity": {
                             "type": "string",
                             "enum": ["this", "attacker", "direct_attacker", "attacking_player"],
                             "description": "The entity to check."
                         },
                         "scores": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "oneOf": [
-                                    {
-                                        "type": "integer"
+                            "type": ["object", "integer"],
+                                "properties": {
+                                    "min": {
+                                        "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
                                     },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "min": {
-                                                "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
-                                            },
-                                            "max": {
-                                                "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
-                                            }
-                                        },
-                                        "additionalProperties": false
+                                    "max": {
+                                        "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
                                     }
-                                ]
+                                }
                             }
-                        }
                     },
                     "required": ["condition", "entity", "scores"]
                 },
@@ -144,9 +133,9 @@
                     "type": "object",
                     "properties": {
                         "condition": {"type": "string", "const": "minecraft:inverted" },
-                        "term": { "$ref": "#/definitions/predicate" }
+                        "term": { "$ref": "#" }
                     },
-                    "required": ["condition", "predicate"]
+                    "required": ["condition", "term"]
                 },
                 {
                     "title": "Killed By Player",
@@ -201,7 +190,22 @@
                         "condition": {"type": "string", "const": "minecraft:random_chance" },
                         "chance": {
                             "title": "Chance",
-                            "$ref": "../utils/number_provider.json#/definitions/floatNumberProvider"
+                            "description": "The chance value, either as a direct number or a number provider object.",
+                            "oneOf": [
+                                {
+                                    "type": "number"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "chance": {
+                                            "$ref": "../utils/number_provider.json#/definitions/floatNumberProvider"
+                                        }
+                                    },
+                                    "required": ["chance"],
+                                    "additionalProperties": false
+                                }
+                            ]
                         }
                     },
                     "required": ["condition", "chance"]
@@ -247,30 +251,79 @@
                     "required": ["condition", "name"]
                 },
                 {
+                    "title": "Survives Explosion",
+                    "description": "Returns success with 1 ÷ explosion radius probability.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:survives_explosion"}
+                    },
+                    "required": ["condition"]
+                },
+                {
+                    "title": "Table Bonus",
+                    "description": "Passes with probability picked from a list, indexed by enchantment power.",
+                    "type": "object",
+                    "properties": {
+                        "condition": {"type": "string", "const": "minecraft:table_bonus"},
+                        "enchantment": {
+                            "type": "string",
+                            "title": "Enchantment",
+                            "description": "Resource location of enchantment.",
+                            "enumSource": "enchantments"
+                        },
+                        "chances": {
+                            "type": "array",
+                            "title": "Chances",
+                            "description": "List of probabilities for enchantment power, indexed from 0.",
+                            "items": {
+                                "type": "number",
+                                "title": "Entry",
+                                "minimum": 0,
+                                "maximum": 1
+                            }
+                        }
+                    },
+                    "required": ["condition", "chances", "enchantment"]
+                },
+                {
                     "title": "Time Check",
                     "description": "Checks the current time.",
+                    "type": "object",
                     "properties": {
-                        "condition": { "const": "minecraft:time_check" },
+                        "condition": {"type": "string", "const": "minecraft:time_check" },
                         "value": {
-                            "type": ["integer", "object"],
                             "description": "An integer or a range object with min/max.",
-                            "properties": {
-                                "min": { "type": "integer", "description": "Minimum time value." },
-                                "max": { "type": "integer", "description": "Maximum time value." }
-                            }
+                            "oneOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "min": {
+                                        "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
+                                        },
+                                        "max": {
+                                        "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            ]
                         },
                         "period": {
                             "type": "integer",
                             "description": "The period for the time check."
                         }
                     },
-                    "required": ["value"]
+                    "required": ["condition", "value"]
                 },
                 {
                     "title": "Weather Check",
                     "description": "Checks the current weather.",
+                    "type": "object",
                     "properties": {
-                        "condition": { "const": "minecraft:weather_check" },
+                        "condition": {"type": "string", "const": "minecraft:weather_check" },
                         "raining": {
                             "type": "boolean",
                             "description": "Whether it is currently raining."
@@ -279,20 +332,8 @@
                             "type": "boolean",
                             "description": "Whether it is currently thundering."
                         }
-                    }
-                },
-                {
-                    "title": "Alternative",
-                    "description": "Combines multiple predicates with OR logic.",
-                    "properties": {
-                        "condition": { "const": "minecraft:alternative" },
-                        "terms": {
-                            "type": "array",
-                            "items": { "$ref": "#" },
-                            "description": "A list of alternative predicates."
-                        }
                     },
-                    "required": ["terms"]
+                    "required": ["condition", "raining", "thundering"]
                 }
             ]
         }

@@ -52,7 +52,7 @@
                             "required": ["condition"]
                         },
                         {
-                            "$ref": "../utils/blockstates_for_predicate.json#/definitions/blockStates"
+                            "$ref": "../common/generated/blockstates_oneof.json#/definitions/blockStates"
                         }
                     ]
                 },
@@ -117,10 +117,10 @@
                             "type": ["object", "integer"],
                                 "properties": {
                                     "min": {
-                                        "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
+                                        "$ref": "../common/providers/number_provider.json#/definitions/integerNumberProvider"
                                     },
                                     "max": {
-                                        "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
+                                        "$ref": "../common/providers/number_provider.json#/definitions/integerNumberProvider"
                                     }
                                 }
                             }
@@ -165,7 +165,7 @@
                             "title": "offsetZ"
                         },
                         "predicate": {
-                            "$ref": "../utils/location_predicate.json#/definitions/locationPredicate"
+                            "$ref": "../common/predicates/location_predicate.json#/definitions/locationPredicate"
                         }
                     },
                     "required": ["condition", "predicate"]
@@ -177,7 +177,7 @@
                     "properties": {
                         "condition": {"type": "string", "const": "minecraft:match_tool" },
                         "predicate": {
-                            "$ref": "../utils/item_predicate.json#/definitions/itemPredicate"
+                            "$ref": "../common/predicates/item_predicate.json#/definitions/itemPredicate"
                         }
                     },
                     "required": ["condition", "predicate"]
@@ -199,7 +199,7 @@
                                     "type": "object",
                                     "properties": {
                                         "chance": {
-                                            "$ref": "../utils/number_provider.json#/definitions/floatNumberProvider"
+                                            "$ref": "../common/providers/number_provider.json#/definitions/floatNumberProvider"
                                         }
                                     },
                                     "required": ["chance"],
@@ -301,10 +301,10 @@
                                     "type": "object",
                                     "properties": {
                                         "min": {
-                                        "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
+                                        "$ref": "../common/providers/number_provider.json#/definitions/integerNumberProvider"
                                         },
                                         "max": {
-                                        "$ref": "../utils/number_provider.json#/definitions/integerNumberProvider"
+                                        "$ref": "../common/providers/number_provider.json#/definitions/integerNumberProvider"
                                         }
                                     },
                                     "additionalProperties": false

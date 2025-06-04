@@ -161,7 +161,7 @@
                                     "properties": {
                                         "type": {"type": "string", "const": "enchantment_level"},
                                         "amount": {
-                                            "$ref": "level_based_value.json#/definitions/levelBasedValue",
+                                            "$ref": "../../utils/level_based_value.json#/definitions/levelBasedValue",
                                             "title": "Amount",
                                             "description": "Level based value calculating the value based on the enchantment."
                                         }
@@ -334,7 +334,7 @@
                                     "properties": {
                                         "type": {"type": "string", "const": "enchantment_level"},
                                         "amount": {
-                                            "$ref": "level_based_value.json#/definitions/levelBasedValue",
+                                            "$ref": "../../utils/level_based_value.json#/definitions/levelBasedValue",
                                             "title": "Amount",
                                             "description": "Level based value calculating the value based on the enchantment."
                                         }

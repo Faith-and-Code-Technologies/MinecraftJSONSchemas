@@ -9,7 +9,7 @@
                     "title": "simple_state_provider",
                     "properties": {
                         "block_state": {
-                            "$ref": "block_state.json#/definitions/blockState"
+                            "$ref": "../../utils/block_state.json#/definitions/blockState"
                         }
                     }
                 },
@@ -18,7 +18,7 @@
                     "title": "rotated_block_provider",
                     "properties": {
                         "block_state": {
-                            "$ref": "block_state.json#/definitions/blockState"
+                            "$ref": "../../utils/block_state.json#/definitions/blockState"
                         }
                     }
                 },
@@ -32,7 +32,7 @@
                                 "type": "object",
                                 "properties": {
                                     "data": {
-                                        "$ref": "block_state.json#/definitions/blockState"
+                                        "$ref": "../../utils/block_state.json#/definitions/blockState"
                                     },
                                     "weight": {
                                         "type": "integer",
@@ -87,14 +87,14 @@
                             "type": "integer"
                         },
                         "noise": {
-                            "$ref": "../data/worldgen/noise.json/#definitions/noise"
+                            "$ref": "../../data/worldgen/noise.json/#definitions/noise"
                         },
                         "scale": {
                             "type": "number",
                             "minimum": 0
                         },
                         "slow_noise": {
-                            "$ref": "../data/worldgen/noise.json/#definitions/noise"
+                            "$ref": "../../data/worldgen/noise.json/#definitions/noise"
                         },
                         "slow_scale": {
                             "type": "number",
@@ -117,7 +117,7 @@
                             }
                         },
                         "states": {
-                            "$ref": "block_state.json#/definitions/blockState"
+                            "$ref": "../../utils/block_state.json#/definitions/blockState"
                         }
                     }
                 },
@@ -129,7 +129,7 @@
                             "type": "integer"
                         },
                         "noise": {
-                            "$ref": "../data/worldgen/noise.json#/definitions/noise"
+                            "$ref": "../../data/worldgen/noise.json#/definitions/noise"
                         },
                         "scale": {
                             "type": "number",
@@ -150,7 +150,7 @@
                             "type": "array",
                             "title": "States",
                             "items": {
-                                "$ref": "block_state.json#/definitions/blockState"
+                                "$ref": "../../utils/block_state.json#/definitions/blockState"
                             }
                         }
                     }

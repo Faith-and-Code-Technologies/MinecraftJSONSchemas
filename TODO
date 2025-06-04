@@ -34,3 +34,8 @@ OTHER:
 - Rename & Reorganize many schemas - Make sure to 
 - Normalize `title` and `description` styles
 - Look through finished schemas to add `required` and `additionalProperties` tags
+
+Need to do:
+- Attribute Modifier Predicate
+- Item Condition Predicate
+- Firework Predicate

@@ -777,7 +777,7 @@
                                     "title": "Object",
                                     "properties": {
                                         "objects": {
-                                            "$ref": "../utils/float_provider.json#/definitions/floatProvider"
+                                            "$ref": "../common/providers/float_provider.json#/definitions/floatProvider"
                                         }
                                     }
                                 }
@@ -807,7 +807,7 @@
                                     "title": "Object",
                                     "properties": {
                                         "objects": {
-                                            "$ref": "../utils/float_provider.json#/definitions/floatProvider"
+                                            "$ref": "../common/providers/float_provider.json#/definitions/floatProvider"
                                         }
                                     }
                                 }
@@ -830,7 +830,7 @@
                             "const": "minecraft:replace_block"
                         },
                         "block_state": {
-                            "$ref": "../utils/block_predicate.json#/definitions/blockStateProvider"
+                            "$ref": "../common/providers/block_state_provider.json#/definitions/blockStateProvider"
                         },
                         "offset": {
                             "type": "object",
@@ -853,7 +853,7 @@
                             "enumSource": "game_events"
                         },
                         "predicate": {
-                            "$ref": "../utils/block_predicate.json#/definitions/blockPredicate"
+                            "$ref": "../common/predicates/block_predicate.json#/definitions/blockPredicate"
                         }
                     },
                     "required": [
@@ -871,7 +871,7 @@
                             "const": "minecraft:replace_disk"
                         },
                         "block_state": {
-                            "$ref": "../utils/block_predicate.json#/definitions/blockStateProvider"
+                            "$ref": "../common/providers/block_state_provider.json#/definitions/blockStateProvider"
                         },
                         "offset": {
                             "type": "array",
@@ -896,7 +896,7 @@
                             "enumSource": "game_events"
                         },
                         "predicate": {
-                            "$ref": "../utils/block_predicate.json#/definitions/blockPredicate"
+                            "$ref": "../common/predicates/block_predicate.json#/definitions/blockPredicate"
                         }
                     },
                     "required": [
@@ -1094,7 +1094,7 @@
                                     "title": "Object",
                                     "properties": {
                                         "objects": {
-                                            "$ref": "../utils/float_provider.json#/definitions/floatProvider"
+                                            "$ref": "../common/providers/float_provider.json#/definitions/floatProvider"
                                         }
                                     }
                                 }
@@ -1122,7 +1122,7 @@
                                     "title": "Object",
                                     "properties": {
                                         "objects": {
-                                            "$ref": "../utils/float_provider.json#/definitions/floatProvider"
+                                            "$ref": "../common/providers/float_provider.json#/definitions/floatProvider"
                                         }
                                     }
                                 }

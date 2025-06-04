@@ -1076,7 +1076,7 @@
         "minecraft:lock": {
             "title": "Minecraft Lock Component",
             "description": "Locks a container to a certain \"key\". The \"key\" must be an item with the same data as the container item's lock. An item predicate representing the \"key\" to open this container item",
-            "$ref": "../common/predicates/item_sub_predicate.json#/definitions/itemSubPredicate"
+            "$ref": "../common/predicates/item_sub_predicate.json"
         },
         "minecraft:lodestone_tracker": {
             "title": "Minecraft Lodestone Tracker Component",

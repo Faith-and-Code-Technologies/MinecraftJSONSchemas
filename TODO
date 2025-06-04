@@ -3,11 +3,10 @@ IN PROGRESS:
 - data/block_entity_data.json | https://minecraft.wiki/w/Chunk_format#Block_entity_format
 - utils/entity_condition.json | https://minecraft.wiki/w/Predicate#JSON_Format > entity_properties > All possible conditions for entities > show
 - common/predicates/location_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > location_check >  Tags common to all locations > show
-- common/predicates/item_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > match_tool > All possible conditions for items > show
-- common/predicates/item_sub_predicate.json |  https://minecraft.wiki/w/Data_component_predicate#Formats
 
 NOT STARTED:
 
 OTHER:
 - Normalize `title` and `description` styles
 - Look through finished schemas to add `required` and `additionalProperties` tags
+- move utils/entity_condition.json -> common/utils/entity_condition.json

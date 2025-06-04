@@ -1,8 +1,1020 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "itemSubPredicate": {
-            
+    "type": "object",
+    "properties": {
+        "minecraft:attribute_modifiers": {
+            "type": "object",
+            "properties": {
+                "modifiers": {
+                    "type": "object",
+                    "description": "A collection predicate of attribute modifier",
+                    "title": "Modifiers",
+                    "properties": {
+                        "contains": {
+                            "title": "Contains",
+                            "type": "array",
+                            "description": "Checks if there is any attribute modifier passing a test. Each test must be passed by at least one attribute modifier.",
+                            "items": {
+                                "type": "object",
+                                "description": "A test - Predicate of attribute modifier",
+                                "$ref": "attribute_modifier.json"
+                            }
+                        },
+                        "size": {
+                            "description": "Checks the total number of attribute modifiers",
+                            "title": "Size",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer",
+                                    "description": "Exact size value"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Range",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "description": "The minimum value"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "description": "The maximum value"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "description": "Range format with min/max values"
+                                }
+                            ]
+                        },
+                        "count": {
+                            "type": "array",
+                            "description": "Checks the number of attribute modifiers that pass a test",
+                            "title": "Count",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "test": {
+                                        "type": "object",
+                                        "title": "Test",
+                                        "description": "A test - Predicate of attribute modifier",
+                                        "$ref": "attribute_modifier.json"
+                                    },
+                                    "count": {
+                                        "description": "Required number - matches exact value or checks if value is between a range",
+                                        "title": "Count",
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "title": "Integer",
+                                                "description": "Exact count value"
+                                            },
+                                            {
+                                                "type": "object",
+                                                "title": "Range",
+                                                "properties": {
+                                                    "min": {
+                                                        "type": "integer",
+                                                        "description": "The minimum value"
+                                                    },
+                                                    "max": {
+                                                        "type": "integer",
+                                                        "description": "The maximum value"
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "description": "Range format with min/max values"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "test",
+                                    "count"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:bundle_contents": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "title": "Items",
+                    "type": "object",
+                    "description": "A collection predicate of item stack",
+                    "properties": {
+                        "contains": {
+                            "title": "Contains",
+                            "type": "array",
+                            "description": "Checks if there is any item stack passing a test. Each test must be passed by at least one item stack.",
+                            "items": {
+                                "title": "Item",
+                                "description": "A test - All possible conditions for items",
+                                "$ref": "item_condition.json"
+                            }
+                        },
+                        "size": {
+                            "title": "Size Check",
+                            "description": "Checks the total number of item stacks",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer",
+                                    "description": "Exact size value"
+                                },
+                                {
+                                    "title": "Range",
+                                    "type": "object",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum",
+                                            "description": "The minimum value"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum",
+                                            "description": "The maximum value"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "description": "Range format with min/max values"
+                                }
+                            ]
+                        },
+                        "count": {
+                            "title": "Count",
+                            "type": "array",
+                            "description": "Checks the number of item stacks that pass a test",
+                            "items": {
+                                "title": "Items",
+                                "type": "object",
+                                "properties": {
+                                    "test": {
+                                        "title": "Test",
+                                        "description": "A test - All possible conditions for items",
+                                        "$ref": "item_condition.json"
+                                    },
+                                    "count": {
+                                        "title": "Count",
+                                        "description": "Required number - matches exact value or checks if value is between a range",
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "title": "Integer",
+                                                "description": "Exact count value"
+                                            },
+                                            {
+                                                "title": "Range",
+                                                "type": "object",
+                                                "properties": {
+                                                    "min": {
+                                                        "type": "integer",
+                                                        "title": "Minimum",
+                                                        "description": "The minimum value"
+                                                    },
+                                                    "max": {
+                                                        "type": "integer",
+                                                        "title": "Maximum",
+                                                        "description": "The maximum value"
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "description": "Range format with min/max values"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "test",
+                                    "count"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:container": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "title": "Items",
+                    "type": "object",
+                    "description": "A collection predicate of item stack",
+                    "properties": {
+                        "contains": {
+                            "title": "Contains",
+                            "type": "array",
+                            "description": "Checks if there is any item stack passing a test. Each test must be passed by at least one item stack.",
+                            "items": {
+                                "title": "Item",
+                                "description": "A test - All possible conditions for items",
+                                "$ref": "item_condition.json"
+                            }
+                        },
+                        "size": {
+                            "title": "Size",
+                            "description": "Checks the total number of item stacks",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer",
+                                    "description": "Exact size value"
+                                },
+                                {
+                                    "title": "Range",
+                                    "type": "object",
+                                    "properties": {
+                                        "min": {
+                                            "title": "Minimum",
+                                            "type": "integer",
+                                            "description": "The minimum value"
+                                        },
+                                        "max": {
+                                            "title": "Maximum",
+                                            "type": "integer",
+                                            "description": "The maximum value"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "description": "Range format with min/max values"
+                                }
+                            ]
+                        },
+                        "count": {
+                            "title": "Count",
+                            "type": "array",
+                            "description": "Checks the number of item stacks that pass a test",
+                            "items": {
+                                "title": "Items",
+                                "type": "object",
+                                "properties": {
+                                    "test": {
+                                        "title": "Test",
+                                        "description": "A test - All possible conditions for items",
+                                        "$ref": "item_condition.json"
+                                    },
+                                    "count": {
+                                        "title": "Count",
+                                        "description": "Required number - matches exact value or checks if value is between a range",
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "title": "Integer",
+                                                "description": "Exact count value"
+                                            },
+                                            {
+                                                "title": "Range",
+                                                "type": "object",
+                                                "properties": {
+                                                    "min": {
+                                                        "type": "integer",
+                                                        "description": "The minimum value"
+                                                    },
+                                                    "max": {
+                                                        "type": "integer",
+                                                        "description": "The maximum value"
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "description": "Range format with min/max values"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "test",
+                                    "count"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:custom_data": {
+            "description": "Checks custom_data data component. Can be a JSON object, NBT compound tag, or string that resolves to NBT compound tag.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "String",
+                    "description": "String that is resolved into an NBT compound tag"
+                },
+                {
+                    "type": "object",
+                    "title": "Object",
+                    "description": "JSON object or NBT compound tag format with key-value pairs",
+                    "patternProperties": {
+                        ".*": {
+                            "description": "Any key with any value type (string, number, boolean, object, array, null)"
+                        }
+                    },
+                    "additionalProperties": true
+                }
+            ]
+        },
+        "minecraft:damage": {
+            "type": "object",
+            "description": "Checks remaining durability or damage value. Damage value is from the damage data component; remaining durability is max_damage minus damage value.",
+            "properties": {
+                "damage": {
+                    "title": "Damage",
+                    "description": "Checks damage value",
+                    "oneOf": [
+                        {
+                            "type": "integer",
+                            "title": "Integer",
+                            "description": "Exact damage value"
+                        },
+                        {
+                            "title": "Range",
+                            "type": "object",
+                            "properties": {
+                                "min": {
+                                    "type": "integer",
+                                    "title": "Minimum",
+                                    "description": "The minimum value"
+                                },
+                                "max": {
+                                    "type": "integer",
+                                    "title": "Maximum",
+                                    "description": "The maximum value"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "description": "Range format with min/max values"
+                        }
+                    ]
+                },
+                "durability": {
+                    "title": "Durability",
+                    "description": "Checks remaining durability",
+                    "oneOf": [
+                        {
+                            "type": "integer",
+                            "title": "Integer",
+                            "description": "Exact durability value"
+                        },
+                        {
+                            "title": "Range",
+                            "type": "object",
+                            "properties": {
+                                "min": {
+                                    "type": "integer",
+                                    "title": "Minimum",
+                                    "description": "The minimum value"
+                                },
+                                "max": {
+                                    "type": "integer",
+                                    "title": "Maximum",
+                                    "description": "The maximum value"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "description": "Range format with min/max values"
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:enchantments": {
+            "type": "array",
+            "description": "Array of conditions. The sub-predicate succeeds when all the conditions succeed.",
+            "items": {
+                "title": "Enchantment Condition",
+                "type": "object",
+                "description": "A condition for checking enchantments",
+                "properties": {
+                    "enchantments": {
+                        "title": "Enchantments",
+                        "description": "Any number of enchantment(s) - an ID, a tag with #, or an array containing IDs. If more than one enchantment is specified, succeeds when any one of them is present.",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "title": "String",
+                                "description": "Single enchantment ID or tag (with #)"
+                            },
+                            {
+                                "type": "array",
+                                "title": "Array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "description": "Array containing enchantment IDs"
+                            }
+                        ]
+                    },
+                    "levels": {
+                        "title": "Levels",
+                        "description": "Checks the level of the specified enchantment. If more than one enchantment is specified, succeeds when any one of them matches the level. If enchantment is not specified, succeeds when any enchantment on the item matches the level.",
+                        "oneOf": [
+                            {
+                                "type": "integer",
+                                "title": "Integer",
+                                "description": "Exact level value"
+                            },
+                            {
+                                "title": "Range",
+                                "type": "object",
+                                "properties": {
+                                    "min": {
+                                        "type": "integer",
+                                        "title": "Minimum",
+                                        "description": "The minimum value"
+                                    },
+                                    "max": {
+                                        "type": "integer",
+                                        "title": "Maximum",
+                                        "description": "The maximum value"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "description": "Range format with min/max values"
+                            }
+                        ]
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "minecraft:firework_explosion": {
+            "title": "Firework Explosion Component",
+            "description": "Checks the firework_explosion data component",
+            "$ref": "firework_condition.json"
+        },
+        "minecraft:fireworks": {
+            "type": "object",
+            "description": "Checks explosion effects in the fireworks data component",
+            "properties": {
+                "explosions": {
+                    "title": "Explosions",
+                    "type": "object",
+                    "description": "A collection predicate of explosion effect",
+                    "properties": {
+                        "contains": {
+                            "title": "Contains",
+                            "type": "array",
+                            "description": "Checks if there is any explosion effect passing a test. Each test must be passed by at least one explosion effect.",
+                            "items": {
+                                "title": "Items",
+                                "description": "A test - Predicate of firework explosion effect",
+                                "$ref": "firework_condition.json"
+                            }
+                        },
+                        "size": {
+                            "title": "Size",
+                            "description": "Checks the total number of explosion effects",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer",
+                                    "description": "Exact size value"
+                                },
+                                {
+                                    "title": "Range",
+                                    "type": "object",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum",
+                                            "description": "The minimum value"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum",
+                                            "description": "The maximum value"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "description": "Range format with min/max values"
+                                }
+                            ]
+                        },
+                        "count": {
+                            "title": "Count",
+                            "type": "array",
+                            "description": "Checks the number of explosion effects that pass a test",
+                            "items": {
+                                "title": "Items",
+                                "type": "object",
+                                "properties": {
+                                    "test": {
+                                        "title": "Test",
+                                        "description": "A test - Predicate of firework explosion effect",
+                                        "$ref": "firework_condition.json"
+                                    },
+                                    "count": {
+                                        "title": "Count",
+                                        "description": "Required number - matches exact value or checks if value is between a range",
+                                        "oneOf": [
+                                            {
+                                                "title": "Integer",
+                                                "type": "integer",
+                                                "description": "Exact count value"
+                                            },
+                                            {
+                                                "title": "Range",
+                                                "type": "object",
+                                                "properties": {
+                                                    "min": {
+                                                        "type": "integer",
+                                                        "title": "Minimum",
+                                                        "description": "The minimum value"
+                                                    },
+                                                    "max": {
+                                                        "type": "integer",
+                                                        "title": "Maximum",
+                                                        "description": "The maximum value"
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "description": "Range format with min/max values"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "test",
+                                    "count"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "flight_duration": {
+                    "title": "Flight Duration",
+                    "description": "Checks the flight duration of this firework rocket, i.e. the number of gunpowders used to craft it",
+                    "oneOf": [
+                        {
+                            "type": "integer",
+                            "title": "Integer",
+                            "description": "Exact flight duration value"
+                        },
+                        {
+                            "title": "Range",
+                            "type": "object",
+                            "properties": {
+                                "min": {
+                                    "type": "integer",
+                                    "title": "Minimum",
+                                    "description": "The minimum value"
+                                },
+                                "max": {
+                                    "type": "integer",
+                                    "title": "Maximum",
+                                    "description": "The maximum value"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "description": "Range format with min/max values"
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:jukebox_playable": {
+            "type": "object",
+            "description": "Checks jukebox song in the jukebox_playable data component.",
+            "properties": {
+                "song": {
+                    "title": "Song",
+                    "description": "Any number of Jukebox songs",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "title": "String",
+                            "description": "A Jukebox Song ID or tag (with #)"
+                        },
+                        {
+                            "type": "array",
+                            "title": "Array",
+                            "description": "An array of Jukebox IDs",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "minecraft:potion_contents": {
+            "description": "Checks potion field in the potion_contents data component.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "String",
+                    "description": "A Jukebox Song ID or tag (with #)"
+                },
+                {
+                    "type": "array",
+                    "title": "Array",
+                    "description": "An array of Jukebox IDs",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "minecraft:stored_enchantments": {
+            "title": "Stored Enchantments",
+            "description": "Array of enchantment conditions. All conditions must succeed for the predicate to pass.",
+            "type": "array",
+            "items": {
+                "title": "Enchantment Condition",
+                "description": "A single enchantment condition that specifies which enchantments and levels to check",
+                "type": "object",
+                "properties": {
+                    "enchantments": {
+                        "title": "Enchantments",
+                        "description": "Optional specification of enchantment(s). Can be a single enchantment ID, a tag reference, or an array of enchantment IDs. If more than one enchantment is specified, succeeds when any one of them is present.",
+                        "oneOf": [
+                            {
+                                "title": "String",
+                                "description": "A single enchantment identifier",
+                                "type": "string"
+                            },
+                            {
+                                "title": "Array",
+                                "description": "An array containing multiple enchantment identifiers",
+                                "type": "array",
+                                "items": {
+                                    "title": "Enchantment ID",
+                                    "description": "An enchantment identifier",
+                                    "type": "string"
+                                }
+                            }
+                        ]
+                    },
+                    "levels": {
+                        "title": "Levels",
+                        "description": "Optional level checking. Can be an exact integer value or a range object. If more than one enchantment is specified, succeeds when any one of them matches the level. If enchantment is not specified, succeeds when any enchantment on the item matches the level.",
+                        "oneOf": [
+                            {
+                                "title": "Integer",
+                                "description": "An exact level value to match",
+                                "type": "integer"
+                            },
+                            {
+                                "title": "Range",
+                                "description": "A range specification with minimum and/or maximum values",
+                                "type": "object",
+                                "properties": {
+                                    "min": {
+                                        "title": "Minimum",
+                                        "description": "The minimum level value (inclusive)",
+                                        "type": "integer"
+                                    },
+                                    "max": {
+                                        "title": "Maximum",
+                                        "description": "The maximum level value (inclusive)",
+                                        "type": "integer"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "anyOf": [
+                                    {
+                                        "required": [
+                                            "min"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "max"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "minecraft:trim": {
+            "title": "Trim",
+            "description": "The trim component containing material and pattern specifications",
+            "type": "object",
+            "properties": {
+                "material": {
+                    "title": "Material",
+                    "description": "Any number of trim material(s) - can be a single ID, tag with #, or array of IDs. If multiple materials are specified, succeeds when any one matches the testing trim material",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "title": "Single",
+                            "description": "A single trim material ID or tag"
+                        },
+                        {
+                            "type": "array",
+                            "title": "Array",
+                            "description": "Array containing multiple trim material IDs",
+                            "items": {
+                                "type": "string",
+                                "title": "Material IDs",
+                                "description": "A trim material ID or tag"
+                            }
+                        }
+                    ]
+                },
+                "pattern": {
+                    "title": "Pattern",
+                    "description": "Any number of trim pattern(s) - can be a single ID, tag with #, or array of IDs. If multiple patterns are specified, succeeds when any one matches the testing trim pattern",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "title": "String",
+                            "description": "A single trim pattern ID or tag"
+                        },
+                        {
+                            "type": "array",
+                            "title": "Array",
+                            "description": "Array containing multiple trim pattern IDs",
+                            "items": {
+                                "type": "string",
+                                "title": "Pattern ID",
+                                "description": "A trim pattern ID or tag"
+                            }
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:writable_book_content": {
+            "title": "Writable Book Content",
+            "description": "The writable book content component containing page collection predicates",
+            "type": "object",
+            "properties": {
+                "pages": {
+                    "title": "Pages",
+                    "description": "A collection predicate of page",
+                    "type": "object",
+                    "properties": {
+                        "contains": {
+                            "title": "Contains",
+                            "description": "Checks if there is any page passing a test. To succeed, each test must be passed by at least one page, but one page does not have to pass all the tests",
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "title": "Page Content Test",
+                                "description": "A test that matches the full string of a page"
+                            }
+                        },
+                        "size": {
+                            "title": "Size",
+                            "description": "Checks the total number of pages",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer",
+                                    "description": "Matches an exact number of pages"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Range",
+                                    "description": "Checks if the page count is within a range",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum",
+                                            "description": "The minimum number of pages"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum",
+                                            "description": "The maximum number of pages"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            ]
+                        },
+                        "count": {
+                            "title": "Count",
+                            "description": "Checks the number of pages that pass a test",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "title": "Page Count Test",
+                                "description": "A test and required number combination",
+                                "properties": {
+                                    "test": {
+                                        "type": "string",
+                                        "title": "Test",
+                                        "description": "A test that matches the full string of a page"
+                                    },
+                                    "count": {
+                                        "title": "Count",
+                                        "description": "The required number of pages that must pass the test",
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "title": "Integer",
+                                                "description": "Matches an exact number of pages"
+                                            },
+                                            {
+                                                "type": "object",
+                                                "title": "Range",
+                                                "description": "Checks if the count is within a range",
+                                                "properties": {
+                                                    "min": {
+                                                        "type": "integer",
+                                                        "title": "Minimum",
+                                                        "description": "The minimum number of pages that must pass"
+                                                    },
+                                                    "max": {
+                                                        "type": "integer",
+                                                        "title": "Maximum",
+                                                        "description": "The maximum number of pages that must pass"
+                                                    }
+                                                },
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "test",
+                                    "count"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "minecraft:written_book_content": {
+            "title": "Written Book Content",
+            "description": "The written book content component containing page collection predicates and book metadata",
+            "type": "object",
+            "properties": {
+                "pages": {
+                    "title": "Pages",
+                    "description": "A collection predicate of page. Checks the raw texts of pages instead of filtered texts",
+                    "type": "object",
+                    "properties": {
+                        "contains": {
+                            "title": "Contains",
+                            "description": "Checks if there is any page passing a test. To succeed, each test must be passed by at least one page, but one page does not have to pass all the tests",
+                            "type": "array",
+                            "items": {
+                                "title": "Page Text Component Test",
+                                "description": "A text component that matches the full text of a page"
+                            }
+                        },
+                        "size": {
+                            "title": "Size",
+                            "description": "Checks the total number of pages",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer",
+                                    "description": "Matches an exact number of pages"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Range",
+                                    "description": "Checks if the page count is within a range",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum",
+                                            "description": "The minimum number of pages"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum",
+                                            "description": "The maximum number of pages"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            ]
+                        },
+                        "count": {
+                            "title": "Count",
+                            "description": "Checks the number of pages that pass a test",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "title": "Page Count Test",
+                                "description": "A test and required number combination",
+                                "properties": {
+                                    "test": {
+                                        "title": "Test",
+                                        "description": "A text component that matches the full text of a page"
+                                    },
+                                    "count": {
+                                        "title": "Count",
+                                        "description": "The required number of pages that must pass the test",
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "title": "Integer",
+                                                "description": "Matches an exact number of pages"
+                                            },
+                                            {
+                                                "type": "object",
+                                                "title": "Range",
+                                                "description": "Checks if the count is within a range",
+                                                "properties": {
+                                                    "min": {
+                                                        "type": "integer",
+                                                        "title": "Minimum",
+                                                        "description": "The minimum number of pages that must pass"
+                                                    },
+                                                    "max": {
+                                                        "type": "integer",
+                                                        "title": "Maximum",
+                                                        "description": "The maximum number of pages that must pass"
+                                                    }
+                                                },
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "test",
+                                    "count"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "author": {
+                    "type": "string",
+                    "title": "Author",
+                    "description": "Matches the full string of author"
+                },
+                "title": {
+                    "type": "string",
+                    "title": "Title",
+                    "description": "Matches the full string of title. Checks raw title instead of filtered title"
+                },
+                "generation": {
+                    "title": "Generation",
+                    "description": "Checks the number of times this written book has been copied. 0 = original, 1 = copy of original, 2 = copy of copy, 3 = tattered",
+                    "oneOf": [
+                        {
+                            "type": "integer",
+                            "title": "Integer",
+                            "description": "Matches an exact generation number",
+                            "minimum": 0,
+                            "maximum": 3
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "description": "Checks if the generation is within a range",
+                            "properties": {
+                                "min": {
+                                    "type": "integer",
+                                    "title": "Minimum",
+                                    "description": "The minimum generation number",
+                                    "minimum": 0
+                                },
+                                "max": {
+                                    "type": "integer",
+                                    "title": "Maximum",
+                                    "description": "The maximum generation number",
+                                    "maximum": 3
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    ]
+                },
+                "resolved": {
+                    "type": "boolean",
+                    "title": "Resolved",
+                    "description": "Checks whether the JSON text components have already been resolved (the resolved field in the data component is true)"
+                }
+            },
+            "additionalProperties": false
         }
-    }
+    },
+    "additionalProperties": false
 }

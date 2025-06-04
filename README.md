@@ -9,4 +9,4 @@ Only supported for **1.21.5 and up!***
 ###### *Will be backported to 1.21.4 in the future.
 
 ### Credits
-- Minecraft.wiki for their well structured site allowing this project to be possible. Also, most definitions are directly from here.
+- Minecraft.wiki for their well structured site allowing this project to be possible. Also, most descriptions are directly from here.

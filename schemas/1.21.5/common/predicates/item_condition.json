@@ -1,0 +1,68 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "items": {
+            "description": "Any number of item(s) - an ID, a tag with #, or an array containing IDs. Tests if the type of item in the item stack matches any of the listed values.",
+            "title": "Items",
+            "oneOf": [
+                {
+                    "title": "String",
+                    "type": "string",
+                    "description": "Single item ID or tag (with #)"
+                },
+                {
+                    "title": "Array",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Array containing item IDs"
+                }
+            ]
+        },
+        "count": {
+            "description": "Tests the number of items in this item stack.",
+            "oneOf": [
+                {
+                    "type": "integer",
+                    "title": "Integer",
+                    "description": "Single value to test for"
+                },
+                {
+                    "title": "Range",
+                    "type": "object",
+                    "properties": {
+                        "min": {
+                            "type": "integer",
+                            "title": "Minimum",
+                            "description": "The minimum value"
+                        },
+                        "max": {
+                            "type": "integer",
+                            "title": "Maximum",
+                            "description": "The maximum value"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "description": "Range format with min/max values"
+                }
+            ]
+        },
+        "components": {
+            "type": "object",
+            "title": "Components",
+            "additionalProperties": false,
+            "description": "Matches exact item component values.",
+            "$ref": "../../data/data_component.json"
+        },
+        "predicates": {
+            "type": "object",
+            "title": "Predicates",
+            "additionalProperties": false,
+            "description": "Matches item sub-predicates.",
+            "$ref": "item_sub_predicate.json"
+        }
+    },
+    "additionalProperties": false
+}

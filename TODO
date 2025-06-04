@@ -1,8 +1,7 @@
 IN PROGRESS:
 - data/entity_data.json | https://minecraft.wiki/w/Entity_format#Entity_format
 - data/block_entity_data.json | https://minecraft.wiki/w/Chunk_format#Block_entity_format
-- utils/entity_condition.json | https://minecraft.wiki/w/Predicate#JSON_Format > entity_properties > All possible conditions for entities > show
-- common/predicates/location_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > location_check >  Tags common to all locations > show
+- common/predicates/entity_condition.json | https://minecraft.wiki/w/Predicate#JSON_Format > entity_properties > All possible conditions for entities > show
 
 NOT STARTED:
 

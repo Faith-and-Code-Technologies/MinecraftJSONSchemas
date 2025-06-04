@@ -1,20 +1,341 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$comment": "VERY much not done",
-    "definitions": {
-        "locationPredicate": {
+    "type": "object",
+    "title": "Location Predicate",
+    "description": "The predicate to apply at the specified location.",
+    "properties": {
+        "biomes": {
+            "title": "Biomes",
+            "description": "Any number of biome(s)",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "String",
+                    "description": "An ID or a tag with #"
+                },
+                {
+                    "type": "array",
+                    "title": "Array",
+                    "description": "An array containing IDs",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "block": {
             "type": "object",
-            "title": "Location Predicate",
-            "description": "The predicate to apply at the specified location.",
+            "title": "Block",
+            "description": "The block at the location.",
             "properties": {
-                "biomes": { "type": "array", "items": { "type": "string" }, "description": "A list of biomes to check." },
-                "block": { "type": "object", "description": "A block predicate to check." },
-                "dimension": { "type": "string", "description": "The dimension to check, e.g., 'minecraft:overworld'." },
-                "fluid": { "type": "string", "description": "The fluid to check, e.g., 'minecraft:water'." },
-                "light": { "type": "object", "description": "The light level to check." },
-                "can_see_sky": { "type": "boolean", "description": "Whether the position can see the sky." },
-                "structures": { "type": "array", "items": { "type": "string" }, "description": "A list of structures to check." }
-            }
+                "blocks": {
+                    "title": "Blocks",
+                    "description": "Any number of block(s)",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "title": "String",
+                            "description": "An ID or a tag with #"
+                        },
+                        {
+                            "type": "array",
+                            "title": "Array",
+                            "description": "An array containing IDs",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "nbt": {
+                    "type": "string",
+                    "title": "NBT",
+                    "description": "Tests the block NBT"
+                },
+                "state": {
+                    "type": "object",
+                    "title": "State",
+                    "description": "Tests the block state",
+                    "patternProperties": {
+                        "^[a-zA-Z_][a-zA-Z0-9_]*$": {
+                            "title": "Block Property",
+                            "description": "Block property key and value pair. Test will fail if the block doesn't have this property",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "title": "Exact Property Value",
+                                    "description": "Exact value that the block property must match"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Property Value Range",
+                                    "description": "Range of values that the block property must fall within",
+                                    "properties": {
+                                        "min": {
+                                            "type": "string",
+                                            "title": "Minimum Value",
+                                            "description": "A minimum value for the block property"
+                                        },
+                                        "max": {
+                                            "type": "string",
+                                            "title": "Maximum Value",
+                                            "description": "A maximum value for the block property"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            ]
+                        }
+                    }
+                },
+                "components": {
+                    "type": "object",
+                    "title": "Components",
+                    "description": "Matches exact item component values.",
+                    "$ref": "../../data/data_component.json"
+                },
+                "predicates": {
+                    "type": "object",
+                    "title": "Predicates",
+                    "description": "Matches data component predicates.",
+                    "$ref": "item_sub_predicate.json"
+                }
+            },
+            "required": [
+                "blocks",
+                "nbt",
+                "state"
+            ]
+        },
+        "dimension": {
+            "type": "string",
+            "description": "The dimension to check, e.g., 'minecraft:overworld'.",
+            "title": "Dimension"
+        },
+        "fluid": {
+            "title": "Fluid Tests",
+            "description": "Tests for fluid at the location",
+            "type": "object",
+            "properties": {
+                "fluids": {
+                    "title": "Fluid Types",
+                    "description": "Any number of fluid(s) - can be a single ID, tag with #, or array of IDs. The fluid at this block",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "title": "Single Fluid ID",
+                            "description": "A single fluid ID or tag"
+                        },
+                        {
+                            "type": "array",
+                            "title": "Multiple Fluid IDs",
+                            "description": "Array containing multiple fluid IDs",
+                            "items": {
+                                "type": "string",
+                                "title": "Fluid ID",
+                                "description": "A fluid ID or tag"
+                            }
+                        }
+                    ]
+                },
+                "state": {
+                    "title": "Fluid State Properties",
+                    "description": "The fluid property tests",
+                    "type": "object",
+                    "patternProperties": {
+                        "^[a-zA-Z_][a-zA-Z0-9_]*$": {
+                            "title": "Fluid Property",
+                            "description": "Fluid property key and value pair. Test will fail if the fluid doesn't have this property",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "title": "Exact Property Value",
+                                    "description": "Exact value that the fluid property must match"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Property Value Range",
+                                    "description": "Range of values that the fluid property must fall within",
+                                    "properties": {
+                                        "min": {
+                                            "type": "string",
+                                            "title": "Minimum Value",
+                                            "description": "A minimum value for the fluid property"
+                                        },
+                                        "max": {
+                                            "type": "string",
+                                            "title": "Maximum Value",
+                                            "description": "A maximum value for the fluid property"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            ]
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "light": {
+            "description": "The light level to check.",
+            "title": "Light",
+            "oneOf": [
+                {
+                    "type": "integer",
+                    "title": "Exact Light Level",
+                    "description": "Exact light level that must match",
+                    "minimum": 0,
+                    "maximum": 15
+                },
+                {
+                    "type": "object",
+                    "title": "Light Level Range",
+                    "description": "Range of light levels (inclusive)",
+                    "properties": {
+                        "min": {
+                            "type": "integer",
+                            "title": "Minimum Light Level",
+                            "description": "The minimum light level (inclusive)",
+                            "minimum": 0,
+                            "maximum": 15
+                        },
+                        "max": {
+                            "type": "integer",
+                            "title": "Maximum Light Level",
+                            "description": "The maximum light level (inclusive)",
+                            "minimum": 0,
+                            "maximum": 15
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "position": {
+            "title": "Position Tests",
+            "description": "Tests for the absolute position of this location. Use an object with min and max to test for a range of values",
+            "type": "object",
+            "properties": {
+                "x": {
+                    "title": "X Position",
+                    "description": "The x position coordinate",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Exact X Coordinate",
+                            "description": "Exact x coordinate that must match"
+                        },
+                        {
+                            "type": "object",
+                            "title": "X Coordinate Range",
+                            "description": "Range of x coordinates",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum X Coordinate",
+                                    "description": "The minimum x coordinate value"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum X Coordinate",
+                                    "description": "The maximum x coordinate value"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    ]
+                },
+                "y": {
+                    "title": "Y Position",
+                    "description": "The y position coordinate",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Exact Y Coordinate",
+                            "description": "Exact y coordinate that must match"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Y Coordinate Range",
+                            "description": "Range of y coordinates",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum Y Coordinate",
+                                    "description": "The minimum y coordinate value"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum Y Coordinate",
+                                    "description": "The maximum y coordinate value"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    ]
+                },
+                "z": {
+                    "title": "Z Position",
+                    "description": "The z position coordinate",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Exact Z Coordinate",
+                            "description": "Exact z coordinate that must match"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Z Coordinate Range",
+                            "description": "Range of z coordinates",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum Z Coordinate",
+                                    "description": "The minimum z coordinate value"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum Z Coordinate",
+                                    "description": "The maximum z coordinate value"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "smokey": {
+            "type": "boolean",
+            "title": "Smokey",
+            "description": "Whether the block is closely above a campfire or soul campfire."
+        },
+        "can_see_sky": {
+            "type": "boolean",
+            "title": "Can See Sky",
+            "description": "Whether the block can see the sky."
+        },
+        "structures": {
+            "title": "Structures",
+            "description": "Any number of structure(s)",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "String",
+                    "description": "An ID or a tag with #"
+                },
+                {
+                    "type": "array",
+                    "title": "Array",
+                    "description": "An array containing IDs",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
         }
     }
 }

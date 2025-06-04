@@ -8,12 +8,12 @@
                 "direct_entity": {
                     "title": "Direct Entity",
                     "description": "The entity that was the direct cause of the damage.",
-                    "$ref": "entity_condition.json#/definitions/entityCondition"
+                    "$ref": "../common/predicates/entity_condition.json#/definitions/entityCondition"
                 },
                 "source_entity": {
                     "title": "Source Entity",
                     "description": "Checks the entity that was the source of the damage (for example: The skeleton that shot the arrow)",
-                    "$ref": "entity_condition.json#/definitions/entityCondition"
+                    "$ref": "../common/predicates/entity_condition.json#/definitions/entityCondition"
                 },
                 "is_direct": {
                     "title": "Is Direct?",

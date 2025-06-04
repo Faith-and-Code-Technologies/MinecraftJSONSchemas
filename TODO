@@ -9,4 +9,3 @@ NOT STARTED:
 OTHER:
 - Normalize `title` and `description` styles
 - Look through finished schemas to add `required` and `additionalProperties` tags
-- move utils/entity_condition.json -> common/utils/entity_condition.json

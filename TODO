@@ -1,41 +1,16 @@
-FINISHED:
-- data/enchantment.json
-- data/predicate.json
-- data/data_component.json
-- data/item_stack.json
-- data/particle.json
-- data/text_component.json
-- data/worldgen/noise.json
-- utils/block_predicate.json
-- utils/block_state_provider.json
-- utils/block_state.json
-- utils/blockstates.json
-- utils/blockstates_for_predicate.json
-- utils/float_provider.json
-- utils/int_provider.json
-- utils/position_source.json
-- utils/damage_types.json
-- utils/level_based_value.json
-- utils/number_provider.json
-- utils/base_color.json
-- utils/sound_event.json
-
 IN PROGRESS:
 - data/entity_data.json | https://minecraft.wiki/w/Entity_format#Entity_format
 - data/block_entity_data.json | https://minecraft.wiki/w/Chunk_format#Block_entity_format
 - utils/entity_condition.json | https://minecraft.wiki/w/Predicate#JSON_Format > entity_properties > All possible conditions for entities > show
-- utils/location_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > location_check >  Tags common to all locations > show
-- utils/item_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > match_tool > All possible conditions for items > show
-- utils/item_sub_predicate.json |  https://minecraft.wiki/w/Data_component_predicate#Formats
+- common/predicates/location_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > location_check >  Tags common to all locations > show
+- common/predicates/item_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > match_tool > All possible conditions for items > show
+- common/predicates/item_sub_predicate.json |  https://minecraft.wiki/w/Data_component_predicate#Formats
+- common/predicates/attribute_modifier.json | https://minecraft.wiki/w/Data_component_predicate#Formats > attrivute_modifiers > Predicate of attribute modifier > show
+- common/predicates/item_condition.json | https://minecraft.wiki/w/Data_component_predicate#Formats > bundle_contents > All possible conditions for items > show
+- common/predicates/firework_condition.json | https://minecraft.wiki/w/Data_component_predicate#Formats > firework_explosion > Predicate of firework explosion effect > show
 
 NOT STARTED:
 
 OTHER:
-- Rename & Reorganize many schemas - Make sure to 
 - Normalize `title` and `description` styles
 - Look through finished schemas to add `required` and `additionalProperties` tags
-
-Need to do:
-- Attribute Modifier Predicate
-- Item Condition Predicate
-- Firework Predicate

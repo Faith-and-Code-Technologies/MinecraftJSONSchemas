@@ -7,7 +7,6 @@ IN PROGRESS:
 - common/predicates/item_sub_predicate.json |  https://minecraft.wiki/w/Data_component_predicate#Formats
 - common/predicates/attribute_modifier.json | https://minecraft.wiki/w/Data_component_predicate#Formats > attrivute_modifiers > Predicate of attribute modifier > show
 - common/predicates/item_condition.json | https://minecraft.wiki/w/Data_component_predicate#Formats > bundle_contents > All possible conditions for items > show
-- common/predicates/firework_condition.json | https://minecraft.wiki/w/Data_component_predicate#Formats > firework_explosion > Predicate of firework explosion effect > show
 
 NOT STARTED:
 

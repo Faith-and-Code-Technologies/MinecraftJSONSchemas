@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "shape": {
+            "type": "string",
+            "title": "Shape",
+            "enum": [
+                "small_ball", "large_ball",
+                "star", "creeper", "burst"
+            ],
+            "description": "Checks the shape of explosion effect."
+        },
+        "has_trail": {
+            "type": "boolean",
+            "title": "Has Trail",
+            "description": "Checks whether or not the explosion has a trail effect."
+        },
+        "has_twinkle": {
+            "type": "boolean",
+            "title": "Has Twinkle",
+            "description": "Checks whether or not the explosion has a twinkle effect."
+        }
+    },
+    "additionalProperties": false
+}

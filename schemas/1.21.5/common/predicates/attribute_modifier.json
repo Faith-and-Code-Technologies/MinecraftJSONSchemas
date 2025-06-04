@@ -1,0 +1,89 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "attribute": {
+            "description": "Any number of attribute(s) - an ID, a tag with #, or an array containing IDs",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "String",
+                    "description": "Single attribute ID or tag (with #)"
+                },
+                {
+                    "type": "array",
+                    "title": "Array",
+                    "description": "Array containing attribute IDs",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "id": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Checks the namespaced ID of the attribute modifier",
+            "title": "ID"
+        },
+        "amount": {
+            "description": "Checks the amount from the attribute modifier. Matches an exact value or checks if the value is between a range.",
+            "title": "Amount",
+            "oneOf": [
+                {
+                    "type": "number",
+                    "description": "Exact amount value",
+                    "title": "Float"
+                },
+                {
+                    "type": "object",
+                    "title": "Range",
+                    "properties": {
+                        "min": {
+                            "type": "number",
+                            "title": "Minimum",
+                            "description": "The minimum value"
+                        },
+                        "max": {
+                            "type": "number",
+                            "title": "Maximum",
+                            "description": "The maximum value"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "description": "Range format with min/max values"
+                }
+            ]
+        },
+        "operation": {
+            "title": "Operation",
+            "type": "string",
+            "enum": [
+                "add_value",
+                "add_multiplied_base",
+                "add_multiplied_total"
+            ],
+            "description": "Checks the operation of the attribute modifier"
+        },
+        "slot": {
+            "type": "string",
+            "enum": [
+                "any",
+                "mainhand",
+                "offhand",
+                "hand",
+                "head",
+                "chest",
+                "legs",
+                "feet",
+                "armor",
+                "body"
+            ],
+            "description": "Checks the slot of the attribute modifier",
+            "title": "Slot"
+        }
+    },
+    "additionalProperties": false
+}

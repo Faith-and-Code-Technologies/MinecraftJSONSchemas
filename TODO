@@ -5,7 +5,6 @@ IN PROGRESS:
 - common/predicates/location_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > location_check >  Tags common to all locations > show
 - common/predicates/item_predicate.json | https://minecraft.wiki/w/Predicate#JSON_Format > match_tool > All possible conditions for items > show
 - common/predicates/item_sub_predicate.json |  https://minecraft.wiki/w/Data_component_predicate#Formats
-- common/predicates/attribute_modifier.json | https://minecraft.wiki/w/Data_component_predicate#Formats > attrivute_modifiers > Predicate of attribute modifier > show
 
 NOT STARTED:
 

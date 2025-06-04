@@ -165,7 +165,7 @@
                             "title": "offsetZ"
                         },
                         "predicate": {
-                            "$ref": "../common/predicates/location_predicate.json#/definitions/locationPredicate"
+                            "$ref": "../common/predicates/location_predicate.json"
                         }
                     },
                     "required": ["condition", "predicate"]

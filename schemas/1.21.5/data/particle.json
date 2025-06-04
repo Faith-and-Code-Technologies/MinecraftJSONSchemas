@@ -34,7 +34,7 @@
                                         "type": "object",
                                         "properties": {
                                             "block_state": {
-                                                "$ref": "utils/block_state.json#/blockState"
+                                                "$ref": "../utils/block_state.json#/definitions/blockState"
                                             }
                                         }
                                     },
@@ -67,7 +67,7 @@
                                         "type": "object",
                                         "properties": {
                                             "block_state": {
-                                                "$ref": "utils/block_state.json#/blockState"
+                                                "$ref": "../utils/block_state.json#/definitions/blockState"
                                             }
                                         }
                                     },
@@ -100,7 +100,7 @@
                                         "type": "object",
                                         "properties": {
                                             "block_state": {
-                                                "$ref": "utils/block_state.json#/blockState"
+                                                "$ref": "../utils/block_state.json#/definitions/blockState"
                                             }
                                         }
                                     },
@@ -133,7 +133,7 @@
                                         "type": "object",
                                         "properties": {
                                             "block_state": {
-                                                "$ref": "utils/block_state.json#/blockState"
+                                                "$ref": "../utils/block_state.json#/definitions/blockState"
                                             }
                                         }
                                     },
@@ -166,7 +166,7 @@
                                         "type": "object",
                                         "properties": {
                                             "block_state": {
-                                                "$ref": "utils/block_state.json#/blockState"
+                                                "$ref": "../utils/block_state.json#/definitions/blockState"
                                             }
                                         }
                                     },
@@ -414,7 +414,7 @@
                         ],
                         "properties": {
                             "destination": {
-                                "$ref": "utils/position_source.json#/definitions/positionSource"
+                                "$ref": "../utils/position_source.json#/definitions/positionSource"
                             },
                             "arrival_in_ticks": {
                                 "type": "integer"

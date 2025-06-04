@@ -6,7 +6,7 @@
             "title": "Block State",
             "properties": {
                 "blockstate": {
-                    "$ref": "blockstates.json#/definitions/blockStates"
+                    "$ref": "../common/generated/blockstates.json#/definitions/blockStates"
                 }
             }
         }

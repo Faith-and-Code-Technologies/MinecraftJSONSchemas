@@ -1,7 +1,150 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
-    "properties": {
-        
-    }
+    "definitions": {
+        "entityFormat": {
+            "type": "object",
+            "properties": {
+                "Air": {
+                    "type": "integer",
+                    "title": "Air",
+                    "description": "How much air the entity has, in game ticks."
+                },
+                "CustomName": {
+                    "title": "Custom Name",
+                    "description": "The custom name text component of this entity.",
+                    "$ref": "text_component.json"
+                },
+                "CustomNameVisible": {
+                    "type": "boolean",
+                    "title": "Custom Name Visible",
+                    "description": "If true, and this entity has a custom name, the name always appears above the entity, regardless of where the cursor points."
+                },
+                "data": {
+                    "type": "object",
+                    "title": "Data",
+                    "description": "Any custom data.",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "fall_distance": {
+                    "type": "number",
+                    "title": "Fall Distance",
+                    "description": "Distance the entity has fallen. "
+                },
+                "Fire": {
+                    "type": "integer",
+                    "title": "Fire",
+                    "description": "Number of game ticks until the fire is put out."
+                },
+                "Glowing": {
+                    "type": "boolean",
+                    "title": "Glowing",
+                    "description": "If true, the entity has a glowing outline."
+                },
+                "HasVisualFire": {
+                    "type": "boolean",
+                    "title": "Has Visual Fire",
+                    "description": "If true, the entity visually appears on fire, even if it is not actually on fire."
+                },
+                "Invulnerable": {
+                    "type": "boolean",
+                    "title": "Invulnerable",
+                    "description": "If true, the entity should not take damage."
+                },
+                "Motion": {
+                    "type": "array",
+                    "title": "Motion",
+                    "description": "List of 3 doubles describing the dx, dy, and dz velocity.",
+                    "items": {
+                        "type": "number",
+                        "minimum": -10.0,
+                        "maximum": 10.0
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                },
+                "NoGravity": {
+                    "type": "boolean",
+                    "title": "No Gravity",
+                    "description": "If True, the entity does not fall down naturally."
+                },
+                "OnGroud": {
+                    "type": "boolean",
+                    "title": "On Ground",
+                    "description": "If true, the entity is touching the ground."
+                },
+                "Passengers": {
+                    "type": "array",
+                    "title": "Passengers",
+                    "description": "The data of the entities that are riding this entity.",
+                    "items": {
+                        "$ref": "#"
+                    }
+                },
+                "PortalCooldown": {
+                    "type": "integer",
+                    "title": "Portal Cooldown",
+                    "description": "The number of game ticks before which the entity may be teleported back through a nether portal."
+                },
+                "Pos": {
+                    "type": "array",
+                    "title": "Pos",
+                    "description": "List of 3 doubles describing the current X, Y, and Z of the entity.",
+                    "items": {
+                        "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3
+                },
+                "Rotation": {
+                    "type": "array",
+                    "title": "Rotation",
+                    "description": "List of 2 floats representing the entity's facing direction.",
+                    "items": {
+                        "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2
+                },
+                "Silent": {
+                    "type": "boolean",
+                    "title": "Silent",
+                    "description": "If true, this entity is silenced."
+                },
+                "Tags": {
+                    "type": "array",
+                    "title": "Tags",
+                    "description": "List of scoreboard tags of this entity.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "maxItems": 1024
+                },
+                "TicksFrozen": {
+                    "type": "integer",
+                    "title": "Ticks Frozen",
+                    "description": "How many game ticks the entity has been freezing."
+                },
+                "UUID": {
+                    "type": "array",
+                    "title": "UUID",
+                    "description": "The entity's UUID",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4
+                }
+            }
+        }
+    },
+    "oneOf": [
+        {
+            "type": "object",
+            "properties": {
+            }
+        }
+    ]
 }

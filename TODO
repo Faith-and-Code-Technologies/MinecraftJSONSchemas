@@ -3,8 +3,12 @@ IN PROGRESS:
 - data/block_entity_data.json | https://minecraft.wiki/w/Chunk_format#Block_entity_format
 
 NOT STARTED:
+- world/entity/*
 
 OTHER:
 - Normalize `title` and `description` styles
 - Look through finished schemas to add `required` and `additionalProperties` tags
 - Use `allOf` when using a `$ref` and metadata tags
+
+FEAT:
+- Take all `title` and `descriptions` into a lang file, and create src/compiler.py to compile the lang into the schemas

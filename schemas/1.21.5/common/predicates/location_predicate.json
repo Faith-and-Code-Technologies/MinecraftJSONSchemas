@@ -92,13 +92,13 @@
                     "type": "object",
                     "title": "Components",
                     "description": "Matches exact item component values.",
-                    "$ref": "../../data/data_component.json"
+                    "$ref": "../../data/data_component.json#"
                 },
                 "predicates": {
                     "type": "object",
                     "title": "Predicates",
                     "description": "Matches data component predicates.",
-                    "$ref": "item_sub_predicate.json"
+                    "$ref": "item_sub_predicate.json#"
                 }
             },
             "required": [

@@ -14,7 +14,7 @@
                     "minimum": 1
                 },
                 "components": {
-                    "$ref": "data_component.json"
+                    "$ref": "data_component.json#"
                 }
             },
             "required": [

@@ -54,14 +54,14 @@
             "title": "Components",
             "additionalProperties": false,
             "description": "Matches exact item component values.",
-            "$ref": "../../data/data_component.json"
+            "$ref": "../../data/data_component.json#"
         },
         "predicates": {
             "type": "object",
             "title": "Predicates",
             "additionalProperties": false,
             "description": "Matches item sub-predicates.",
-            "$ref": "item_sub_predicate.json"
+            "$ref": "item_sub_predicate.json#"
         }
     },
     "additionalProperties": false

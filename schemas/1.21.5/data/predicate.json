@@ -165,7 +165,7 @@
                             "title": "offsetZ"
                         },
                         "predicate": {
-                            "$ref": "../common/predicates/location_predicate.json"
+                            "$ref": "../common/predicates/location_predicate.json#"
                         }
                     },
                     "required": ["condition", "predicate"]
@@ -177,7 +177,7 @@
                     "properties": {
                         "condition": {"type": "string", "const": "minecraft:match_tool" },
                         "predicate": {
-                            "$ref": "../common/predicates/item_condition.json"
+                            "$ref": "../common/predicates/item_condition.json#"
                         }
                     },
                     "required": ["condition", "predicate"]

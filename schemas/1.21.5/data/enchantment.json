@@ -420,7 +420,7 @@
                                     "$ref": "#/definitions/locationBasedEffects"
                                 },
                                 "requirements": {
-                                    "$ref": "predicate.json"
+                                    "$ref": "predicate.json#"
                                 }
                             }
                         },
@@ -433,7 +433,7 @@
                                     "const": ""
                                 },
                                 "requirements": {
-                                    "$ref": "predicate.json"
+                                    "$ref": "predicate.json#"
                                 }
                             }
                         },
@@ -521,7 +521,7 @@
                     "$ref": "#/definitions/valueEffects"
                 },
                 "requirements": {
-                    "$ref": "predicate.json"
+                    "$ref": "predicate.json#"
                 }
             },
             "required": [
@@ -535,7 +535,7 @@
                     "$ref": "#/definitions/entityEffects"
                 },
                 "requirements": {
-                    "$ref": "predicate.json"
+                    "$ref": "predicate.json#"
                 }
             },
             "required": [

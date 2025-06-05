@@ -107,7 +107,7 @@
                     "entity_data": {
                         "type": "object",
                         "description": "The NBT data of the entity in the hive. See Entity format.",
-                        "$ref": "entity_data.json"
+                        "$ref": "entity_data.json#"
                     },
                     "min_ticks_in_hive": {
                         "type": "integer",
@@ -128,7 +128,7 @@
         "minecraft:block_entity_data": {
             "type": "object",
             "description": "Block entity NBT applied when this block is placed. See Block entity format. Excludes x, y and z tags.",
-            "$ref": "block_entity_data.json"
+            "$ref": "block_entity_data.json#"
         },
         "minecraft:block_state": {
             "type": "object",
@@ -224,7 +224,7 @@
                         {
                             "type": "object",
                             "description": "Sound event definition.",
-                            "$ref": "../utils/sound_event.json"
+                            "$ref": "../utils/sound_event.json#"
                         }
                     ]
                 },
@@ -237,7 +237,7 @@
                         {
                             "type": "object",
                             "description": "Sound event definition.",
-                            "$ref": "../utils/sound_event.json"
+                            "$ref": "../utils/sound_event.json#"
                         }
                     ]
                 },
@@ -257,7 +257,7 @@
                 {
                     "type": "object",
                     "description": "A sound event definition object.",
-                    "$ref": "../utils/sound_event.json"
+                    "$ref": "../utils/sound_event.json#"
                 }
             ]
         },
@@ -319,7 +319,7 @@
             "items": {
                 "type": "object",
                 "description": "A single item stack.",
-                "$ref": "item_stack.json"
+                "$ref": "item_stack.json#"
             }
         },
         "minecraft:can_break": {
@@ -410,7 +410,7 @@
                 "type": "object",
                 "title": "Projectile Item Stack",
                 "description": "A single projectile item stack.",
-                "$ref": "item_stack.json",
+                "$ref": "item_stack.json#",
                 "additionalProperties": true
             }
         },
@@ -491,7 +491,7 @@
                         "title": "Item Stack",
                         "description": "The item stored in this slot.",
                         "type": "object",
-                        "$ref": "item_stack.json"
+                        "$ref": "item_stack.json#"
                     }
                 },
                 "required": [
@@ -726,7 +726,7 @@
             "title": "Entity Data Component",
             "description": "Specifies the NBT data of an entity that is spawned/created from this item (e.g. armor stand, spawn egg, etc). NBT applied to an entity when created from an item.",
             "type": "object",
-            "$ref": "entity_data.json"
+            "$ref": "entity_data.json#"
         },
         "minecraft:equippable": {
             "title": "Equippable Component",
@@ -1006,7 +1006,7 @@
                                     "type": "object",
                                     "title": "Sound Event Definition",
                                     "description": "New sound event definition",
-                                    "$ref": "../utils/sound_event.json"
+                                    "$ref": "../utils/sound_event.json#"
                                 }
                             ]
                         },
@@ -1076,7 +1076,7 @@
         "minecraft:lock": {
             "title": "Minecraft Lock Component",
             "description": "Locks a container to a certain \"key\". The \"key\" must be an item with the same data as the container item's lock. An item predicate representing the \"key\" to open this container item",
-            "$ref": "../common/predicates/item_sub_predicate.json"
+            "$ref": "../common/predicates/item_sub_predicate.json#"
         },
         "minecraft:lodestone_tracker": {
             "title": "Minecraft Lodestone Tracker Component",

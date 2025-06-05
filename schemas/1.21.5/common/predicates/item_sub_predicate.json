@@ -17,7 +17,7 @@
                             "items": {
                                 "type": "object",
                                 "description": "A test - Predicate of attribute modifier",
-                                "$ref": "attribute_modifier.json"
+                                "$ref": "attribute_modifier.json#"
                             }
                         },
                         "size": {
@@ -58,7 +58,7 @@
                                         "type": "object",
                                         "title": "Test",
                                         "description": "A test - Predicate of attribute modifier",
-                                        "$ref": "attribute_modifier.json"
+                                        "$ref": "attribute_modifier.json#"
                                     },
                                     "count": {
                                         "description": "Required number - matches exact value or checks if value is between a range",
@@ -116,7 +116,7 @@
                             "items": {
                                 "title": "Item",
                                 "description": "A test - All possible conditions for items",
-                                "$ref": "item_condition.json"
+                                "$ref": "item_condition.json#"
                             }
                         },
                         "size": {
@@ -159,7 +159,7 @@
                                     "test": {
                                         "title": "Test",
                                         "description": "A test - All possible conditions for items",
-                                        "$ref": "item_condition.json"
+                                        "$ref": "item_condition.json#"
                                     },
                                     "count": {
                                         "title": "Count",
@@ -219,7 +219,7 @@
                             "items": {
                                 "title": "Item",
                                 "description": "A test - All possible conditions for items",
-                                "$ref": "item_condition.json"
+                                "$ref": "item_condition.json#"
                             }
                         },
                         "size": {
@@ -262,7 +262,7 @@
                                     "test": {
                                         "title": "Test",
                                         "description": "A test - All possible conditions for items",
-                                        "$ref": "item_condition.json"
+                                        "$ref": "item_condition.json#"
                                     },
                                     "count": {
                                         "title": "Count",
@@ -454,7 +454,7 @@
         "minecraft:firework_explosion": {
             "title": "Firework Explosion Component",
             "description": "Checks the firework_explosion data component",
-            "$ref": "firework_condition.json"
+            "$ref": "firework_condition.json#"
         },
         "minecraft:fireworks": {
             "type": "object",
@@ -472,7 +472,7 @@
                             "items": {
                                 "title": "Items",
                                 "description": "A test - Predicate of firework explosion effect",
-                                "$ref": "firework_condition.json"
+                                "$ref": "firework_condition.json#"
                             }
                         },
                         "size": {
@@ -515,7 +515,7 @@
                                     "test": {
                                         "title": "Test",
                                         "description": "A test - Predicate of firework explosion effect",
-                                        "$ref": "firework_condition.json"
+                                        "$ref": "firework_condition.json#"
                                     },
                                     "count": {
                                         "title": "Count",

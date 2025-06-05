@@ -97,7 +97,7 @@
                             "description": "The entity to evaluate."
                         },
                         "predicate": {
-                            "$ref": "../common/predicates/entity_condition.json#/definitions/entityCondition"
+                            "$ref": "../common/predicates/entity_condition.json"
                         }
                     },
                     "required": ["condition", "entity", "predicate"]

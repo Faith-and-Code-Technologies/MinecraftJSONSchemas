@@ -1,97 +1,1313 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "entityCondition": {
-            "type": "object",
-            "title": "Entity Predicate",
-            "description": "The predicate applied to the entity.",
-            "properties": {
-                "type": {
+    "title": "Entity Predicate",
+    "description": "Schema for entity predicate conditions used in Minecraft data packs",
+    "type": "object",
+    "properties": {
+        "type": {
+            "title": "Entity Type",
+            "description": "Test this entity's type. Can be a single ID, tag with #, or array of IDs",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "String",
+                    "description": "An ID or a tag (with #)."
+                },
+                {
                     "type": "array",
-                    "description": "The entity type(s) to test. Can be a single ID, a tag (prefixed with #), or an array of IDs."
-                },
-                "components": {
-                    "type": "object",
-                    "description": "Matches exact item component values. Each key corresponds to a component to test."
-                },
-                "distance": {
-                    "type": "object",
-                    "description": "Tests the distance to the entity.",
-                    "properties": {
-                        "absolute": { "type": "number", "description": "Distance in 3D space." },
-                        "horizontal": { "type": "number", "description": "Horizontal distance (ignoring Y)." },
-                        "x": { "type": "number", "description": "Difference in X-coordinates." },
-                        "y": { "type": "number", "description": "Difference in Y-coordinates." },
-                        "z": { "type": "number", "description": "Difference in Z-coordinates." }
+                    "title": "Array",
+                    "description": "An array of IDs",
+                    "items": {
+                        "type": "string"
                     }
-                },
-                "effects": {
-                    "type": "object",
-                    "description": "Tests active status effects on the entity.",
-                    "properties": {
-                        "effect_type":{
-                            "title": "Effect Type",
+                }
+            ]
+        },
+        "components": {
+            "title": "Components",
+            "description": "Matches exact item component values. Each key corresponds to a component to test",
+            "$ref": "../../data/data_component.json"
+        },
+        "distance": {
+            "title": "Distance",
+            "description": "Test the distance to the entity this predicate is invoked upon",
+            "type": "object",
+            "properties": {
+                "absolute": {
+                    "title": "Absolute Distance",
+                    "description": "Test the distance between two points in 3D space",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
                             "type": "object",
-                            "description": "The type of effect.",
+                            "title": "Range",
                             "properties": {
-                                "amplifier": {
-                                    "type": "object",
-                                    "properties": {
-                                        "min": { "type": "integer" },
-                                        "max": { "type": "integer" }
-                                    }
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
                                 },
-                                "duration": {
-                                    "type": "object",
-                                    "properties": {
-                                        "min": { "type": "integer" },
-                                        "max": { "type": "integer" }
-                                    }
-                                },
-                                "ambient": { "type": "boolean" },
-                                "visible": { "type": "boolean" }
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
                             }
                         }
-                    }
+                    ]
                 },
-                "equipment": {},
-
-                "flags": {
-                    "type": "object",
-                    "description": "Tests flags of the entity.",
-                    "properties": {
-                        "is_baby": { "type": "boolean" },
-                        "is_on_fire": { "type": "boolean" },
-                        "is_sneaking": { "type": "boolean" },
-                        "is_sprinting": { "type": "boolean" },
-                        "is_swimming": { "type": "boolean" },
-                        "is_on_ground": { "type": "boolean" },
-                        "is_flying": { "type": "boolean" }
-                    }
+                "horizontal": {
+                    "title": "Horizontal Distance",
+                    "description": "Test the distance between two points, ignoring the Y value",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
                 },
-                "location": {},
-
-                "movement": {
-                    "type": "object",
-                    "description": "Tests the movement of the entity.",
-                    "properties": {
-                        "x": { "type": "number" },
-                        "y": { "type": "number" },
-                        "z": { "type": "number" },
-                        "speed": { "type": "number" },
-                        "horizontal_speed": { "type": "number" },
-                        "vertical_speed": { "type": "number" },
-                        "fall_distance": { "type": "number" }
-                    }
+                "x": {
+                    "title": "X Distance",
+                    "description": "Test the absolute difference between the X-coordinates of the two points",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
                 },
-                "team": {
-                    "type": "string",
-                    "description": "The team of the entity."
+                "y": {
+                    "title": "Y Distance",
+                    "description": "Test the absolute difference between the Y-coordinates of the two points",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
                 },
-                "targeted_entity": {},
-
-                "vehicle": {}
+                "z": {
+                    "title": "Z Distance",
+                    "description": "Test the absolute difference between the Z-coordinates of the two points",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
+                }
             }
+        },
+        "effects": {
+            "title": "Effects",
+            "description": "Test the active status effects on the entity",
+            "type": "object",
+            "patternProperties": {
+                "^minecraft:": {
+                    "title": "Status Effect",
+                    "description": "A status effect that must be present",
+                    "type": "object",
+                    "properties": {
+                        "amplifier": {
+                            "title": "Effect Amplifier",
+                            "description": "Test the effect's amplifier. Level I is represented by 0",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Range",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "duration": {
+                            "title": "Effect Duration",
+                            "description": "Test if the effect's remaining time (in ticks)",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Range",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "ambient": {
+                            "title": "Ambient Effect",
+                            "description": "Test whether the effect is from a beacon",
+                            "type": "boolean"
+                        },
+                        "visible": {
+                            "title": "Visible Effect",
+                            "description": "Test if the effect has visible particles",
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
+        "equipment": {
+            "title": "Equipment",
+            "description": "Test the items that this entity holds in its equipment slots",
+            "type": "object",
+            "properties": {
+                "mainhand": {
+                    "title": "Main Hand Item",
+                    "description": "Test the item in the entity's main hand slot",
+                    "type": "object",
+                    "$ref": "item_condition.json"
+                },
+                "offhand": {
+                    "title": "Off Hand Item",
+                    "description": "Test the item in the entity's off hand slot",
+                    "type": "object",
+                    "$ref": "item_condition.json"
+                },
+                "head": {
+                    "title": "Head Item",
+                    "description": "Test the item in the entity's head slot",
+                    "type": "object",
+                    "$ref": "item_condition.json"
+                },
+                "chest": {
+                    "title": "Chest Item",
+                    "description": "Test the item in the entity's chest slot",
+                    "type": "object",
+                    "$ref": "item_condition.json"
+                },
+                "legs": {
+                    "title": "Legs Item",
+                    "description": "Test the item in the entity's legs slot",
+                    "type": "object",
+                    "$ref": "item_condition.json"
+                },
+                "feet": {
+                    "title": "Feet Item",
+                    "description": "Test the item in the entity's feet slot",
+                    "type": "object",
+                    "$ref": "item_condition.json"
+                },
+                "body": {
+                    "title": "Body Item",
+                    "description": "Test the item in the entity's body slot",
+                    "type": "object",
+                    "$ref": "item_condition.json"
+                }
+            }
+        },
+        "flags": {
+            "title": "Entity Flags",
+            "description": "Test flags of the entity",
+            "type": "object",
+            "properties": {
+                "is_baby": {
+                    "title": "Is Baby",
+                    "description": "Test whether the entity is or is not a baby variant",
+                    "type": "boolean"
+                },
+                "is_on_fire": {
+                    "title": "Is On Fire",
+                    "description": "Test whether the entity is or is not on fire",
+                    "type": "boolean"
+                },
+                "is_sneaking": {
+                    "title": "Is Sneaking",
+                    "description": "Test whether the entity is or is not sneaking",
+                    "type": "boolean"
+                },
+                "is_sprinting": {
+                    "title": "Is Sprinting",
+                    "description": "Test whether the entity is or is not sprinting",
+                    "type": "boolean"
+                },
+                "is_swimming": {
+                    "title": "Is Swimming",
+                    "description": "Test whether the entity is or is not swimming",
+                    "type": "boolean"
+                },
+                "is_on_ground": {
+                    "title": "Is On Ground",
+                    "description": "Test whether the entity is or is not on the ground",
+                    "type": "boolean"
+                },
+                "is_flying": {
+                    "title": "Is Flying",
+                    "description": "Test whether the entity is or is not flying (with elytra or in creative mode)",
+                    "type": "boolean"
+                }
+            }
+        },
+        "location": {
+            "title": "Location",
+            "description": "Test properties of this entity's location",
+            "$ref": "location_predicate.json"
+        },
+        "nbt": {
+            "title": "NBT Data",
+            "description": "Test NBT data of this entity. The outer braces { } must be included",
+            "type": "string"
+        },
+        "passenger": {
+            "title": "Passenger",
+            "description": "Test the entity directly riding this entity",
+            "$ref": "#"
+        },
+        "slots": {
+            "title": "Inventory Slots",
+            "description": "Test for items in specific inventory slots",
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "title": "Slot",
+                    "description": "Slot to test",
+                    "$ref": "item_condition.json"
+                }
+            }
+        },
+        "stepping_on": {
+            "title": "Block Standing On",
+            "description": "Test properties of the block the entity is standing on",
+            "$ref": "location_predicate.json"
+        },
+        "movement_affected_by": {
+            "title": "Movement Affected By",
+            "description": "Test properties of the block 0.5 blocks below the block the entity is standing on",
+            "$ref": "location_predicate.json"
+        },
+        "team": {
+            "title": "Team",
+            "description": "Test if the team of this entity matches this string",
+            "type": "string"
+        },
+        "targeted_entity": {
+            "title": "Targeted Entity",
+            "description": "Test properties of the entity which this entity is targeting for attacks",
+            "$ref": "#"
+        },
+        "vehicle": {
+            "title": "Vehicle",
+            "description": "Test properties of the vehicle entity that this entity is riding upon",
+            "$ref": "#"
+        },
+        "movement": {
+            "title": "Movement",
+            "description": "Test the movement of the entity",
+            "type": "object",
+            "properties": {
+                "x": {
+                    "title": "X Velocity",
+                    "description": "Test the velocity along the x-axis in blocks/s",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "y": {
+                    "title": "Y Velocity",
+                    "description": "Test the velocity along the y-axis in blocks/s",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "z": {
+                    "title": "Z Velocity",
+                    "description": "Test the velocity along the z-axis in blocks/s",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "speed": {
+                    "title": "Overall Speed",
+                    "description": "Test the overall movement speed in blocks/s",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "horizontal_speed": {
+                    "title": "Horizontal Speed",
+                    "description": "Test the horizontal movement speed in blocks/s. Combined magnitude of x and z velocities",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "vertical_speed": {
+                    "title": "Vertical Speed",
+                    "description": "Test the vertical movement speed in blocks/s. Absolute value of y velocity",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "fall_distance": {
+                    "title": "Fall Distance",
+                    "description": "Test the fall distance of the entity in blocks",
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "title": "Float"
+                        },
+                        {
+                            "type": "object",
+                            "title": "Range",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "title": "Minimum"
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "title": "Maximum"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "periodic_tick": {
+            "title": "Periodic Tick",
+            "description": "Only succeeds if the age of the entity is divisible by the given number",
+            "type": "integer"
+        },
+        "predicates": {
+            "title": "Data Component Predicates",
+            "description": "Matches data component predicates",
+            "$ref": "item_sub_predicate.json"
+        },
+        "type_specific": {
+            "title": "Type Specific Properties",
+            "description": "Test entity properties that can only be applied to certain entity types",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "axolotl"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "lucy",
+                                "wild",
+                                "gold",
+                                "cyan",
+                                "blue"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "cat"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "title": "ID",
+                                    "enum": [
+                                        "white",
+                                        "black",
+                                        "red",
+                                        "siamese",
+                                        "british_shorthair",
+                                        "calico",
+                                        "persian",
+                                        "ragdoll",
+                                        "tabby",
+                                        "all_black",
+                                        "jellie"
+                                    ]
+                                },
+                                {
+                                    "type": "string",
+                                    "title": "Tag"
+                                },
+                                {
+                                    "type": "array",
+                                    "title": "Array",
+                                    "items": {
+                                        "type": "string",
+                                        "enum": [
+                                            "white",
+                                            "black",
+                                            "red",
+                                            "siamese",
+                                            "british_shorthair",
+                                            "calico",
+                                            "persian",
+                                            "ragdoll",
+                                            "tabby",
+                                            "all_black",
+                                            "jellie"
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "fishing_hook"
+                        },
+                        "in_open_water": {
+                            "title": "In Open Water",
+                            "description": "Whether the fishing hook was in open water (fishing_hook type only)",
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "fox"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "red",
+                                "snow"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "frog"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "title": "ID",
+                                    "enum": [
+                                        "cold",
+                                        "temperate",
+                                        "warm"
+                                    ]
+                                },
+                                {
+                                    "type": "string",
+                                    "title": "Tag"
+                                },
+                                {
+                                    "type": "array",
+                                    "title": "Array",
+                                    "items": {
+                                        "type": "string",
+                                        "enum": [
+                                            "cold",
+                                            "temperate",
+                                            "warm"
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "horse"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "white",
+                                "creamy",
+                                "chestnut",
+                                "brown",
+                                "black",
+                                "gray",
+                                "dark_brown"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "lightning"
+                        },
+                        "blocks_set_on_fire": {
+                            "title": "Blocks Set On Fire",
+                            "description": "Tests the number of blocks set on fire by this lightning bolt (lightning type only)",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Range",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "entity_struck": {
+                            "title": "Entity Struck",
+                            "description": "Test properties of entities struck by this lightning bolt (lightning type only)",
+                            "$ref": "#"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "llama"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "creamy",
+                                "white",
+                                "brown",
+                                "gray"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "mooshroom"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "red",
+                                "brown"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "painting"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "title": "ID"
+                                },
+                                {
+                                    "type": "string",
+                                    "title": "Tag"
+                                },
+                                {
+                                    "type": "array",
+                                    "title": "Array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "parrot"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "red_blue",
+                                "green",
+                                "yellow_blue",
+                                "gray"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "player"
+                        },
+                        "looking_at": {
+                            "title": "Looking At",
+                            "description": "Test properties of the entity that this player is looking at (player type only)",
+                            "$ref": "#"
+                        },
+                        "advancements": {
+                            "title": "Player Advancements",
+                            "description": "Test the player's advancements (player type only)",
+                            "type": "object",
+                            "patternProperties": {
+                                ".*": {
+                                    "oneOf": [
+                                        {
+                                            "type": "boolean"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "patternProperties": {
+                                                ".*": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        "gamemode": {
+                            "title": "Game Mode",
+                            "description": "Test the game modes of this player (player type only)",
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "survival",
+                                    "creative",
+                                    "adventure",
+                                    "spectator"
+                                ]
+                            }
+                        },
+                        "level": {
+                            "title": "Experience Level",
+                            "description": "Tests experience level of this player (player type only)",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Range",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "recipes": {
+                            "title": "Known Recipes",
+                            "description": "Test if recipes are known or unknown to this player (player type only)",
+                            "type": "object",
+                            "patternProperties": {
+                                ".*": {
+                                    "type": "boolean"
+                                }
+                            }
+                        },
+                        "stats": {
+                            "title": "Player Statistics",
+                            "description": "Test this player's statistics (player type only)",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "title": "Statistic Type",
+                                        "description": "The statistic type",
+                                        "type": "string",
+                                        "enum": [
+                                            "minecraft:custom",
+                                            "minecraft:crafted",
+                                            "minecraft:used",
+                                            "minecraft:broken",
+                                            "minecraft:mined",
+                                            "minecraft:killed",
+                                            "minecraft:picked_up",
+                                            "minecraft:dropped",
+                                            "minecraft:killed_by"
+                                        ]
+                                    },
+                                    "stat": {
+                                        "title": "Statistic ID",
+                                        "description": "The statistic ID to test",
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "title": "Statistic Value",
+                                        "description": "Tests the value of the statistic",
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "title": "Integer"
+                                            },
+                                            {
+                                                "type": "object",
+                                                "title": "Range",
+                                                "properties": {
+                                                    "min": {
+                                                        "type": "integer",
+                                                        "title": "Minimum"
+                                                    },
+                                                    "max": {
+                                                        "type": "integer",
+                                                        "title": "Maximum"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "stat"
+                                ]
+                            }
+                        },
+                        "input": {
+                            "title": "Player Input",
+                            "description": "Test the inputs of this player (player type only)",
+                            "type": "object",
+                            "properties": {
+                                "forward": {
+                                    "title": "Forward Input",
+                                    "description": "Tests whether the player is inputting Walk Forward",
+                                    "type": "boolean"
+                                },
+                                "backward": {
+                                    "title": "Backward Input",
+                                    "description": "Tests whether the player is inputting Walk Backward",
+                                    "type": "boolean"
+                                },
+                                "left": {
+                                    "title": "Left Input",
+                                    "description": "Tests whether the player is inputting Strafe Left",
+                                    "type": "boolean"
+                                },
+                                "right": {
+                                    "title": "Right Input",
+                                    "description": "Tests whether the player is inputting Strafe Right",
+                                    "type": "boolean"
+                                },
+                                "jump": {
+                                    "title": "Jump Input",
+                                    "description": "Tests whether the player is inputting Jump",
+                                    "type": "boolean"
+                                },
+                                "sneak": {
+                                    "title": "Sneak Input",
+                                    "description": "Tests whether the player is inputting Sneak",
+                                    "type": "boolean"
+                                },
+                                "sprint": {
+                                    "title": "Sprint Input",
+                                    "description": "Tests whether the player is inputting Sprint",
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "rabbit"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "brown",
+                                "white",
+                                "white_splotched",
+                                "gold",
+                                "salt",
+                                "evil"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "raider"
+                        },
+                        "is_captain": {
+                            "title": "Is Captain",
+                            "description": "Tests whether the raider is a captain (raider type only)",
+                            "type": "boolean"
+                        },
+                        "has_raid": {
+                            "title": "Has Raid",
+                            "description": "Tests whether the raider is part of a raid (raider type only)",
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "salmon"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "small",
+                                "medium",
+                                "large"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "sheep"
+                        },
+                        "sheared": {
+                            "title": "Is Sheared",
+                            "description": "Whether the sheep has been sheared (true) or still has wool (false) (sheep type only)",
+                            "type": "boolean"
+                        },
+                        "color": {
+                            "title": "Sheep Color",
+                            "description": "One sheep color (sheep type only)",
+                            "type": "string",
+                            "enum": [
+                                "white",
+                                "orange",
+                                "magenta",
+                                "light_blue",
+                                "yellow",
+                                "lime",
+                                "pink",
+                                "gray",
+                                "light_gray",
+                                "cyan",
+                                "purple",
+                                "blue",
+                                "brown",
+                                "green",
+                                "red",
+                                "black"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "slime"
+                        },
+                        "size": {
+                            "title": "Slime Size",
+                            "description": "Tests the size of this slime or magma cube (slime type only)",
+                            "oneOf": [
+                                {
+                                    "type": "integer",
+                                    "title": "Integer"
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Range",
+                                    "properties": {
+                                        "min": {
+                                            "type": "integer",
+                                            "title": "Minimum"
+                                        },
+                                        "max": {
+                                            "type": "integer",
+                                            "title": "Maximum"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "tropical_fish"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "kob",
+                                "sunstreak",
+                                "snooper",
+                                "dasher",
+                                "brinely",
+                                "spotty",
+                                "flopper",
+                                "stripey",
+                                "glitter",
+                                "blockfish",
+                                "betty",
+                                "clayfish"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "villager"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "type": "string",
+                            "enum": [
+                                "desert",
+                                "jungle",
+                                "plains",
+                                "savannah",
+                                "snow",
+                                "swamp",
+                                "taiga"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "wolf"
+                        },
+                        "variant": {
+                            "title": "Variant",
+                            "description": "Entity variant to test for",
+                            "oneOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "additionalProperties": false
+                }
+            ]
         }
     }
 }

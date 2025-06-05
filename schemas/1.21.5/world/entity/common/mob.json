@@ -1,0 +1,121 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "AbsorptionAmount": {
+            "type": "number",
+            "title": "Absorption Amount",
+            "description": "Number of extra health added by Absorption effect."
+        },
+        "active_effects": {
+            "type": "array",
+            "title": "Active Effects",
+            "description": "The list of potion effects on this mob.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "ambient": {
+                        "type": "boolean",
+                        "title": "Ambient",
+                        "description": "If true, this effect is provided by a Beacon."
+                    },
+                    "amplifier": {
+                        "type": "integer",
+                        "title": "Amplifier",
+                        "description": "The potion effect level. 0 is level 1."
+                    },
+                    "duration": {
+                        "type": "integer",
+                        "title": "Duration",
+                        "description": "The number of game ticks before the effect wears off."
+                    },
+                    "hidden_effect": {
+                        "$ref": "#"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "ID",
+                        "description": "The effect name."
+                    },
+                    "show_icon": {
+                        "type": "boolean",
+                        "title": "Show Icon",
+                        "description": "If true, effect icon is shown, if false, no icon is shown."
+                    },
+                    "show_particles": {
+                        "type": "boolean",
+                        "title": "Show Particles",
+                        "description": "If true, particles are shown, if false, no particles are shown."
+                    }
+                }
+            }
+        },
+        "attributes": {
+            "type": "array",
+            "title": "Attributes",
+            "description": "A list of Attributes for this mob.",
+            "items": {
+                "type": "object",
+                "title": "Attribute",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "ID",
+                        "description": "The name of this attribute."
+                    },
+                    "base": {
+                        "type": "number",
+                        "title": "Base",
+                        "description": "The base value of this attribute."
+                    },
+                    "modifiers": {
+                        "type": "array",
+                        "title": "Modifiers",
+                        "description": "A list of Modifiers.",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "amount": {
+                                    "type": "number",
+                                    "title": "Amount",
+                                    "description": "The amount by which this modifier modifies the base value in calculations."
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "title": "ID",
+                                    "description": "A resource location unique to this modifier."
+                                },
+                                "operation": {
+                                    "type": "string",
+                                    "title": "Operation",
+                                    "description": "Defines the operation this modifier executes on the attribute's base value.",
+                                    "enum": [
+                                        "add_value",
+                                        "add_multiplied_base",
+                                        "add_multiplied_total"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Brain": {
+            "type": "object",
+            "title": "Brain",
+            "description": "Everything this entity has to keep in mind.",
+            "properties": {
+                "memories": {
+                    "oneOf": [
+                        {
+                            "minecraft:admiring_item": {
+                                
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

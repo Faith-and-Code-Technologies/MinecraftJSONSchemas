@@ -80,7 +80,7 @@
                     "title": "Passengers",
                     "description": "The data of the entities that are riding this entity.",
                     "items": {
-                        "$ref": "#"
+                        "$ref": "#/definitions/entityFormat"
                     }
                 },
                 "PortalCooldown": {

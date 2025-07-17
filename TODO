@@ -1,9 +1,6 @@
 IN PROGRESS:
-- data/entity_data.json | https://minecraft.wiki/w/Entity_format#Entity_format
 - data/block_entity_data.json | https://minecraft.wiki/w/Chunk_format#Block_entity_format
-
-NOT STARTED:
-- world/entity/*
+- world/entity/* | https://minecraft.wiki/w/Entity_format#Mobs
 
 OTHER:
 - Normalize `title` and `description` styles

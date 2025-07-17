@@ -139,12 +139,5 @@
                 }
             }
         }
-    },
-    "oneOf": [
-        {
-            "type": "object",
-            "properties": {
-            }
-        }
-    ]
+    }
 }

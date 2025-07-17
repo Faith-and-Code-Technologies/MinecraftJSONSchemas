@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
+# Ensures all $refs are valid
 
 import json
 import os
 import sys
 from pathlib import Path
-from typing import Dict, List, Set, Tuple, Any
-from urllib.parse import urlparse, unquote
+from typing import Dict, List, Tuple, Any
 
 
 class SchemaValidator:
@@ -18,8 +17,6 @@ class SchemaValidator:
         
     def load_schemas(self) -> None:
         print(f"Loading schemas from: {self.schema_dir}")
-        
-        base_dir = self.schema_dir.parent if self.schema_dir.parent else self.schema_dir
         
         json_files = list(self.schema_dir.rglob("*.json"))
         print(f"Found {len(json_files)} JSON files in schema directory")

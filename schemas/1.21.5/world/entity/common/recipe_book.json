@@ -1,0 +1,70 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "recipe_book": {
+            "type": "object",
+            "properties": {
+                            "recipes": {
+                "type": "array",
+                "title": "Recipes",
+                "description": "A list of all recipes the player has seen.",
+                "items": {
+                    "type": "string",
+                    "title": "Recipe",
+                    "description": "The name of a recipe"
+                }
+            },
+            "toBeDisplayed": {
+                "type": "array",
+                "title": "To Be Displayed",
+                "description": "A list of all recipes the player has unlocked, but not viewed in the crafting helper yet.",
+                "items": {
+                    "type": "string",
+                    "title": "Recipe",
+                    "description": "The name of a recipe"
+                }
+            },
+            "isFilteringCraftable": {
+                "type": "boolean",
+                "title": "Is Filtering Craftable",
+                "description": "True if the player has enabled the 'Show Craftable' feature in the crafting recipe book."
+            },
+            "isGuiOpen": {
+                "type": "boolean",
+                "title": "Is Gui Open",
+                "description": "True if the player has the crafting recipe book GUI open."
+            },
+            "isFurnaceFilteringCraftable": {
+                "type": "boolean",
+                "title": "Is Furnace Filtering Craftable",
+                "description": "True if the player has enabled the 'Show Smeltable' feature in the smelting recipe book."
+            },
+            "isFurnaceGuiOpen": {
+                "type": "boolean",
+                "title": "Is Furnace Gui Open",
+                "description": "True if the player has the smelting recipe book GUI open."
+            },
+            "isBlastingFurnaceFilteringCraftable": {
+                "type": "boolean",
+                "title": "Is Blasting Furnace Filtering Craftable",
+                "description": "True if the player has enabled the 'Show Blastable' feature in the blasting recipe book."
+            },
+            "isBlastingFurnaceGuiOpen": {
+                "type": "boolean",
+                "title": "Is Blasting Furnace Gui Open",
+                "description": "True if the player has the blasting recipe book GUI open."
+            },
+            "isSmokerFilteringCraftable": {
+                "type": "boolean",
+                "title": "Is Smoker Filtering Craftable",
+                "description": "True if the player has enabled the 'Show Smokable' feature in the smoking recipe book."
+            },
+            "isSmokerGuiOpen": {
+                "type": "boolean",
+                "title": "Is Smoker Gui Open",
+                "description": "True if the player has the smoking recipe book GUI open."
+            }
+            }
+        }
+    }
+}

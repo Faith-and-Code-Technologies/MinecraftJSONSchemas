@@ -6,6 +6,7 @@ OTHER:
 - Normalize `title` and `description` styles
 - Look through finished schemas to add `required` and `additionalProperties` tags
 - Use `allOf` when using a `$ref` and metadata tags
+- Some booleans I have added should actually be bytes. (Which means we should do an integer with a 1 as max and 0 as min.)
 
 FEAT:
 - Take all `title` and `descriptions` into a lang file, and create src/compiler.py to compile the lang into the schemas

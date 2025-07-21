@@ -2,7 +2,9 @@
     "$schema": "https://json-schema.org/draft-07/schema#",
     "definitions": {
         "angry": {
-            "AngerTime": {
+            "type": "object",
+            "properties": {
+                "AngerTime": {
                 "type": "integer",
                 "title": "Anger Time",
                 "description": "Ticks until the mob becomes neutral- -2.1b to 0 for neutral mobs, 1 to 2.1b for angry mobs.",
@@ -18,6 +20,7 @@
                 },
                 "maxItems": 4,
                 "minItems": 4
+            }
             }
         }
     }

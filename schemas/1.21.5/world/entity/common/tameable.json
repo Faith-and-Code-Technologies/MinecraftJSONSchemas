@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "tameable": {
+            "type": "object",
+            "properties": {
+                "Owner": {
+                "type": "array",
+                "title": "Owner",
+                "description": "The UUID of the entity who owns this mob.",
+                "items": {
+                    "type": "integer"
+                },
+                "maxItems": 4,
+                "minItems": 4
+            },
+            "Sitting": {
+                "type": "boolean",
+                "title": "Sitting",
+                "description": "True if the mob is sitting."
+            }
+            }
+        }
+    }
+}

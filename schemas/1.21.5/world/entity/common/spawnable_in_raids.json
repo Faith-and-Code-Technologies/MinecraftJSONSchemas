@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "spawnable_in_raids": {
+            "type": "object",
+            "properties": {
+                "CanJoinRaid": {
+                "type": "boolean",
+                "title": "Can Join Raid",
+                "description": "If false, the entity will not participate in raids and will not be counted in the progress bar."
+            },
+            "PatrolLeader": {
+                "type": "boolean",
+                "title": "Patrol Leader",
+                "description": "True if the current mob is the patrol leader."
+            },
+            "Patrolling": {
+                "type": "boolean",
+                "title": "Patrolling",
+                "description": "Makes the mob assume patrol behavior."
+            },
+            "patrol_target": {
+                "type": "array",
+                "title": "Patrol Target",
+                "description": "The block location that the patrol moves toward.",
+                "items": {
+                    "type": "integer"
+                },
+                "maxItems": 3,
+                "minItems": 3
+            },
+            "RaidId": {
+                "type": "integer",
+                "title": "Raid ID",
+                "description": "Numeric ID of the raid that the mob currentley belongs to."
+            },
+            "Wave": {
+                "type": "integer",
+                "title": "Wave",
+                "description": "Raid wave that the mob spawned as a part of."
+            }
+            }
+        }
+    }
+}

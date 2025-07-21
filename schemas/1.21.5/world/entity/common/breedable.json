@@ -2,7 +2,9 @@
     "$schema": "https://json-schema.org/draft-07/schema#",
     "definitions": {
         "breedable": {
-            "Age": {
+            "type": "object",
+            "properties": {
+                "Age": {
                 "type": "integer",
                 "title": "Age",
                 "description": "Represents the age of the mob in ticks. When negatice, the mob is a baby. When above 0, the mob is an adult; represents number of ticks before this mob can breed again."
@@ -26,6 +28,7 @@
                 },
                 "maxItems": 4,
                 "minItems": 4
+            }
             }
         }
     }

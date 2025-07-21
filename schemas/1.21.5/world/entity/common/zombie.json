@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "zombie": {
+            "type": "object",
+            "properties": {
+                "CanBreakDoors": {
+                    "type": "boolean",
+                    "title": "Can Break Doors",
+                    "description": "True if the zombie can break doors (default value is 0)."
+                },
+                "DrownedConversionTime": {
+                    "type": "integer",
+                    "title": "Drowned Conversion Time",
+                    "description": "The number of ticks until this zombie converts to a drowned, or husk to zombie."
+                },
+                "InWaterTime": {
+                    "type": "integer",
+                    "title": "In Water Time",
+                    "description": "The number of ticks this zombie or husk has been under water, used to start the drowning conversion."
+                },
+                "IsBaby": {
+                    "type": "boolean",
+                    "title": "Is Baby",
+                    "description": "True if this zombie is a baby."
+                }
+            }
+        }
+    }
+}

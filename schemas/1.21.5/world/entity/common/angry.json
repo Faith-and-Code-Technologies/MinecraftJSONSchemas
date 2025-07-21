@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "angry": {
+            "AngerTime": {
+                "type": "integer",
+                "title": "Anger Time",
+                "description": "Ticks until the mob becomes neutral- -2.1b to 0 for neutral mobs, 1 to 2.1b for angry mobs.",
+                "minimum": -2147483648,
+                "maximum": -2147483648
+            },
+            "AngryAt": {
+                "type": "array",
+                "title": "UUID",
+                "description": "The UUID of the entity that caused this mob to be angry.",
+                "items": {
+                    "type": "integer"
+                },
+                "maxItems": 4,
+                "minItems": 4
+            }
+        }
+    }
+}

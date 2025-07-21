@@ -1,0 +1,39 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "horse": {
+            "Bred": {
+                "type": "boolean",
+                "title": "Bred",
+                "description": "Remains 0 after breeding. If true, causes it to stay near other horses with this flag set."
+            },
+            "EatingHaystack": {
+                "type": "boolean",
+                "title": "Eating Haystack",
+                "description": "True if the horse is grazing."
+            },
+            "Owner": {
+                "type": "array",
+                "title": "UUID",
+                "description": "The UUID of the entity that tamed the horse, stored as four ints. Has no effect on behavior.",
+                "items": {
+                    "type": "integer"
+                },
+                "maxItems": 4,
+                "minItems": 4
+            },
+            "Tame": {
+                "type": "boolean",
+                "title": "Tame",
+                "description": "True if the horse is tamed."
+            },
+            "Temper": {
+                "type": "integer",
+                "title": "Temper",
+                "description": "Increases with feeding. Higher values make a horse easier to tame.",
+                "minimum": 0,
+                "maximum": 100
+            }
+        }
+    }
+}

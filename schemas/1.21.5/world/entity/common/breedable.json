@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "breedable": {
+            "Age": {
+                "type": "integer",
+                "title": "Age",
+                "description": "Represents the age of the mob in ticks. When negatice, the mob is a baby. When above 0, the mob is an adult; represents number of ticks before this mob can breed again."
+            },
+            "ForcedAge": {
+                "type": "integer",
+                "title": "Forced Age",
+                "description": "A value of age assigned to this mob when it grows up. Incremented when a baby mob is fed."
+            },
+            "InLove": {
+                "type": "integer",
+                "title": "In Love",
+                "description": "Number of ticks until the mob loses its breeding hearts and stops searching for a mate. 0 when not searching for a mate."
+            },
+            "LoveCause": {
+                "type": "array",
+                "title": "UUID",
+                "description": "The UUID of the entity that caused this mob to breed.",
+                "items": {
+                    "type": "integer"
+                },
+                "maxItems": 4,
+                "minItems": 4
+            }
+        }
+    }
+}
